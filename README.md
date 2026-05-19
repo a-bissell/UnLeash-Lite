@@ -82,7 +82,7 @@ On firmware 1.1.14 and below, `--aes-key` is not needed.
 | `bypass-cron` | Install a cron job for command execution (CVE-2026-27509 bypass) |
 | `bypass-escalate` | Two-press self-overwrite escalation (CVE-2026-27509 bypass) |
 
-The `bypass-*` modes work on firmware 1.0.5.5+ where Unitree added a keyword blocklist to `programming_actuator`. They encode payloads as byte arrays and use `np.savetxt` for file I/O to avoid the filter.
+The `bypass-*` modes work on firmware 1.1.14+ where Unitree added a keyword blocklist to `programming_actuator`. They encode payloads as byte arrays and use `np.savetxt` for file I/O to avoid the filter.
 
 ## Options
 
