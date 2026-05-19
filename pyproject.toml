@@ -39,8 +39,8 @@ dependencies = [
 unleash-lite = "unleash_lite.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/a-bissell/unleash"
-Issues = "https://github.com/a-bissell/unleash/issues"
+Homepage = "https://github.com/a-bissell/UnLeash-Lite"
+Issues = "https://github.com/a-bissell/UnLeash-Lite/issues"
 
 [tool.setuptools.packages.find]
 include = ["unleash_lite*"]

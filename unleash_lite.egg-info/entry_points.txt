@@ -1,2 +1,0 @@
-[console_scripts]
-unleash-lite = unleash_lite.__main__:main

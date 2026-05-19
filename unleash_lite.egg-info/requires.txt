@@ -1,4 +1,0 @@
-aiortc
-pycryptodome
-cryptography
-requests

