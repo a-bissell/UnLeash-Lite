@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unleash-lite"
+version = "0.1.0"
+description = "WebRTC jailbreak for Unitree Go2 robots"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Alex Bissell" },
+]
+keywords = ["unitree", "go2", "webrtc", "jailbreak", "robot", "right-to-repair"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: System :: Hardware",
+]
+dependencies = [
+    "aiortc",
+    "pycryptodome",
+    "cryptography",
+    "requests",
+    "curl_cffi",
+]
+
+[project.scripts]
+unleash-lite = "unleash_lite.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/a-bissell/unleash"
+Issues = "https://github.com/a-bissell/unleash/issues"
+
+[tool.setuptools.packages.find]
+include = ["unleash_lite*"]
