@@ -122,7 +122,15 @@ UnLeash Lite does not use BLE (the specific attack vector in CVE-2025-35027) or 
 
 ## Legal
 
-For use by robot owners on hardware they own.
+This software is provided for **security research, education, and
+right-to-repair purposes only**. By using it, you agree that:
+
+- You own the robot you are targeting, or have explicit written
+  authorization from its owner.
+- You are solely responsible for complying with all applicable local,
+  state, national, and international laws.
+- The authors and contributors accept no liability for damages,
+  legal consequences, or misuse arising from this software.
 
 ## License
 
