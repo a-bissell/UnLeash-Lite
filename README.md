@@ -13,7 +13,7 @@
 
 </div>
 
- UnLeash Lite allows SSH access by uploading Python payloads over the WebRTC data channel (the same channel the Unitree app uses). The payload is bound to a controller hotkey and executes as root when pressed.
+ UnLeash Lite enables root-level SSH access by uploading Python payloads over the WebRTC data channel (the same channel the Unitree app uses). The payload is bound to a controller hotkey and executes as root when pressed.
 
 **Requirements:** LAN access to the robot + a physical controller.
 
