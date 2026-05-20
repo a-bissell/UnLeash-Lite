@@ -9,7 +9,7 @@
                      lite
 ```
 
-<h2>WebRTC Jailbreak for Unitree Go2</h2>
+<h2>WebRTC Jailbreak for Unitree Go2 (and more!)</h2>
 
 </div>
 
