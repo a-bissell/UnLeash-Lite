@@ -152,6 +152,11 @@ class WebRTCJailbreakOrchestrator:
         print(f"  {DIM}Written to: /unitree/etc/programming/{p.program_uuid}.py{RESET}")
         print(f"  {DIM}Executes as root when {hotkey} is pressed on the controller.{RESET}")
 
+        if p.name == "bypass-ssh":
+            print()
+            print(f"  {C}  After pressing {hotkey}, wait up to 60s for the cron job.{RESET}")
+            print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
+
         # Phase 3: Wait for callback
         if wait_for_callback and self.callback_ip and server:
             print()

