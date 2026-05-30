@@ -3,6 +3,7 @@
 import argparse
 import asyncio
 import getpass
+import logging
 import socket
 import sys
 
@@ -21,17 +22,21 @@ def _get_local_ip():
 
 
 def main():
-    # Detect fetch-key subcommand before argparse sees it
+    # Detect subcommands before argparse sees them
     if len(sys.argv) > 1 and sys.argv[1] == "fetch-key":
         _main_fetch_key()
+        return
+    if len(sys.argv) > 1 and sys.argv[1] == "probe":
+        _main_probe()
         return
 
     # Everything else is the jailbreak CLI
     parser = argparse.ArgumentParser(
         prog="unleash-lite",
         description="UnLeash Lite: WebRTC jailbreak for Unitree Go2",
-        epilog="To fetch AES keys for firmware >= 1.1.15:\n"
-               "  unleash-lite fetch-key --email you@example.com",
+        epilog="Subcommands:\n"
+               "  unleash-lite fetch-key --email you@example.com\n"
+               "  unleash-lite probe [--aes-key KEY] [--debug]",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     _add_jailbreak_args(parser)
@@ -95,6 +100,8 @@ def _add_jailbreak_args(parser):
                         help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
     parser.add_argument("--timeout", type=float, default=120,
                         help="Callback wait timeout (default: 120s)")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging (dumps all DDS messages)")
 
 
 def _run_fetch_key(args):
@@ -139,7 +146,33 @@ def _run_fetch_key(args):
         sys.exit(1)
 
 
+def _main_probe():
+    parser = argparse.ArgumentParser(
+        prog="unleash-lite probe",
+        description="Diagnostic probe: connect to robot, upload a no-op, "
+                    "dump all raw DDS responses for firmware API analysis",
+    )
+    parser.add_argument("--robot-ip", default="192.168.123.161",
+                        help="Robot IP address (default: 192.168.123.161)")
+    parser.add_argument("--port", type=int, default=9991,
+                        help="Signaling port (default: 9991)")
+    parser.add_argument("--aes-key",
+                        help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging (dumps all DDS messages)")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .webrtc_jailbreak import probe
+    asyncio.run(probe(args.robot_ip, args.port, aes_128_key=args.aes_key))
+
+
 def _run_jailbreak(args):
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
     from .webrtc_payloads import (
         payload_ssh, payload_reverse_shell, payload_custom,
         payload_ssh_persist,

