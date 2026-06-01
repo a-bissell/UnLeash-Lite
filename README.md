@@ -13,62 +13,76 @@
 
 </div>
 
-UnLeash Lite uploads Python payloads to the Go2 over its WebRTC data channel and executes them as root. The primary delivery method is an SDP buffer overflow that works pre-auth over the LAN -- no AES keys, no cloud credentials, no physical controller required.
+UnLeash Lite uploads Python payloads to the Go2 over its WebRTC data channel and executes them as root. No physical controller needed. The tool connects through the robot's HTTP signaling endpoint, uploads a payload via the WebRTC bridge, and triggers execution by sending a fake controller button press through the same bridge -- all from inside the DDS security perimeter.
 
 ## Quick Start
 
+### Firmware <= 1.1.13
+
 ```bash
 pip install .
-pip install 'unleash-lite[sdp]'
-
-python -m unleash_lite sdp-jailbreak bypass-ssh
+python -m unleash_lite ssh
 ```
 
-Wait up to 60 seconds for the cron job, then:
+Wait for the callback confirmation, then:
 
 ```bash
 ssh root@192.168.123.161
 # password: unleash
 ```
 
-No controller press needed. The tool sends a fake button input over DDS automatically.
+### Firmware 1.1.14+
 
-> **Custom password:** Add `--password <your-password>` to the sdp-jailbreak command.
+```bash
+pip install .
+python -m unleash_lite bypass-ssh
+```
+
+Wait up to 60 seconds for the cron job, then SSH in.
+
+### Firmware 1.1.15+
+
+Same as 1.1.14, but you need your robot's AES key:
+
+```bash
+pip install .
+python -m unleash_lite fetch-key --email you@example.com
+python -m unleash_lite bypass-ssh --aes-key <your-32-hex-char-key>
+```
+
+Wait up to 60 seconds, then SSH in.
+
+> **Custom password:** Add `--password <your-password>` to any command above.
 
 ### What just happened?
 
-1. A crafted SDP offer was delivered to the robot via DDS multicast, bypassing HTTP signaling entirely
-2. A heap buffer overflow in `parseMediaAttributes()` (AWS KVS WebRTC SDK < v1.18.1) injected our DTLS fingerprint into the robot's PeerConnection
-3. A WebRTC data channel was established using the forged fingerprint
-4. A bypass payload was uploaded to `programming_actuator` and bound to the L1+Y hotkey
-5. A fake controller button press was published over DDS to trigger execution
-6. The payload wrote a self-deleting cron job that enables SSH and sets the root password
+1. Connected to the robot's HTTP signaling endpoint (port 9991) and established a WebRTC data channel
+2. Uploaded a Python payload to `programming_actuator` via the bridge, bound to the L1+Y hotkey
+3. Sent a fake L1+Y controller button press through the bridge to `rt/wirelesscontroller`
+4. The bridge forwarded both the upload and the trigger to the internal DDS bus from inside the DDS security perimeter
+5. `programming_actuator` executed the payload as root
 
-The entire chain is pre-auth. No AES key. No cloud login. No HTTP signaling. No physical controller.
+No physical controller. No DDS multicast. No CycloneDDS dependency.
 
 ## Install
 
 ```bash
 pip install .
-
-# Required for SDP overflow:
-pip install 'unleash-lite[sdp]'
 ```
 
-The `sdp` extra installs `cyclonedds==0.10.2`. This version must match the robot's CycloneDDS -- v0.11+ has incompatible SEDP discovery and will not work. cyclonedds 0.10.2 requires Python 3.10 through 3.13 (it will not build on 3.14+).
+That's it. The primary jailbreak path has no extra dependencies beyond the base package (aiortc, pycryptodome, cryptography, requests, curl_cffi).
 
 ## Firmware Support
 
-| Firmware | SDP Overflow | HTTP Signaling | Status |
-|----------|-------------|----------------|--------|
-| 1.1.7 -- 1.1.11 | `sdp-jailbreak bypass-ssh` | `ssh` | Confirmed |
-| 1.1.12 -- 1.1.13 | `sdp-jailbreak bypass-ssh` | `ssh` | Untested (should work) |
-| 1.1.14 | `sdp-jailbreak bypass-ssh` | `bypass-ssh` | Confirmed |
-| 1.1.15 | `sdp-jailbreak bypass-ssh` | `bypass-ssh --aes-key KEY` | Confirmed |
+| Firmware | Command | AES Key? | Status |
+|----------|---------|----------|--------|
+| <= 1.1.13 | `ssh` | No | Confirmed |
+| 1.1.14 | `bypass-ssh` | No | Confirmed (benchtop) |
+| >= 1.1.15 | `bypass-ssh --aes-key KEY` | Yes | Confirmed (benchtop) |
 
-The SDP overflow bypasses HTTP signaling and per-device authentication entirely. The `--aes-key` flag is never needed with `sdp-jailbreak`.
+All firmware versions use the same attack chain: HTTP signaling into the WebRTC bridge, upload via `programming_actuator`, trigger via fake controller press. The bridge sits inside the DDS security perimeter and forwards both operations to the internal DDS bus.
 
-> **Tip:** On firmware <= 1.1.13, `sdp-jailbreak ssh` is faster than `sdp-jailbreak bypass-ssh` because it enables SSH immediately instead of going through a cron job. Both work on all firmware, but the `ssh` payload will be rejected by the keyword blocklist on 1.1.14+.
+> **Note on firmware 1.1.14+:** Unitree added a keyword blocklist and seccomp sandbox to `programming_actuator`. The `bypass-*` modes encode payloads as byte arrays and use `np.savetxt` for file I/O to evade the filter. `bypass-ssh` and `bypass-cron` escape the seccomp sandbox by staging commands as cron jobs that execute outside the sandbox.
 
 ## Modes
 
@@ -84,70 +98,50 @@ The SDP overflow bypasses HTTP signaling and per-device authentication entirely.
 | `bypass-cron` | all | Install a cron job for command execution |
 | `bypass-escalate` | all | Two-press self-overwrite for unfiltered Python execution |
 
-The `bypass-*` modes encode payloads as byte arrays and use `np.savetxt` for file I/O, evading the keyword blocklist added in firmware 1.1.14 ([CVE-2026-27509](https://nvd.nist.gov/vuln/detail/CVE-2026-27509)). `bypass-ssh` and `bypass-cron` escape the seccomp sandbox by staging commands as cron jobs.
+## Fetching the AES Key (firmware >= 1.1.15)
 
-All modes work with both `sdp-jailbreak` and the HTTP signaling path.
-
-## HTTP Signaling (Legacy)
-
-The original delivery method uses the robot's HTTP signaling endpoint on port 9991. This is the same endpoint the Unitree app connects through. It works without CycloneDDS but requires a physical controller to trigger the payload, and on firmware >= 1.1.15 it requires a per-device AES key.
-
-### Firmware <= 1.1.13
+Firmware 1.1.15 added per-device AES-128 authentication to the HTTP signaling endpoint. You need the robot's key (32 hex characters) to connect.
 
 ```bash
-python -m unleash_lite ssh
-```
-
-Press **L1+Y** on the controller. Then `ssh root@192.168.123.161` (password: `unleash`).
-
-### Firmware 1.1.14
-
-```bash
-python -m unleash_lite bypass-ssh
-```
-
-Press **L1+Y**, wait up to 60 seconds. Then `ssh root@192.168.123.161`.
-
-### Firmware >= 1.1.15
-
-```bash
-# Fetch your device key from the Unitree cloud
+# Print keys for all robots on your account
 python -m unleash_lite fetch-key --email you@example.com
 
-# Run the jailbreak
-python -m unleash_lite bypass-ssh --aes-key <your-32-hex-char-key>
+# Get key for a specific robot
+python -m unleash_lite fetch-key --email you@example.com --sn B42D2000XXXXXXXX
 ```
 
-Press **L1+Y**, wait up to 60 seconds. Then `ssh root@192.168.123.161`.
-
-If you already have SSH access, you can read the key directly:
+If you already have SSH access, read it directly:
 
 ```bash
 ssh root@192.168.123.161 'xxd -p /unitree/etc/key/aes_key.bin'
 ```
 
-## DDS Controller Trigger
+On firmware 1.1.14 and below, `--aes-key` is not needed.
 
-The `trigger` subcommand sends a fake controller button press over DDS multicast without needing a physical Unitree remote:
+## Standalone Trigger
+
+The `trigger` subcommand sends a fake controller button press without uploading a payload. Use it to fire a previously staged hotkey binding:
 
 ```bash
-python -m unleash_lite trigger                          # default: L1+Y
-python -m unleash_lite trigger --hotkey L2+Y
-python -m unleash_lite trigger --interface-ip 192.168.123.100
+# Via bridge (default, works on production robots)
+python -m unleash_lite trigger --robot-ip 192.168.123.161
+
+# Via DDS multicast (benchtop boards without DDS Security only)
+python -m unleash_lite trigger --via dds --interface-ip 192.168.123.100
 ```
 
-`sdp-jailbreak` runs this automatically after uploading the payload. The standalone `trigger` command is useful when you've uploaded a payload through some other means and just need to fire it.
+The bridge trigger connects via HTTP signaling and sends the button press through the WebRTC data channel. The jailbreak commands run this automatically after upload.
 
 ## CLI Reference
 
-### sdp-jailbreak
-
 ```bash
-python -m unleash_lite sdp-jailbreak <mode> [options]
+python -m unleash_lite <mode> [options]
 ```
 
 ```
---interface-ip IP     Network interface IP for DDS multicast (auto-detected)
+--robot-ip IP         Robot IP address (default: 192.168.123.161)
+--port PORT           WebRTC signaling port (default: 9991)
+--aes-key KEY         Per-device AES-128 key for firmware >= 1.1.15 (32 hex chars)
 --hotkey HOTKEY       Controller hotkey binding (default: L1+Y)
 --password PASS       Root password for ssh modes (default: unleash)
 --cmd CMD             Shell command for custom / bypass-cron mode
@@ -162,43 +156,59 @@ python -m unleash_lite sdp-jailbreak <mode> [options]
 --debug               Enable debug logging
 ```
 
-### HTTP signaling modes
-
-```bash
-python -m unleash_lite <mode> [options]
-```
-
-Same options as sdp-jailbreak, plus:
-
-```
---robot-ip IP         Robot IP address (default: 192.168.123.161)
---port PORT           WebRTC signaling port (default: 9991)
---aes-key KEY         Per-device AES-128 key for firmware >= 1.1.15 (32 hex chars)
-```
-
 ### Other subcommands
 
 ```bash
 python -m unleash_lite fetch-key --email you@example.com [--sn SERIAL]
 python -m unleash_lite probe [--aes-key KEY] [--debug]
-python -m unleash_lite trigger [--hotkey L1+Y] [--interface-ip IP]
+python -m unleash_lite trigger [--robot-ip IP] [--via bridge|dds]
 ```
 
-## How the SDP Overflow Works
+## How It Works
 
-The Unitree Go2's `webrtc_bridge` service uses the AWS Kinesis Video Streams (KVS) WebRTC SDK to handle peer connections. It reads WebRTC offers from the DDS topic `rt/webrtcreq` and passes them to the SDK's SDP parser.
+### The WebRTC Bridge Bypass
 
-`parseMediaAttributes()` in the KVS SDK (versions before v1.18.1) allocates a fixed-size array for SDP attributes but does not bounds-check the count. The crafted SDP contains 5 media descriptions. The last one (`m=application`) carries 256 attributes. The 256th has a 522-byte name ending in `\x01\x01`, which overflows into `sessionAttributesCount` in the SDK's session descriptor struct, corrupting it to 257. The session attribute loop then reads index 256, which maps into the first media description's `mediaName` and `mediaTitle` fields. We place our DTLS fingerprint there, so it gets written into the PeerConnection's expected fingerprint.
+The Go2 runs DDS Security (PKI-DH authentication) on its internal DDS bus, which prevents external devices from directly publishing to DDS topics. This blocks the direct DDS attack documented in [CVE-2026-27509](https://nvd.nist.gov/vuln/detail/CVE-2026-27509).
 
-With the forged fingerprint accepted, the DTLS handshake succeeds and a data channel opens. The heap corruption causes the SDK to detect inconsistent internal state and close the session roughly 1-2 seconds later (the process itself does not crash). The tool fires the validation handshake and payload upload immediately in the data channel message handler to beat this window.
+However, the robot's `webrtc_bridge` service (`unitreeWebRTCClientMaster`) is an internal DDS participant with valid security credentials. It bridges between the WebRTC data channel and the DDS bus, forwarding messages in both directions. Any LAN-adjacent device that can reach the HTTP signaling endpoint (port 9991) can establish a WebRTC data channel and send messages that the bridge publishes to internal DDS topics from inside the security perimeter.
 
-The overflow SDP is delivered and the answer received entirely over DDS multicast (`rt/webrtcreq` / `rt/webrtcres`), which is unauthenticated. No HTTP signaling, no AES key exchange, no RSA encryption.
+This bypasses DDS Security entirely. The bridge does not filter which topics it writes to or what message types it forwards. Confirmed working:
+
+- **Upload:** `rt/api/programming_actuator/request` (api_id=1002) -- uploads Python code bound to a controller hotkey
+- **Trigger:** `rt/wirelesscontroller` -- fake controller button press, received by `programming_actuator` which executes the bound script as root
+- **Telemetry:** `rt/lf/lowstate` -- IMU and motor state readable via subscribe
+
+The upload and trigger happen over the same WebRTC connection. No physical controller is involved at any point.
+
+### Firmware Defenses
+
+| Defense | Added in | What it does | How it's bypassed |
+|---------|----------|-------------|-------------------|
+| DDS Security (PKI-DH) | ~1.1.x | Blocks external DDS participants | WebRTC bridge is inside the perimeter |
+| Keyword blocklist | 1.1.14 | Scans Python source for ~180 blocked keywords | `str(bytes([...]))` encoding + `np.savetxt` for file I/O |
+| seccomp sandbox | 1.1.14 | Restricts syscalls in Python execution | Write to `/etc/cron.d/`, cron runs outside sandbox |
+| UUID validation | 1.1.14 | Requires 10-digit numeric UUID | `str(int(time.time()))` produces valid UUIDs |
+| Per-device AES auth | 1.1.15 | Per-device key on HTTP signaling | Key retrievable from Unitree cloud API |
+
+### SDP Overflow (Research Finding)
+
+UnLeash Lite also includes an SDP overflow exploit targeting a heap buffer overflow in `parseMediaAttributes()` in the AWS KVS WebRTC SDK (versions before v1.18.1). The overflow corrupts `sessionAttributesCount` via a 522-byte attribute name, causing an out-of-bounds read that injects a forged DTLS fingerprint into the PeerConnection.
+
+This was discovered and responsibly disclosed to AWS through their Vulnerability Disclosure Program. AWS patched the issue in KVS WebRTC SDK v1.18.1.
+
+On production Go2 robots, DDS Security blocks the multicast delivery of the overflow SDP, so the exploit only works on development/benchtop boards that lack DDS Security configuration. It remains available via the `sdp-jailbreak` subcommand for research purposes and is relevant to any other deployment of the KVS WebRTC SDK that accepts SDP from untrusted sources.
+
+```bash
+# Benchtop boards only (requires cyclonedds==0.10.2)
+pip install 'unleash-lite[sdp]'
+python -m unleash_lite sdp-jailbreak bypass-ssh --interface-ip 192.168.123.100
+```
 
 ## Acknowledgments
 
 This tool builds on publicly disclosed security research by multiple independent teams.
 
-**Olivier Laflamme (Boschko) and Ruikai Peng** discovered that `programming_actuator` executes arbitrary Python as root with no authentication ([CVE-2026-27509](https://nvd.nist.gov/vuln/detail/CVE-2026-27509)). Their exploit reaches it by joining DDS domain 0 directly on the LAN. Their writeup at [boschko.ca](https://boschko.ca/unitree-go2-rce/) documents the DDS attack chain.
+**Olivier Laflamme (Boschko) and Ruikai Peng** discovered that `programming_actuator` executes arbitrary Python as root with no authentication ([CVE-2026-27509](https://nvd.nist.gov/vuln/detail/CVE-2026-27509)). Their exploit reaches it by joining DDS domain 0 directly on the LAN. Their writeup at [boschko.ca](https://boschko.ca/unitree-go2-rce/) documents the DDS attack chain. Unitree's response was to add DDS Security, which blocks the direct DDS path but is bypassed by the WebRTC bridge (see above).
 
 **Andreas Makris (Bin4ry), Kevin Finisterre (h0stile), and Konstantin Severov (legion1581)** disclosed the broader Unitree security architecture weaknesses ([CVE-2025-35027](https://nvd.nist.gov/vuln/detail/CVE-2025-35027), [arXiv:2509.14139](https://arxiv.org/abs/2509.14139)): hardcoded AES keys, the WebRTC signaling protocol, and fleet-wide shared cryptographic material. legion1581's [`unitree_webrtc_connect`](https://github.com/legion1581/unitree_webrtc_connect) was foundational for the WebRTC data channel implementation.
 
