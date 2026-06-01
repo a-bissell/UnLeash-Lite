@@ -341,10 +341,13 @@ def dds_trigger_hotkey(interface_ip, hotkey="L1+Y", hold_secs=0.3):
 class Go2DataChannelSDP:
     """WebRTC data channel via SDP overflow + DDS multicast.
 
-    The UAF constraint (~1-2s after DTLS) means validation + upload must
-    fire immediately in the message handler. Call connect_and_fire() with
-    the payload — it returns after the upload completes or the connection
-    dies, whichever comes first.
+    The heap corruption from the overflow causes the SDK to close the
+    session shortly after DTLS completes (~1-2s). The process does not
+    crash -- the SDK detects inconsistent internal state and transitions
+    to RTC_PEER_CONNECTION_STATE_CLOSED cleanly. Validation + upload
+    must fire immediately in the message handler before this happens.
+    Call connect_and_fire() with the payload -- it returns after the
+    upload completes or the connection closes, whichever comes first.
     """
 
     def __init__(self, interface_ip=None):
@@ -427,8 +430,8 @@ class Go2DataChannelSDP:
             await asyncio.wait_for(self._upload_done.wait(), timeout=timeout)
         except asyncio.TimeoutError:
             raise ConnectionError(
-                "Timed out waiting for upload confirmation. The UAF may have "
-                "killed the connection before the upload completed.")
+                "Timed out waiting for upload confirmation. The SDK may have "
+                "closed the session before the upload completed.")
 
         return self._upload_result
 

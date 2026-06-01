@@ -43,8 +43,8 @@ def main():
         epilog="Subcommands:\n"
                "  unleash-lite fetch-key --email you@example.com\n"
                "  unleash-lite probe [--aes-key KEY] [--debug]\n"
-               "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]\n"
-               "  unleash-lite trigger [--hotkey L1+Y] [--interface-ip IP]",
+               "  unleash-lite trigger [--hotkey L1+Y] [--robot-ip IP]\n"
+               "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     _add_jailbreak_args(parser)
@@ -220,16 +220,26 @@ def _main_sdp_jailbreak():
 def _main_trigger():
     parser = argparse.ArgumentParser(
         prog="unleash-lite trigger",
-        description="Send a fake controller button press via DDS multicast. "
-                    "Triggers a previously uploaded hotkey-bound payload "
-                    "without needing a physical Unitree controller.",
+        description="Send a fake controller button press to trigger a "
+                    "previously uploaded hotkey-bound payload. Default "
+                    "mode uses the WebRTC bridge (works through DDS "
+                    "Security). Use --via dds for direct DDS multicast "
+                    "(benchtop boards only).",
     )
     parser.add_argument("--hotkey", default="L1+Y",
                         choices=["L1+Y", "L2+Y", "R1+Y"],
                         help="Hotkey combo to trigger (default: L1+Y)")
+    parser.add_argument("--robot-ip", default="192.168.123.161",
+                        help="Robot IP address (default: 192.168.123.161)")
+    parser.add_argument("--port", type=int, default=9991,
+                        help="Signaling port (default: 9991)")
+    parser.add_argument("--aes-key",
+                        help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
+    parser.add_argument("--via", choices=["bridge", "dds"], default="bridge",
+                        help="Trigger method: bridge (default, works on production) "
+                             "or dds (direct multicast, benchtop only)")
     parser.add_argument("--interface-ip",
-                        help="Network interface IP for DDS multicast "
-                             "(default: auto-detect or DDS_MC_INTERFACE env)")
+                        help="Network interface IP for DDS multicast (--via dds only)")
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug logging")
     args = parser.parse_args(sys.argv[2:])
@@ -237,22 +247,42 @@ def _main_trigger():
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    from .webrtc_sdp import dds_trigger_hotkey, _detect_interface_ip
+    if args.via == "dds":
+        from .webrtc_sdp import dds_trigger_hotkey, _detect_interface_ip
 
-    interface_ip = args.interface_ip or _detect_interface_ip()
-    if not interface_ip:
-        print("  Error: cannot detect network interface. "
-              "Pass --interface-ip or set DDS_MC_INTERFACE.")
-        sys.exit(1)
+        interface_ip = args.interface_ip or _detect_interface_ip()
+        if not interface_ip:
+            print("  Error: cannot detect network interface. "
+                  "Pass --interface-ip or set DDS_MC_INTERFACE.")
+            sys.exit(1)
 
-    print(f"  Sending {args.hotkey} via DDS to {interface_ip}...")
-    print(f"  (3s SEDP discovery wait)")
-    try:
-        dds_trigger_hotkey(interface_ip, args.hotkey)
-        print(f"  Trigger sent.")
-    except Exception as e:
-        print(f"  Error: {e}")
-        sys.exit(1)
+        print(f"  Sending {args.hotkey} via DDS multicast ({interface_ip})...")
+        print(f"  (3s SEDP discovery wait)")
+        try:
+            dds_trigger_hotkey(interface_ip, args.hotkey)
+            print(f"  Trigger sent.")
+        except Exception as e:
+            print(f"  Error: {e}")
+            sys.exit(1)
+    else:
+        from .webrtc import Go2DataChannel
+
+        async def _bridge_trigger():
+            dc = Go2DataChannel(args.robot_ip, args.port,
+                                aes_128_key=args.aes_key)
+            try:
+                print(f"  Connecting to {args.robot_ip}:{args.port}...")
+                await dc.connect(timeout=15)
+                print(f"  Sending {args.hotkey} via bridge...")
+                await dc.trigger_hotkey(args.hotkey)
+                print(f"  Trigger sent.")
+            except Exception as e:
+                print(f"  Error: {e}")
+                sys.exit(1)
+            finally:
+                await dc.close()
+
+        asyncio.run(_bridge_trigger())
 
 
 def _run_sdp_jailbreak(args):

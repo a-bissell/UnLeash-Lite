@@ -190,7 +190,7 @@ The Unitree Go2's `webrtc_bridge` service uses the AWS Kinesis Video Streams (KV
 
 `parseMediaAttributes()` in the KVS SDK (versions before v1.18.1) allocates a fixed-size array for SDP attributes but does not bounds-check the count. The crafted SDP contains 5 media descriptions. The last one (`m=application`) carries 256 attributes. The 256th has a 522-byte name ending in `\x01\x01`, which overflows into `sessionAttributesCount` in the SDK's session descriptor struct, corrupting it to 257. The session attribute loop then reads index 256, which maps into the first media description's `mediaName` and `mediaTitle` fields. We place our DTLS fingerprint there, so it gets written into the PeerConnection's expected fingerprint.
 
-With the forged fingerprint accepted, the DTLS handshake succeeds and a data channel opens. A use-after-free in the SDK kills the connection roughly 1-2 seconds later, so the tool fires the validation handshake and payload upload immediately in the data channel message handler.
+With the forged fingerprint accepted, the DTLS handshake succeeds and a data channel opens. The heap corruption causes the SDK to detect inconsistent internal state and close the session roughly 1-2 seconds later (the process itself does not crash). The tool fires the validation handshake and payload upload immediately in the data channel message handler to beat this window.
 
 The overflow SDP is delivered and the answer received entirely over DDS multicast (`rt/webrtcreq` / `rt/webrtcres`), which is unauthenticated. No HTTP signaling, no AES key exchange, no RSA encryption.
 

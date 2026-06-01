@@ -373,6 +373,45 @@ class Go2DataChannel:
                 logger.debug("list_programs data not JSON: %r", data_str)
         return [], resp
 
+    # Button bitmask values from physical_remote_controller.py
+    HOTKEY_KEYS = {
+        "L1+Y": 2050,   # L1(2) + Y(2048)
+        "L2+Y": 2080,   # L2(32) + Y(2048)
+        "R1+Y": 2049,   # R1(1) + Y(2048)
+    }
+
+    async def trigger_hotkey(self, hotkey="L1+Y", hold_secs=0.4):
+        """Send a fake controller button press via the data channel bridge.
+
+        The WebRTC bridge forwards messages to rt/wirelesscontroller on
+        the internal DDS bus, inside the DDS security perimeter.
+        programming_actuator reads this topic and fires the bound script.
+        No physical controller needed.
+        """
+        keys = self.HOTKEY_KEYS.get(hotkey)
+        if keys is None:
+            raise ValueError(
+                f"Unknown hotkey {hotkey!r}. "
+                f"Valid: {', '.join(self.HOTKEY_KEYS)}")
+
+        logger.debug("Bridge trigger: %s (keys=%d)", hotkey, keys)
+        wc = {"lx": 0.0, "ly": 0.0, "rx": 0.0, "ry": 0.0}
+
+        # Button down
+        self._dc.send(json.dumps({
+            "type": "msg",
+            "topic": "rt/wirelesscontroller",
+            "data": {**wc, "keys": keys},
+        }))
+        await asyncio.sleep(hold_secs)
+        # Button up
+        self._dc.send(json.dumps({
+            "type": "msg",
+            "topic": "rt/wirelesscontroller",
+            "data": {**wc, "keys": 0},
+        }))
+        logger.debug("Bridge trigger sent")
+
     async def close(self):
         if self._pc:
             await self._pc.close()
