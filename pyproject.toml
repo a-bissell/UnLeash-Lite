@@ -35,6 +35,9 @@ dependencies = [
     "curl_cffi",
 ]
 
+[project.optional-dependencies]
+sdp = ["cyclonedds==0.10.2"]
+
 [project.scripts]
 unleash-lite = "unleash_lite.__main__:main"
 
