@@ -33,6 +33,7 @@ dependencies = [
     "cryptography",
     "requests",
     "curl_cffi",
+    "aiohttp",
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UnLeash Lite</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg-base:#0d0e12;
+  --bg-surface:#14151b;
+  --bg-elevated:#1c1d25;
+  --bg-input:#0a0b0f;
+  --text-pri:#e8e9ec;
+  --text-body:#c8cad0;
+  --text-muted:#6b6f7b;
+  --text-dim:#3d404a;
+  --border:#2a2d38;
+  --border-sub:#1f2128;
+  --accent:#d4843e;
+  --accent-dim:rgba(212,132,62,0.15);
+  --red:#cc4444;
+  --red-dim:rgba(204,68,68,0.15);
+  --green:#44aa99;
+  --green-dim:rgba(68,170,153,0.15);
+  --blue:#5b8bd4;
+  --blue-dim:rgba(91,139,212,0.15);
+  --modal-bg:rgba(0,0,0,0.6);
+  --scrollbar-thumb:var(--border);
+}
+
+[data-theme="light"]{
+  --bg-base:#f5f6f8;
+  --bg-surface:#ffffff;
+  --bg-elevated:#ebedf0;
+  --bg-input:#f0f1f4;
+  --text-pri:#1a1d23;
+  --text-body:#3b3f4a;
+  --text-muted:#6b7280;
+  --text-dim:#9ca3af;
+  --border:#d1d5db;
+  --border-sub:#e5e7eb;
+  --accent:#b35a1f;
+  --accent-dim:rgba(179,90,31,0.1);
+  --red:#cc2222;
+  --red-dim:rgba(204,34,34,0.08);
+  --green:#1a7f37;
+  --green-dim:rgba(26,127,55,0.08);
+  --blue:#0969da;
+  --blue-dim:rgba(9,105,218,0.08);
+  --modal-bg:rgba(0,0,0,0.3);
+  --scrollbar-thumb:var(--border);
+}
+
+body{
+  font-family:'SF Mono','Cascadia Code','Fira Code',Consolas,'Courier New',monospace;
+  background:var(--bg-base);
+  color:var(--text-body);
+  font-size:13px;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:3px}
+
+/* ── Top bar ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:48px;
+  background:var(--bg-surface);border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.logo{font-size:14px;font-weight:600;color:var(--text-pri);letter-spacing:2px}
+.logo span{color:var(--accent)}
+.top-r{display:flex;align-items:center;gap:16px}
+.top-actions{display:flex;gap:8px}
+
+/* ── Status indicators ── */
+.indicators{display:flex;gap:16px;font-size:12px}
+.ind{display:flex;align-items:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-g{background:var(--green);box-shadow:0 0 6px var(--green)}
+.dot-a{background:var(--accent);box-shadow:0 0 6px var(--accent)}
+.dot-r{background:var(--red);box-shadow:0 0 6px var(--red)}
+[data-theme="light"] .dot-g,
+[data-theme="light"] .dot-a,
+[data-theme="light"] .dot-r{box-shadow:none}
+
+/* ── Buttons ── */
+.btn{
+  padding:6px 14px;border-radius:4px;font-size:11px;font-family:inherit;
+  cursor:pointer;border:1px solid;letter-spacing:0.5px;
+  text-transform:uppercase;transition:opacity 0.15s;font-weight:500;
+}
+.btn:hover{opacity:0.85}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+.btn-accent{background:var(--accent-dim);color:var(--accent);border-color:rgba(212,132,62,0.3)}
+.btn-danger{background:var(--red-dim);color:var(--red);border-color:rgba(204,68,68,0.3)}
+.btn-primary{background:var(--accent);color:var(--bg-base);border-color:var(--accent)}
+.btn-ghost{background:transparent;color:var(--text-muted);border-color:var(--border)}
+.btn-green{background:var(--green-dim);color:var(--green);border-color:rgba(68,170,153,0.3)}
+[data-theme="light"] .btn-primary{color:#fff}
+[data-theme="light"] .btn-accent{background:rgba(179,90,31,0.08)}
+[data-theme="light"] .btn-danger{background:rgba(204,34,34,0.06)}
+[data-theme="light"] .btn-green{background:rgba(26,127,55,0.06)}
+
+/* ── Spinner ── */
+.spinner{
+  width:14px;height:14px;border:2px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;
+  animation:spin 0.8s linear infinite;display:none;
+}
+.spinner.active{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Tabs ── */
+.tabs{
+  display:flex;border-bottom:1px solid var(--border);
+  background:var(--bg-surface);flex-shrink:0;
+}
+.tab{
+  padding:10px 24px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;
+  cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;
+  transition:color 0.15s,border-color 0.15s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{color:var(--text-body)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-icon{font-size:13px;opacity:0.6}
+.tab-pane{display:none;flex:1;overflow:hidden;flex-direction:column}
+.tab-pane.active{display:flex}
+
+/* ── Stat strip ── */
+.stats{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.stat{flex:1;padding:12px 20px;border-right:1px solid var(--border);background:var(--bg-surface)}
+.stat:last-child{border-right:none}
+.stat-v{font-size:20px;font-weight:600;color:var(--text-pri)}
+.stat-v.hl{color:var(--accent)}
+.stat-l{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+
+/* ── Two-column main layout ── */
+.main{flex:1;display:grid;grid-template-columns:1fr 340px;overflow:hidden}
+
+/* ── Panel header ── */
+.panel-head{
+  padding:10px 20px;font-size:10px;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:1.5px;
+  border-bottom:1px solid var(--border);background:var(--bg-surface);
+  display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+}
+
+/* ── Feed ── */
+.feed-panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border)}
+.feed{flex:1;overflow-y:auto;padding:4px 0;background:var(--bg-base)}
+.entry{
+  display:grid;grid-template-columns:72px 88px 1fr;gap:8px;
+  padding:5px 20px;align-items:start;font-size:12px;transition:background 0.15s;
+}
+.entry:hover{background:var(--bg-elevated)}
+.entry-time{color:var(--text-dim);font-size:11px;padding-top:2px}
+
+.badge{
+  font-size:10px;font-weight:600;letter-spacing:0.5px;
+  padding:2px 8px;border-radius:3px;text-align:center;white-space:nowrap;
+}
+.b-system{background:rgba(61,64,74,0.3);color:var(--text-muted)}
+.b-warning,.b-stage{background:var(--accent-dim);color:var(--accent)}
+.b-error,.b-fail{background:var(--red-dim);color:var(--red)}
+.b-success,.b-active{background:var(--green-dim);color:var(--green)}
+.b-task{background:var(--blue-dim);color:var(--blue)}
+.b-upload{background:rgba(147,51,234,0.15);color:#a78bfa}
+[data-theme="light"] .b-upload{background:rgba(147,51,234,0.08);color:#7c3aed}
+
+.entry-detail{
+  grid-column:3;margin-top:4px;padding:8px 12px;
+  background:var(--bg-input);border:1px solid var(--border-sub);border-radius:4px;
+  font-size:11px;color:var(--text-muted);white-space:pre-wrap;word-break:break-all;
+  max-height:200px;overflow-y:auto;display:none;
+}
+.entry-detail.open{display:block}
+.entry-toggle{cursor:pointer;text-decoration:underline;text-underline-offset:2px;opacity:0.7}
+.entry-toggle:hover{opacity:1}
+
+@keyframes entry-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.entry-new{animation:entry-in 0.25s ease-out}
+
+[data-theme="light"] .b-system{background:rgba(107,114,128,0.1)}
+
+/* ── Sidebar ── */
+.sidebar{display:flex;flex-direction:column;overflow:hidden;background:var(--bg-surface)}
+.item-list{flex:1;overflow-y:auto}
+.item{
+  padding:10px 16px;border-bottom:1px solid var(--border-sub);
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;transition:background 0.15s;
+}
+.item:hover{background:var(--bg-elevated)}
+.item.selected{background:var(--bg-elevated);border-left:2px solid var(--accent)}
+.item-badge{
+  width:22px;height:22px;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;flex-shrink:0;
+}
+.ib-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(204,68,68,0.3)}
+.ib-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(68,170,153,0.3)}
+.ib-blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(91,139,212,0.3)}
+.ib-amber{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(212,132,62,0.3)}
+.item-info{flex:1;min-width:0}
+.item-title{font-size:12px;font-weight:500;color:var(--text-pri);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-meta{font-size:10px;color:var(--text-muted)}
+.item-status{font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500}
+.is-active{background:var(--green-dim);color:var(--green)}
+.is-connecting{background:var(--accent-dim);color:var(--accent)}
+.is-stale{background:rgba(61,64,74,0.3);color:var(--text-muted)}
+.is-error{background:var(--red-dim);color:var(--red)}
+[data-theme="light"] .is-stale{background:rgba(107,114,128,0.1)}
+.item-close{
+  background:none;border:none;color:var(--text-dim);font-size:14px;
+  cursor:pointer;padding:2px 4px;line-height:1;
+}
+.item-close:hover{color:var(--red)}
+
+/* ── Command panel ── */
+.cmd-panel{border-top:1px solid var(--border);padding:12px 16px;flex-shrink:0}
+.cmd-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.cmd-row{display:flex;gap:6px;margin-bottom:6px}
+.cmd-row:last-child{margin-bottom:0}
+.cmd-sel{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text-body);
+  padding:6px 8px;border-radius:4px;font-size:11px;font-family:inherit;flex:1;
+  appearance:none;-webkit-appearance:none;
+}
+.cmd-input{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text-pri);
+  padding:6px 10px;border-radius:4px;font-size:12px;font-family:inherit;flex:1;
+}
+.cmd-input::placeholder{color:var(--text-dim)}
+.cmd-input:focus,.cmd-sel:focus{outline:none;border-color:var(--accent)}
+
+/* ── Quick actions row ── */
+.quick-row{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.quick-btn{
+  font-size:10px;padding:3px 8px;border-radius:3px;cursor:pointer;
+  background:var(--bg-elevated);border:1px solid var(--border-sub);
+  color:var(--text-muted);font-family:inherit;letter-spacing:0.3px;
+  transition:all 0.15s;display:flex;align-items:center;gap:4px;
+}
+.quick-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── Dynamic params ── */
+.param-group{display:none;flex-direction:column;gap:6px;margin-bottom:6px}
+.param-group.visible{display:flex}
+.param-label{font-size:10px;color:var(--text-dim);margin-bottom:2px}
+
+/* ── Modal ── */
+.modal-backdrop{position:fixed;inset:0;background:var(--modal-bg);z-index:200;backdrop-filter:blur(2px)}
+.modal{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:201;
+  width:480px;max-width:calc(100vw - 32px);
+  background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;
+  display:flex;flex-direction:column;max-height:80vh;overflow:hidden;
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.modal-head h3{font-size:13px;font-weight:600;color:var(--text-pri);letter-spacing:1px;text-transform:uppercase}
+.modal-close{background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;line-height:1;padding:2px 6px}
+.modal-close:hover{color:var(--text-pri)}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px}
+.modal-field{display:flex;flex-direction:column;gap:4px}
+.modal-field label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+.modal-field input,.modal-field select{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text-pri);
+  padding:8px 12px;border-radius:4px;font-size:12px;font-family:inherit;
+}
+.modal-field input:focus,.modal-field select:focus{outline:none;border-color:var(--accent)}
+.modal-field input::placeholder{color:var(--text-dim)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:8px}
+.modal-hint{font-size:11px;color:var(--text-dim);line-height:1.4}
+
+/* ── Login overlay ── */
+.login-overlay{
+  position:fixed;inset:0;background:var(--bg-base);
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;flex-direction:column;gap:16px;
+}
+.login-box{display:flex;flex-direction:column;gap:12px;align-items:center}
+.login-box .logo{font-size:18px;margin-bottom:8px}
+.login-row{display:flex;gap:8px}
+.login-input{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text-pri);
+  padding:10px 16px;border-radius:4px;font-size:13px;font-family:inherit;width:250px;
+}
+.login-input:focus{outline:none;border-color:var(--accent)}
+.login-input::placeholder{color:var(--text-dim)}
+.login-err{color:var(--red);font-size:12px;display:none}
+
+/* ── Payloads tab ── */
+.payloads-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);flex:1;overflow-y:auto;
+}
+.payload-section{background:var(--bg-base);display:flex;flex-direction:column}
+.payload-section-head{
+  padding:12px 20px;font-size:10px;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:1.5px;
+  background:var(--bg-surface);border-bottom:1px solid var(--border);
+  font-weight:600;
+}
+.payload-card{
+  padding:12px 20px;border-bottom:1px solid var(--border-sub);
+  transition:background 0.15s;cursor:pointer;
+}
+.payload-card:hover{background:var(--bg-elevated)}
+.payload-name{font-size:12px;font-weight:600;color:var(--text-pri);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.payload-desc{font-size:11px;color:var(--text-muted);margin-bottom:6px;line-height:1.4}
+.payload-tags{display:flex;gap:4px;flex-wrap:wrap}
+.payload-tag{
+  font-size:9px;padding:1px 6px;border-radius:2px;
+  background:var(--bg-elevated);color:var(--text-dim);
+  border:1px solid var(--border-sub);letter-spacing:0.3px;
+}
+.payload-tag.compat{background:var(--green-dim);color:var(--green);border-color:rgba(68,170,153,0.2)}
+.payload-tag.bypass{background:var(--accent-dim);color:var(--accent);border-color:rgba(212,132,62,0.2)}
+
+/* ── Cloud Intel tab ── */
+.intel-layout{flex:1;display:grid;grid-template-columns:320px 1fr;overflow:hidden}
+.intel-sidebar{
+  border-right:1px solid var(--border);background:var(--bg-surface);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.intel-main{background:var(--bg-base);display:flex;flex-direction:column;overflow:hidden}
+.intel-form{padding:20px;display:flex;flex-direction:column;gap:12px}
+.intel-form-field{display:flex;flex-direction:column;gap:4px}
+.intel-form-field label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+.intel-form-field input,.intel-form-field select{
+  background:var(--bg-input);border:1px solid var(--border);color:var(--text-pri);
+  padding:8px 12px;border-radius:4px;font-size:12px;font-family:inherit;
+}
+.intel-form-field input:focus,.intel-form-field select:focus{outline:none;border-color:var(--accent)}
+.intel-form-field input::placeholder{color:var(--text-dim)}
+.intel-status{font-size:11px;color:var(--text-dim);padding:0 20px}
+
+.device-table{flex:1;overflow-y:auto;padding:0}
+.device-table table{width:100%;border-collapse:collapse}
+.device-table th{
+  font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;
+  padding:10px 16px;text-align:left;background:var(--bg-surface);
+  border-bottom:1px solid var(--border);position:sticky;top:0;
+}
+.device-table td{
+  padding:10px 16px;border-bottom:1px solid var(--border-sub);font-size:12px;
+}
+.device-table tr:hover td{background:var(--bg-elevated)}
+.key-cell{
+  font-size:11px;color:var(--accent);cursor:pointer;
+  max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.key-cell:hover{text-decoration:underline}
+
+/* ── Empty state ── */
+.empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;color:var(--text-dim);font-size:12px;gap:4px;
+}
+
+/* ── Bottom bar ── */
+.bottombar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:28px;
+  background:var(--bg-surface);border-top:1px solid var(--border);
+  font-size:11px;color:var(--text-muted);flex-shrink:0;
+}
+.live-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 4px var(--green);
+  margin-right:6px;animation:pulse 2s infinite;
+}
+[data-theme="light"] .live-dot{box-shadow:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* ── Theme toggle ── */
+.btn-theme{background:transparent;color:var(--text-muted);border-color:var(--border);font-size:13px;padding:4px 10px;line-height:1}
+</style>
+</head>
+<body>
+
+<!-- ═══════ LOGIN ═══════ -->
+<div class="login-overlay" id="login-overlay" style="display:none">
+  <div class="login-box">
+    <div class="logo">UNLEASH <span>LITE</span></div>
+    <div class="login-row">
+      <input type="password" class="login-input" id="login-pw" placeholder="Password" autofocus>
+      <button class="btn btn-primary" onclick="doLogin()">ACCESS</button>
+    </div>
+    <div class="login-err" id="login-err">Invalid password</div>
+  </div>
+</div>
+
+<!-- ═══════ CONNECT MODAL ═══════ -->
+<div id="modal-backdrop" class="modal-backdrop" style="display:none" onclick="closeModal()"></div>
+<div id="modal-connect" class="modal" style="display:none">
+  <div class="modal-head">
+    <h3>Connect to Robot</h3>
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-field">
+      <label>Robot IP</label>
+      <input type="text" id="m-robot-ip" value="192.168.123.161" placeholder="192.168.123.161">
+    </div>
+    <div class="modal-field">
+      <label>Signaling Port</label>
+      <input type="number" id="m-port" value="9991" placeholder="9991">
+    </div>
+    <div class="modal-field">
+      <label>AES-128 Key (firmware &ge; 1.1.15)</label>
+      <input type="text" id="m-aes-key" placeholder="32 hex chars (optional)">
+    </div>
+    <div class="modal-hint">Leave AES key blank for firmware &lt; 1.1.15. Use Cloud Intel tab or <code>fetch-key</code> to retrieve the key for newer firmware.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-green" onclick="connectRobot()">Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TOP BAR ═══════ -->
+<div class="topbar">
+  <div class="logo">UNLEASH <span>LITE</span></div>
+  <div class="top-r">
+    <div class="indicators">
+      <div class="ind"><div class="dot dot-g" id="ind-server-dot"></div><span id="ind-server">Server online</span></div>
+      <div class="ind"><div class="dot dot-a" id="ind-conn-dot"></div><span id="ind-conn">0 connected</span></div>
+    </div>
+    <div class="spinner" id="global-spinner"></div>
+    <div class="top-actions">
+      <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()" title="Toggle light/dark">&#x263C;</button>
+      <button class="btn btn-accent" onclick="scanLAN()" id="btn-scan">Scan LAN</button>
+      <button class="btn btn-green" onclick="openConnectModal()">Connect</button>
+      <button class="btn btn-danger" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TABS ═══════ -->
+<div class="tabs">
+  <div class="tab active" id="tab-cnc" onclick="switchTab('cnc')">
+    <span class="tab-icon">&#x2318;</span> Command &amp; Control
+  </div>
+  <div class="tab" id="tab-payloads" onclick="switchTab('payloads')">
+    <span class="tab-icon">&#x26A1;</span> Payloads
+  </div>
+  <div class="tab" id="tab-intel" onclick="switchTab('intel')">
+    <span class="tab-icon">&#x2601;</span> Cloud Intel
+  </div>
+</div>
+
+<!-- ═══════ TAB: COMMAND & CONTROL ═══════ -->
+<div class="tab-pane active" id="pane-cnc">
+  <div class="stats">
+    <div class="stat"><div class="stat-v hl" id="s-found">0</div><div class="stat-l">Robots Found</div></div>
+    <div class="stat"><div class="stat-v" id="s-connected">0</div><div class="stat-l">Connected</div></div>
+    <div class="stat"><div class="stat-v" id="s-staged">0</div><div class="stat-l">Staged</div></div>
+    <div class="stat"><div class="stat-v" id="s-completed">0</div><div class="stat-l">Completed</div></div>
+    <div class="stat"><div class="stat-v" id="s-firmware">--</div><div class="stat-l">Firmware</div></div>
+  </div>
+
+  <div class="main">
+    <div class="feed-panel">
+      <div class="panel-head">
+        <span>Live Feed</span>
+        <button class="btn btn-ghost" style="padding:2px 8px;font-size:10px" onclick="clearFeed()">Clear</button>
+      </div>
+      <div class="feed" id="feed"></div>
+    </div>
+
+    <div class="sidebar">
+      <div class="panel-head"><span>Hosts</span></div>
+      <div class="item-list" id="host-list">
+        <div class="empty" id="host-empty">No robots discovered</div>
+      </div>
+
+      <div class="cmd-panel">
+        <div class="cmd-label">Command</div>
+        <div class="cmd-row">
+          <select class="cmd-sel" id="cmd-target"><option value="*">All hosts</option></select>
+          <select class="cmd-sel" id="cmd-mode" onchange="onModeChange()">
+            <option value="">Select mode...</option>
+            <optgroup label="Standard (fw &lt; 1.1.14)">
+              <option value="ssh">ssh</option>
+              <option value="reverse-shell">reverse-shell</option>
+              <option value="custom">custom</option>
+              <option value="ssh-persist">ssh-persist</option>
+            </optgroup>
+            <optgroup label="Bypass (fw &ge; 1.1.14)">
+              <option value="bypass-ssh">bypass-ssh</option>
+              <option value="bypass-hosts">bypass-hosts</option>
+              <option value="bypass-file">bypass-file</option>
+              <option value="bypass-cron">bypass-cron</option>
+              <option value="bypass-escalate">bypass-escalate</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="quick-row">
+          <button class="quick-btn" onclick="quickAction('bypass-ssh')" title="One-click SSH for firmware >= 1.1.14">&#x26A1; Quick SSH</button>
+          <button class="quick-btn" onclick="quickAction('trigger')" title="Re-trigger hotkey on connected host(s)">&#x25B6; Trigger</button>
+          <button class="quick-btn" onclick="quickAction('probe')" title="Connect and dump DDS responses">&#x1F50D; Probe</button>
+        </div>
+        <div class="param-group" id="params-password">
+          <div class="param-label">Root Password</div>
+          <input class="cmd-input" id="p-password" placeholder="unleash" value="unleash">
+        </div>
+        <div class="param-group" id="params-attacker">
+          <div class="param-label">Attacker IP</div>
+          <input class="cmd-input" id="p-attacker-ip" placeholder="auto-detect">
+        </div>
+        <div class="param-group" id="params-command">
+          <div class="param-label">Shell Command</div>
+          <input class="cmd-input" id="p-cmd" placeholder="$ command...">
+        </div>
+        <div class="param-group" id="params-file">
+          <div class="param-label">File Path</div>
+          <input class="cmd-input" id="p-file-path" placeholder="/path/to/file">
+          <div class="param-label">Content</div>
+          <input class="cmd-input" id="p-content" placeholder="file content">
+        </div>
+        <div class="param-group" id="params-code">
+          <div class="param-label">Python Code</div>
+          <input class="cmd-input" id="p-code" placeholder="unfiltered Python code">
+        </div>
+        <div class="param-group" id="params-hotkey">
+          <div class="param-label">Controller Hotkey</div>
+          <select class="cmd-sel" id="p-hotkey">
+            <option value="L1+Y">L1+Y</option>
+            <option value="L1+A">L1+A</option>
+            <option value="L1+B">L1+B</option>
+            <option value="L1+X">L1+X</option>
+            <option value="L2+Y">L2+Y</option>
+            <option value="L2+A">L2+A</option>
+            <option value="L2+B">L2+B</option>
+            <option value="L2+X">L2+X</option>
+          </select>
+        </div>
+        <div class="cmd-row">
+          <button class="btn btn-primary" style="flex:1" onclick="executeJailbreak()" id="btn-execute">EXECUTE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB: PAYLOADS ═══════ -->
+<div class="tab-pane" id="pane-payloads">
+  <div class="payloads-grid">
+    <div class="payload-section">
+      <div class="payload-section-head">Standard Modes <span style="font-weight:400;letter-spacing:0">&mdash; auto-triggered via bridge</span></div>
+      <div class="payload-card" onclick="selectPayload('ssh')">
+        <div class="payload-name">ssh <span class="badge b-system" style="font-size:9px">STANDARD</span></div>
+        <div class="payload-desc">Enable SSH, set root password, permit root login. Direct <code>os.system()</code> calls.</div>
+        <div class="payload-tags">
+          <span class="payload-tag compat">fw &lt; 1.1.14</span>
+          <span class="payload-tag">--password</span>
+          <span class="payload-tag">--callback-ip</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('reverse-shell')">
+        <div class="payload-name">reverse-shell</div>
+        <div class="payload-desc">Bash reverse shell to attacker IP. Spawns <code>bash -i</code> over TCP.</div>
+        <div class="payload-tags">
+          <span class="payload-tag compat">fw &lt; 1.1.14</span>
+          <span class="payload-tag">--attacker-ip</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('custom')">
+        <div class="payload-name">custom</div>
+        <div class="payload-desc">Run an arbitrary shell command as root via <code>os.system()</code>.</div>
+        <div class="payload-tags">
+          <span class="payload-tag compat">fw &lt; 1.1.14</span>
+          <span class="payload-tag">--cmd</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('ssh-persist')">
+        <div class="payload-name">ssh-persist</div>
+        <div class="payload-desc">Install <code>ssh_guard.sh</code> for persistent SSH across reboots. Survives OTA updates.</div>
+        <div class="payload-tags">
+          <span class="payload-tag compat">fw &lt; 1.1.14</span>
+          <span class="payload-tag">--password</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payload-section">
+      <div class="payload-section-head">CVE-2026-27509 Bypass Modes <span style="font-weight:400;letter-spacing:0">&mdash; auto-triggered via bridge</span></div>
+      <div class="payload-card" onclick="selectPayload('bypass-ssh')">
+        <div class="payload-name">bypass-ssh <span class="badge b-stage" style="font-size:9px">RECOMMENDED</span></div>
+        <div class="payload-desc">Enable SSH via cron job. One-step SSH for firmware &ge; 1.1.14. Cron fires within 60s, then self-deletes.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14</span>
+          <span class="payload-tag">--password</span>
+          <span class="payload-tag">np.savetxt</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('bypass-hosts')">
+        <div class="payload-name">bypass-hosts</div>
+        <div class="payload-desc">Write MQTT redirect to <code>/etc/hosts</code>. Redirects Unitree cloud traffic to attacker.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14</span>
+          <span class="payload-tag">--attacker-ip</span>
+          <span class="payload-tag">np.savetxt</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('bypass-file')">
+        <div class="payload-name">bypass-file</div>
+        <div class="payload-desc">Arbitrary file write via <code>np.savetxt</code>. Passes keyword filter and seccomp sandbox.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14</span>
+          <span class="payload-tag">--file-path</span>
+          <span class="payload-tag">--content</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('bypass-cron')">
+        <div class="payload-name">bypass-cron</div>
+        <div class="payload-desc">Write a cron job for command execution. Escalates from seccomp sandbox to full root.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14</span>
+          <span class="payload-tag">--cmd</span>
+          <span class="payload-tag">np.savetxt</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('bypass-escalate')">
+        <div class="payload-name">bypass-escalate</div>
+        <div class="payload-desc">Two-press self-overwrite. Press 1: overwrites script with unfiltered Python. Press 2: executes it.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14</span>
+          <span class="payload-tag">--code</span>
+          <span class="payload-tag">2-press</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB: CLOUD INTEL ═══════ -->
+<div class="tab-pane" id="pane-intel">
+  <div class="intel-layout">
+    <div class="intel-sidebar">
+      <div class="panel-head"><span>Unitree Cloud</span></div>
+      <div class="intel-form">
+        <div class="intel-form-field">
+          <label>Email</label>
+          <input type="email" id="cloud-email" placeholder="you@example.com">
+        </div>
+        <div class="intel-form-field">
+          <label>Password</label>
+          <input type="password" id="cloud-password" placeholder="Account password">
+        </div>
+        <div class="intel-form-field">
+          <label>Region</label>
+          <select id="cloud-region">
+            <option value="global">Global</option>
+            <option value="cn">China</option>
+          </select>
+        </div>
+        <div class="intel-form-field">
+          <label>Device Type</label>
+          <select id="cloud-device-type">
+            <option value="Go2">Go2</option>
+            <option value="G1">G1</option>
+          </select>
+        </div>
+        <button class="btn btn-accent" onclick="cloudLogin()" id="btn-cloud-login" style="width:100%">Fetch Devices</button>
+        <div class="intel-status" id="cloud-status"></div>
+      </div>
+    </div>
+    <div class="intel-main">
+      <div class="panel-head"><span>Devices</span></div>
+      <div class="device-table" id="device-table">
+        <div class="empty">Login to Unitree cloud to fetch device keys</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ BOTTOM BAR ═══════ -->
+<div class="bottombar">
+  <span><span class="live-dot"></span><span id="bottom-live">Live</span> &middot; <span id="bottom-poll">refreshing 3s</span></span>
+  <span id="bottom-info">localhost:8443</span>
+</div>
+
+<script>
+var API = window.location.origin;
+var token = localStorage.getItem('unleash_token');
+var autoScroll = true;
+var entryN = 0;
+var hosts = {};
+var sseSource = null;
+var stats = {found:0, connected:0, staged:0, completed:0};
+
+/* ── Theme ── */
+(function(){
+  var saved = localStorage.getItem('unleash_theme');
+  if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+})();
+function toggleTheme(){
+  var cur = document.documentElement.getAttribute('data-theme');
+  if (cur === 'light'){
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('unleash_theme', 'dark');
+    document.getElementById('btn-theme').innerHTML = '&#x263C;';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('unleash_theme', 'light');
+    document.getElementById('btn-theme').innerHTML = '&#x263E;';
+  }
+}
+if (localStorage.getItem('unleash_theme') === 'light'){
+  document.getElementById('btn-theme').innerHTML = '&#x263E;';
+}
+
+/* ── Auth ── */
+document.getElementById('login-pw').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') doLogin();
+});
+if (token){ init(); }
+else { document.getElementById('login-overlay').style.display = 'flex'; }
+
+function doLogin(){
+  var pw = document.getElementById('login-pw').value;
+  fetch(API + '/api/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({password: pw})
+  })
+  .then(function(r){ if (!r.ok) throw 0; return r.json(); })
+  .then(function(d){
+    token = d.token;
+    localStorage.setItem('unleash_token', token);
+    document.getElementById('login-overlay').style.display = 'none';
+    init();
+  })
+  .catch(function(){ document.getElementById('login-err').style.display = 'block'; });
+}
+
+function aH(){ return {'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}; }
+function aFetch(url, opts){
+  opts = opts || {};
+  opts.headers = Object.assign(aH(), opts.headers || {});
+  return fetch(url, opts).then(function(r){
+    if (r.status === 401){
+      token = null;
+      localStorage.removeItem('unleash_token');
+      document.getElementById('login-overlay').style.display = 'flex';
+      throw new Error('auth');
+    }
+    return r;
+  });
+}
+
+/* ── Init ── */
+function init(){
+  document.getElementById('login-overlay').style.display = 'none';
+  addEntry('system', 'SYSTEM', 'Console connected');
+  connectSSE();
+  loadStatus();
+  setInterval(loadStatus, 3000);
+  document.getElementById('bottom-info').textContent = window.location.host;
+
+  var feed = document.getElementById('feed');
+  feed.addEventListener('scroll', function(){
+    autoScroll = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 40;
+  });
+}
+
+/* ── SSE ── */
+function connectSSE(){
+  if (sseSource) sseSource.close();
+  sseSource = new EventSource(API + '/api/events?token=' + encodeURIComponent(token));
+  sseSource.onmessage = function(e){
+    try {
+      var evt = JSON.parse(e.data);
+      if (evt.type === 'feed'){
+        addEntry(evt.badge, evt.label, evt.message, evt.detail);
+      } else if (evt.type === 'host_update'){
+        updateHost(evt.host);
+      } else if (evt.type === 'stats'){
+        updateStats(evt);
+      }
+    } catch(ex){}
+  };
+  sseSource.onerror = function(){
+    document.getElementById('ind-server').textContent = 'Reconnecting...';
+    document.getElementById('ind-server-dot').className = 'dot dot-a';
+  };
+  sseSource.onopen = function(){
+    document.getElementById('ind-server').textContent = 'Server online';
+    document.getElementById('ind-server-dot').className = 'dot dot-g';
+  };
+}
+
+/* ── Status polling ── */
+function loadStatus(){
+  aFetch(API + '/api/status')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      stats = d;
+      document.getElementById('s-found').textContent = d.found || 0;
+      document.getElementById('s-connected').textContent = d.connected || 0;
+      document.getElementById('s-staged').textContent = d.staged || 0;
+      document.getElementById('s-completed').textContent = d.completed || 0;
+      document.getElementById('s-firmware').textContent = d.firmware || '--';
+
+      var n = d.connected || 0;
+      document.getElementById('ind-conn').textContent = n + ' connected';
+      document.getElementById('ind-conn-dot').className = 'dot ' + (n > 0 ? 'dot-g' : 'dot-a');
+
+      if (d.hosts){
+        for (var ip in d.hosts) updateHost(d.hosts[ip]);
+      }
+    })
+    .catch(function(){});
+}
+
+/* ── Feed ── */
+function addEntry(type, label, message, detail){
+  var id = 'e' + (entryN++);
+  var now = new Date();
+  var time = now.toLocaleTimeString('en-US', {hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  var feed = document.getElementById('feed');
+  var el = document.createElement('div');
+  el.className = 'entry entry-new';
+  var html = '<div class="entry-time">' + time + '</div>'
+           + '<div class="badge b-' + type + '">' + esc(label) + '</div><div>';
+  if (detail){
+    var did = 'd' + id;
+    html += '<span class="entry-toggle" onclick="toggleDetail(\'' + did + '\')">' + esc(message) + '</span>'
+          + '<div class="entry-detail" id="' + did + '">' + esc(detail) + '</div>';
+  } else {
+    html += esc(message);
+  }
+  html += '</div>';
+  el.innerHTML = html;
+  feed.appendChild(el);
+  if (autoScroll) feed.scrollTop = feed.scrollHeight;
+}
+function toggleDetail(id){ document.getElementById(id).classList.toggle('open'); }
+function clearFeed(){ document.getElementById('feed').innerHTML = ''; addEntry('system', 'SYSTEM', 'Feed cleared'); }
+function esc(s){
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function timeSince(iso){
+  if (!iso) return '';
+  var d = (Date.now() - new Date(iso).getTime()) / 1000;
+  if (d < 60)    return Math.floor(d) + 's ago';
+  if (d < 3600)  return Math.floor(d/60) + 'm ago';
+  if (d < 86400) return Math.floor(d/3600) + 'h ago';
+  return Math.floor(d/86400) + 'd ago';
+}
+
+/* ── Hosts ── */
+function updateHost(h){
+  hosts[h.ip] = h;
+  renderHosts();
+  updateTargetDropdown();
+}
+
+function renderHosts(){
+  var list = document.getElementById('host-list');
+  var empty = document.getElementById('host-empty');
+  var ips = Object.keys(hosts);
+  if (ips.length === 0){
+    list.innerHTML = '';
+    var emptyEl = document.createElement('div');
+    emptyEl.className = 'empty';
+    emptyEl.id = 'host-empty';
+    emptyEl.textContent = 'No robots discovered';
+    list.appendChild(emptyEl);
+    return;
+  }
+
+  list.innerHTML = '';
+  ips.forEach(function(ip){
+    var h = hosts[ip];
+    var statusClass = h.status === 'connected' ? 'is-active' :
+                      h.status === 'connecting' ? 'is-connecting' :
+                      h.status === 'error' ? 'is-error' : 'is-stale';
+    var badgeClass = h.status === 'connected' ? 'ib-green' :
+                     h.status === 'error' ? 'ib-red' : 'ib-amber';
+
+    var el = document.createElement('div');
+    el.className = 'item';
+    el.innerHTML =
+      '<div class="item-badge ' + badgeClass + '">H</div>' +
+      '<div class="item-info">' +
+        '<div class="item-title">' + esc(h.hostname || 'GO2_' + ip.split('.').pop()) + '</div>' +
+        '<div class="item-meta">' + esc(h.firmware || 'Unknown firmware') +
+          ' &middot; ' + (h.last_seen ? timeSince(h.last_seen) : 'now') +
+          ' &middot; ' + esc(ip) + '</div>' +
+      '</div>' +
+      '<span class="item-status ' + statusClass + '">' + esc(h.status) + '</span>' +
+      '<button class="item-close" onclick="event.stopPropagation();disconnectHost(\'' + esc(ip) + '\')" title="Disconnect">&times;</button>';
+    el.onclick = function(){ selectHost(ip); };
+    list.appendChild(el);
+  });
+}
+
+function updateTargetDropdown(){
+  var sel = document.getElementById('cmd-target');
+  var current = sel.value;
+  sel.innerHTML = '<option value="*">All hosts</option>';
+  Object.keys(hosts).forEach(function(ip){
+    var opt = document.createElement('option');
+    opt.value = ip;
+    opt.textContent = ip;
+    sel.appendChild(opt);
+  });
+  sel.value = current || '*';
+}
+
+function selectHost(ip){
+  document.getElementById('cmd-target').value = ip;
+  document.querySelectorAll('.item').forEach(function(el){ el.classList.remove('selected'); });
+}
+
+function disconnectHost(ip){
+  aFetch(API + '/api/disconnect', {
+    method: 'POST',
+    body: JSON.stringify({robot_ip: ip})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    addEntry('system', 'SYSTEM', 'Disconnected from ' + ip);
+    delete hosts[ip];
+    renderHosts();
+    updateTargetDropdown();
+  })
+  .catch(function(e){ addEntry('error', 'ERROR', 'Disconnect failed: ' + e); });
+}
+
+/* ── Stats ── */
+function updateStats(d){
+  if (d.found !== undefined) document.getElementById('s-found').textContent = d.found;
+  if (d.connected !== undefined) document.getElementById('s-connected').textContent = d.connected;
+  if (d.staged !== undefined) document.getElementById('s-staged').textContent = d.staged;
+  if (d.completed !== undefined) document.getElementById('s-completed').textContent = d.completed;
+}
+
+/* ── Tab switching ── */
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('pane-' + name).classList.add('active');
+}
+
+/* ── Modal ── */
+function openConnectModal(){
+  document.getElementById('modal-backdrop').style.display = 'block';
+  document.getElementById('modal-connect').style.display = 'flex';
+  document.getElementById('m-robot-ip').focus();
+}
+function closeModal(){
+  document.getElementById('modal-backdrop').style.display = 'none';
+  document.getElementById('modal-connect').style.display = 'none';
+}
+document.getElementById('m-robot-ip').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') connectRobot();
+});
+
+/* ── Connect ── */
+function connectRobot(){
+  var ip = document.getElementById('m-robot-ip').value.trim();
+  var port = parseInt(document.getElementById('m-port').value) || 9991;
+  var aesKey = document.getElementById('m-aes-key').value.trim();
+  if (!ip){ addEntry('error', 'ERROR', 'Robot IP is required'); return; }
+
+  closeModal();
+  addEntry('stage', 'CONNECT', 'Connecting to ' + ip + ':' + port + '...');
+  showSpinner(true);
+
+  aFetch(API + '/api/connect', {
+    method: 'POST',
+    body: JSON.stringify({robot_ip: ip, port: port, aes_key: aesKey || null})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    showSpinner(false);
+    if (d.ok){
+      addEntry('success', 'CONNECTED', 'WebRTC channel open to ' + ip);
+    } else {
+      addEntry('error', 'FAILED', d.error || 'Connection failed');
+    }
+  })
+  .catch(function(e){
+    showSpinner(false);
+    addEntry('error', 'ERROR', 'Connection error: ' + e.message);
+  });
+}
+
+/* ── Scan ── */
+function scanLAN(){
+  addEntry('task', 'SCAN', 'Scanning LAN for Unitree robots...');
+  showSpinner(true);
+  document.getElementById('btn-scan').disabled = true;
+
+  aFetch(API + '/api/scan', {method: 'POST'})
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    showSpinner(false);
+    document.getElementById('btn-scan').disabled = false;
+    if (d.found && d.found.length > 0){
+      addEntry('success', 'SCAN', 'Found ' + d.found.length + ' robot(s): ' + d.found.join(', '));
+    } else {
+      addEntry('warning', 'SCAN', 'No robots found on LAN');
+    }
+  })
+  .catch(function(e){
+    showSpinner(false);
+    document.getElementById('btn-scan').disabled = false;
+    addEntry('error', 'ERROR', 'Scan failed: ' + e.message);
+  });
+}
+
+/* ── Reset ── */
+function resetAll(){
+  aFetch(API + '/api/reset', {method: 'POST'})
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    hosts = {};
+    renderHosts();
+    updateTargetDropdown();
+    addEntry('warning', 'RESET', 'All connections reset');
+  })
+  .catch(function(e){ addEntry('error', 'ERROR', 'Reset failed: ' + e.message); });
+}
+
+/* ── Mode-dependent params ── */
+var modeParams = {
+  'ssh':              ['password', 'hotkey'],
+  'reverse-shell':    ['attacker', 'hotkey'],
+  'custom':           ['command', 'hotkey'],
+  'ssh-persist':      ['password', 'hotkey'],
+  'bypass-ssh':       ['password', 'hotkey'],
+  'bypass-hosts':     ['attacker', 'hotkey'],
+  'bypass-file':      ['file', 'hotkey'],
+  'bypass-cron':      ['command', 'hotkey'],
+  'bypass-escalate':  ['code', 'hotkey'],
+};
+
+function onModeChange(){
+  var mode = document.getElementById('cmd-mode').value;
+  var groups = ['password', 'attacker', 'command', 'file', 'code', 'hotkey'];
+  groups.forEach(function(g){
+    document.getElementById('params-' + g).classList.remove('visible');
+  });
+  if (mode && modeParams[mode]){
+    modeParams[mode].forEach(function(g){
+      document.getElementById('params-' + g).classList.add('visible');
+    });
+  }
+}
+
+/* ── Execute jailbreak ── */
+function executeJailbreak(){
+  var target = document.getElementById('cmd-target').value;
+  var mode = document.getElementById('cmd-mode').value;
+  if (!mode){ addEntry('error', 'ERROR', 'Select a jailbreak mode'); return; }
+
+  var params = {
+    target: target,
+    mode: mode,
+    password: document.getElementById('p-password').value,
+    attacker_ip: document.getElementById('p-attacker-ip').value,
+    cmd: document.getElementById('p-cmd').value,
+    file_path: document.getElementById('p-file-path').value,
+    content: document.getElementById('p-content').value,
+    code: document.getElementById('p-code').value,
+    hotkey: document.getElementById('p-hotkey').value,
+  };
+
+  addEntry('upload', 'JAILBREAK', mode + ' → ' + (target === '*' ? 'ALL' : target));
+  showSpinner(true);
+  document.getElementById('btn-execute').disabled = true;
+
+  aFetch(API + '/api/jailbreak', {
+    method: 'POST',
+    body: JSON.stringify(params)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    showSpinner(false);
+    document.getElementById('btn-execute').disabled = false;
+    if (d.ok){
+      addEntry('success', 'STAGED', d.message || 'Payload staged successfully');
+    } else {
+      addEntry('error', 'FAILED', d.error || 'Jailbreak failed');
+    }
+  })
+  .catch(function(e){
+    showSpinner(false);
+    document.getElementById('btn-execute').disabled = false;
+    addEntry('error', 'ERROR', 'Execution error: ' + e.message);
+  });
+}
+
+/* ── Quick actions ── */
+function quickAction(action){
+  if (action === 'bypass-ssh'){
+    document.getElementById('cmd-mode').value = 'bypass-ssh';
+    onModeChange();
+    executeJailbreak();
+  } else if (action === 'trigger'){
+    var target = document.getElementById('cmd-target').value;
+    var hotkey = document.getElementById('p-hotkey').value || 'L1+Y';
+    addEntry('stage', 'TRIGGER', 'Triggering ' + hotkey + ' on ' + (target === '*' ? 'all hosts' : target) + '...');
+
+    aFetch(API + '/api/trigger', {
+      method: 'POST',
+      body: JSON.stringify({target: target, hotkey: hotkey})
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.ok){
+        addEntry('success', 'TRIGGERED', d.message || 'Trigger sent');
+      } else {
+        addEntry('error', 'ERROR', d.error || 'Trigger failed');
+      }
+    })
+    .catch(function(e){ addEntry('error', 'ERROR', 'Trigger error: ' + e.message); });
+  } else if (action === 'probe'){
+    var target = document.getElementById('cmd-target').value;
+    if (target === '*'){ target = '192.168.123.161'; }
+    addEntry('task', 'PROBE', 'Probing ' + target + '...');
+    showSpinner(true);
+
+    aFetch(API + '/api/probe', {
+      method: 'POST',
+      body: JSON.stringify({robot_ip: target})
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      showSpinner(false);
+      if (d.ok){
+        addEntry('success', 'PROBE', 'Probe complete', d.detail || '');
+      } else {
+        addEntry('error', 'PROBE', d.error || 'Probe failed');
+      }
+    })
+    .catch(function(e){
+      showSpinner(false);
+      addEntry('error', 'ERROR', 'Probe error: ' + e.message);
+    });
+  }
+}
+
+/* ── Payload selector (from Payloads tab) ── */
+function selectPayload(mode){
+  switchTab('cnc');
+  document.getElementById('cmd-mode').value = mode;
+  onModeChange();
+  addEntry('system', 'SYSTEM', 'Payload mode set to ' + mode);
+}
+
+/* ── Cloud Intel ── */
+function cloudLogin(){
+  var email = document.getElementById('cloud-email').value.trim();
+  var password = document.getElementById('cloud-password').value;
+  var region = document.getElementById('cloud-region').value;
+  var deviceType = document.getElementById('cloud-device-type').value;
+
+  if (!email || !password){
+    document.getElementById('cloud-status').textContent = 'Email and password required';
+    return;
+  }
+
+  document.getElementById('cloud-status').textContent = 'Logging in...';
+  document.getElementById('btn-cloud-login').disabled = true;
+
+  aFetch(API + '/api/cloud/devices', {
+    method: 'POST',
+    body: JSON.stringify({email: email, password: password, region: region, device_type: deviceType})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    document.getElementById('btn-cloud-login').disabled = false;
+    if (d.ok){
+      document.getElementById('cloud-status').textContent = 'Found ' + d.devices.length + ' device(s)';
+      renderDevices(d.devices);
+      addEntry('success', 'CLOUD', 'Fetched ' + d.devices.length + ' device(s) from Unitree cloud');
+    } else {
+      document.getElementById('cloud-status').textContent = d.error || 'Login failed';
+      addEntry('error', 'CLOUD', d.error || 'Cloud login failed');
+    }
+  })
+  .catch(function(e){
+    document.getElementById('btn-cloud-login').disabled = false;
+    document.getElementById('cloud-status').textContent = 'Error: ' + e.message;
+  });
+}
+
+function renderDevices(devices){
+  var container = document.getElementById('device-table');
+  if (!devices || devices.length === 0){
+    container.innerHTML = '<div class="empty">No devices found</div>';
+    return;
+  }
+  var html = '<table><thead><tr><th>Serial Number</th><th>Alias</th><th>AES Key</th><th></th></tr></thead><tbody>';
+  devices.forEach(function(d){
+    var key = d.key || d.gcm_key || '';
+    html += '<tr>'
+      + '<td>' + esc(d.sn || '?') + '</td>'
+      + '<td>' + esc(d.alias || '-') + '</td>'
+      + '<td class="key-cell" onclick="copyKey(this)" title="Click to copy">' + esc(key || '(empty)') + '</td>'
+      + '<td><button class="btn btn-ghost" style="padding:2px 8px;font-size:10px" '
+      + 'onclick="useKey(\'' + esc(key) + '\')">Use</button></td>'
+      + '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function copyKey(el){
+  navigator.clipboard.writeText(el.textContent).then(function(){
+    var orig = el.textContent;
+    el.textContent = 'Copied!';
+    setTimeout(function(){ el.textContent = orig; }, 1000);
+  });
+}
+
+function useKey(key){
+  document.getElementById('m-aes-key').value = key;
+  openConnectModal();
+  addEntry('system', 'SYSTEM', 'AES key loaded into connect dialog');
+}
+
+/* ── Helpers ── */
+function showSpinner(on){
+  document.getElementById('global-spinner').className = on ? 'spinner active' : 'spinner';
+}
+</script>
+</body>
+</html>

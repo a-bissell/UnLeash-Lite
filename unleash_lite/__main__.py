@@ -35,6 +35,9 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "trigger":
         _main_trigger()
         return
+    if len(sys.argv) > 1 and sys.argv[1] == "serve":
+        _main_serve()
+        return
 
     # Everything else is the jailbreak CLI
     parser = argparse.ArgumentParser(
@@ -44,7 +47,8 @@ def main():
                "  unleash-lite fetch-key --email you@example.com\n"
                "  unleash-lite probe [--aes-key KEY] [--debug]\n"
                "  unleash-lite trigger [--hotkey L1+Y] [--robot-ip IP]\n"
-               "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)",
+               "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)\n"
+               "  unleash-lite serve [--port 8443] [--password SECRET]",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     _add_jailbreak_args(parser)
@@ -477,6 +481,30 @@ def _run_jailbreak(args):
         sys.exit(0 if success else 1)
     except KeyboardInterrupt:
         pass
+
+
+def _main_serve():
+    parser = argparse.ArgumentParser(
+        prog="unleash-lite serve",
+        description="Launch the UnLeash Lite web dashboard",
+    )
+    parser.add_argument("--host", default="0.0.0.0",
+                        help="Bind address (default: 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=8443,
+                        help="HTTP port (default: 8443)")
+    parser.add_argument("--password",
+                        help="Dashboard password (open access if omitted)")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .server import UnleashServer
+    server = UnleashServer(host=args.host, port=args.port,
+                           password=args.password)
+    server.run()
 
 
 if __name__ == "__main__":
