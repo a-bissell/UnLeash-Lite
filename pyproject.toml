@@ -33,7 +33,11 @@ dependencies = [
     "cryptography",
     "requests",
     "curl_cffi",
+    "aiohttp",
 ]
+
+[project.optional-dependencies]
+sdp = ["cyclonedds==0.10.2"]
 
 [project.scripts]
 unleash-lite = "unleash_lite.__main__:main"
