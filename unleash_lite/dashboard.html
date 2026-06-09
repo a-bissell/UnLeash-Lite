@@ -1071,6 +1071,7 @@ function executeJailbreak(){
   var mode = document.getElementById('cmd-mode').value;
   if (!mode){ addEntry('error', 'ERROR', 'Select a jailbreak mode'); return; }
 
+  var aesKey = document.getElementById('m-aes-key').value.trim();
   var params = {
     target: target,
     mode: mode,
@@ -1081,6 +1082,7 @@ function executeJailbreak(){
     content: document.getElementById('p-content').value,
     code: document.getElementById('p-code').value,
     hotkey: document.getElementById('p-hotkey').value,
+    aes_key: aesKey || null,
   };
 
   addEntry('upload', 'JAILBREAK', mode + ' → ' + (target === '*' ? 'ALL' : target));
