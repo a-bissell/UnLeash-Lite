@@ -9,7 +9,11 @@
                   lite
 ```
 
-**Root access for the Unitree Go2. 1.1.7-1.1.13, 1.1.14/15 Under development**
+**Root access for the Unitree Go2. 
+
+1.1.7-1.1.13: Working!
+
+1.1.14/15 Under development**
 
 </div>
 
