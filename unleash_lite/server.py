@@ -165,7 +165,7 @@ class UnleashServer:
         self._feed("task", "SCAN", "Scanning LAN for Unitree robots...")
         found = []
 
-        scan_ips = ["192.168.123.161"]
+        scan_ips = ["192.168.123.161", "192.168.123.162"]
         local_ip = _get_local_ip()
         if local_ip and local_ip.startswith("192.168.123."):
             base = ".".join(local_ip.split(".")[:3])
@@ -184,7 +184,7 @@ class UnleashServer:
             except Exception:
                 return None
 
-        tasks = [probe_ip(ip) for ip in scan_ips[:50]]
+        tasks = [probe_ip(ip) for ip in scan_ips]
         results = await asyncio.gather(*tasks)
         for ip in results:
             if ip:
