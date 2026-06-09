@@ -8,14 +8,13 @@
  \___/|_| |_|_____\___|\__,_|___/_| |_|
                   lite
 ```
-<img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
-
 **Root access for the Unitree Go2.**
 
 **Firmware 1.1.7 – 1.1.13: Confirmed working**
 
 **Firmware 1.1.14/15: Payload verified, end-to-end pending**
 
+<img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
 </div>
 
 UnLeash Lite is a web-based jailbreak tool for the Unitree Go2 robot dog. It connects to the robot over its WebRTC data channel, uploads payloads, and triggers execution as root — all from a browser dashboard.
