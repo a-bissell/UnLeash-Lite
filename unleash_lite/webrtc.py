@@ -143,6 +143,77 @@ def send_offer(robot_ip, data1, pubkey, sdp, port=DEFAULT_PORT):
     return None
 
 
+def _normalize_answer_sdp(answer_sdp, offer_sdp):
+    """Ensure the answer's media sections match the offer's.
+
+    Firmware >= 1.1.15 may return extra media sections (e.g. video) in the
+    answer even when the offer only contains an application/datachannel
+    section. aiortc rejects this with "Media sections in answer do not
+    match offer". Strip the extras and renumber mids to align with the offer.
+    """
+    def _parse_media(sdp):
+        session, sections, cur = [], [], None
+        for line in sdp.strip().split("\r\n"):
+            if line.startswith("m="):
+                if cur is not None:
+                    sections.append(cur)
+                cur = [line]
+            elif cur is not None:
+                cur.append(line)
+            else:
+                session.append(line)
+        if cur is not None:
+            sections.append(cur)
+        return session, sections
+
+    def _media_type(section):
+        return section[0].split()[0]  # "m=application", "m=video", etc.
+
+    offer_session, offer_sections = _parse_media(offer_sdp)
+    answer_session, answer_sections = _parse_media(answer_sdp)
+
+    if len(answer_sections) == len(offer_sections):
+        return answer_sdp
+
+    offer_types = [_media_type(s) for s in offer_sections]
+    logger.debug("SDP normalization: offer has %d section(s) %s, "
+                 "answer has %d section(s) %s",
+                 len(offer_sections), offer_types,
+                 len(answer_sections),
+                 [_media_type(s) for s in answer_sections])
+
+    kept = []
+    for otype in offer_types:
+        for asec in answer_sections:
+            if _media_type(asec) == otype and asec not in kept:
+                kept.append(asec)
+                break
+
+    if not kept:
+        logger.warning("SDP normalization found no matching sections; "
+                       "passing answer through unchanged")
+        return answer_sdp
+
+    new_session = []
+    mids = list(range(len(kept)))
+    for line in answer_session:
+        if line.startswith("a=group:BUNDLE"):
+            new_session.append(
+                "a=group:BUNDLE " + " ".join(str(m) for m in mids))
+        else:
+            new_session.append(line)
+
+    result_lines = list(new_session)
+    for idx, section in enumerate(kept):
+        for line in section:
+            if line.startswith("a=mid:"):
+                result_lines.append(f"a=mid:{idx}")
+            else:
+                result_lines.append(line)
+
+    return "\r\n".join(result_lines) + "\r\n"
+
+
 # ---------------------------------------------------------------------------
 # Go2DataChannel
 # ---------------------------------------------------------------------------
@@ -194,6 +265,9 @@ class Go2DataChannel:
         answer_sdp = answer_data.get("sdp", "")
         if not answer_sdp:
             raise ConnectionError("Empty answer SDP from robot")
+
+        answer_sdp = _normalize_answer_sdp(
+            answer_sdp, self._pc.localDescription.sdp)
 
         self._setup_handlers()
         await self._pc.setRemoteDescription(
