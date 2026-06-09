@@ -1,7 +1,7 @@
 <div align="center">
 
 ```
- _   _       _                    _
+ _   _       _                   _
 | | | |_ __ | |    ___  __ _ ___| |__
 | | | | '_ \| |   / _ \/ _` / __| '_ \
 | |_| | | | | |__|  __/ (_| \__ \ | | |
@@ -9,7 +9,7 @@
                   lite
 ```
 
-**Root access for the Unitree Go2. Your robot, your rules.**
+**Root access for the Unitree Go2. 1.1.7-1.1.13, 1.1.14/15 Under development**
 
 </div>
 
