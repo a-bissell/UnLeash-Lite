@@ -12,7 +12,9 @@
 
 **Root access for the Unitree Go2.**
 
-**All firmware versions 1.1.7 – 1.1.15: Confirmed working**
+**Firmware 1.1.7 – 1.1.13: Confirmed working**
+
+**Firmware 1.1.14/15: Payload verified, end-to-end pending**
 
 </div>
 
@@ -92,8 +94,8 @@ unleash-lite bypass-ssh --aes-key <32-hex-char-key>     # firmware 1.1.15+
 | Firmware | Mode | AES Key? | Status |
 |----------|------|----------|--------|
 | <= 1.1.13 | `ssh` | No | Confirmed |
-| 1.1.14 | `bypass-ssh` | No | Confirmed |
-| >= 1.1.15 | `bypass-ssh --aes-key KEY` | Yes | Confirmed |
+| 1.1.14 | `bypass-ssh` | No | Payload writes verified; trigger pending |
+| >= 1.1.15 | `bypass-ssh --aes-key KEY` | Yes | Payload writes verified; trigger pending |
 
 ## Modes
 
