@@ -278,6 +278,7 @@ class UnleashServer:
         mode = data.get("mode")
         target = data.get("target", "*")
         hotkey = data.get("hotkey", "L1+Y")
+        auto_trigger = data.get("trigger_mode", "auto") == "auto"
 
         targets = (list(self.connections.keys())
                    if target == "*" else [target])
@@ -347,18 +348,24 @@ class UnleashServer:
                         self._feed("warning", "WARNING",
                                    "Not found in hotkey list (may still work)")
 
-                    self._feed("stage", "TRIGGER",
-                               f"Triggering {hotkey} via bridge on {ip}...")
-                    try:
-                        await dc.trigger_hotkey(hotkey)
+                    if auto_trigger:
+                        self._feed("stage", "TRIGGER",
+                                   f"Triggering {hotkey} via bridge on {ip}...")
+                        try:
+                            await dc.trigger_hotkey(hotkey)
+                            self.completed += 1
+                            self._feed("success", "TRIGGERED",
+                                       f"Payload delivered + triggered on {ip} "
+                                       f"(no controller needed)")
+                        except Exception as te:
+                            self._feed("warning", "WARNING",
+                                       f"Bridge trigger failed ({te}) — "
+                                       f"press {hotkey} on controller manually")
+                    else:
                         self.completed += 1
-                        self._feed("success", "TRIGGERED",
-                                   f"Payload delivered + triggered on {ip} "
-                                   f"(no controller needed)")
-                    except Exception as te:
-                        self._feed("warning", "WARNING",
-                                   f"Bridge trigger failed ({te}) — "
-                                   f"press {hotkey} on controller manually")
+                        self._feed("success", "STAGED",
+                                   f"Payload ready on {ip} — "
+                                   f"press {hotkey} on controller to execute")
 
                     results.append({"ip": ip, "ok": True})
                 else:

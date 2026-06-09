@@ -12,13 +12,11 @@
 
 **Root access for the Unitree Go2.**
 
-**1.1.7-1.1.13: Working!**
-
-**1.1.14/15 Under development**
+**All firmware versions 1.1.7 – 1.1.15: Confirmed working**
 
 </div>
 
-UnLeash Lite is a web-based jailbreak tool for the Unitree Go2 robot dog. It connects to the robot over its WebRTC data channel, uploads payloads, and triggers execution as root -- all from a browser dashboard. No physical controller needed.
+UnLeash Lite is a web-based jailbreak tool for the Unitree Go2 robot dog. It connects to the robot over its WebRTC data channel, uploads payloads, and triggers execution as root — all from a browser dashboard.
 
 ## Install
 
@@ -38,9 +36,9 @@ Then open [http://localhost:8443](http://localhost:8443) in your browser.
 
 The dashboard provides:
 
-- **Command & Control** -- Live event feed, host management, and one-click jailbreak execution with automatic bridge trigger
-- **Payloads** -- All 9 jailbreak modes with firmware compatibility tags, parameter requirements, and one-click selection
-- **Cloud Intel** -- Unitree cloud login to retrieve per-device AES keys (firmware >= 1.1.15)
+- **Command & Control** — Live event feed, host management, and one-click jailbreak execution
+- **Payloads** — All 9 jailbreak modes with firmware compatibility tags and parameter requirements
+- **Cloud Intel** — Unitree cloud login to retrieve per-device AES keys (firmware >= 1.1.15)
 
 Options:
 
@@ -54,27 +52,38 @@ Set `--password` to require authentication on the dashboard.
 
 ### Firmware <= 1.1.13
 
-Open the dashboard, select **ssh** mode, and click **Execute**. Wait for the callback confirmation in the live feed, then:
+1. Open the dashboard and select **ssh** mode
+2. Set trigger mode to **Auto** and click **Execute**
+3. Wait for the callback confirmation in the live feed, then:
 
 ```bash
 ssh root@192.168.123.161   # password: unleash
 ```
 
-### Firmware 1.1.14+
+### Firmware 1.1.14 (no AES key)
 
-Select **bypass-ssh** mode (or click the **Quick SSH** button) and execute. Wait up to 60 seconds for the cron job, then SSH in.
+1. Select **bypass-ssh** mode (or click **Quick SSH**)
+2. Choose a trigger mode:
+   - **Auto** — the tool sends a fake controller hotkey press to trigger execution (experimental; may not fire on all boards)
+   - **Manual** — after the payload uploads, press **L1+A** on your physical controller to execute
+3. Click **Execute** and wait up to 60 seconds for the cron job to fire
+4. SSH in:
 
-### Firmware 1.1.15+
+```bash
+ssh root@192.168.123.161   # password: unleash
+```
 
-Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key. This loads the key into the connect dialog. Then run **bypass-ssh** as above.
+### Firmware 1.1.15+ (AES key required)
+
+1. Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key — this loads the key into the connect dialog
+2. Select **bypass-ssh**, choose your trigger mode, and execute
+3. Wait up to 60 seconds, then SSH in
 
 ### CLI
 
-All modes are also available from the command line:
-
 ```bash
 unleash-lite ssh                                        # firmware <= 1.1.13
-unleash-lite bypass-ssh                                 # firmware 1.1.14+
+unleash-lite bypass-ssh                                 # firmware 1.1.14
 unleash-lite bypass-ssh --aes-key <32-hex-char-key>     # firmware 1.1.15+
 ```
 
@@ -131,10 +140,10 @@ UnLeash Lite exploits this by:
 
 1. Connecting to the HTTP signaling endpoint (port 9991) and establishing a WebRTC data channel
 2. Uploading a Python payload to `programming_actuator` via the bridge
-3. Sending a fake controller button press through the bridge to trigger execution
+3. Triggering execution — either automatically via a fake controller hotkey press, or manually by the user pressing **L1+A** on a physical controller
 4. The payload runs as root
 
-No physical controller, no DDS multicast, no CycloneDDS dependency.
+No DDS multicast, no CycloneDDS dependency.
 
 ### Firmware Defenses
 
@@ -142,9 +151,10 @@ No physical controller, no DDS multicast, no CycloneDDS dependency.
 |---------|----------|-------------------|
 | DDS Security (PKI-DH) | ~1.1.x | WebRTC bridge is inside the perimeter |
 | Keyword blocklist | 1.1.14 | `str(bytes([...]))` encoding + `np.savetxt` for file I/O |
-| seccomp sandbox | 1.1.14 | Write to `/etc/cron.d/`, cron runs outside sandbox |
+| seccomp sandbox | 1.1.14 | Write to `/etc/cron.d/`, crond runs outside sandbox |
 | UUID validation | 1.1.14 | `str(int(time.time()))` produces valid 10-digit UUIDs |
 | Per-device AES auth | 1.1.15 | Key retrievable from Unitree cloud API |
+| PAM clock skew (stale RTC) | 1.1.14+ | Patch `/etc/pam.d/cron` with `pam_permit.so` before installing cron job |
 
 ## CLI Reference
 

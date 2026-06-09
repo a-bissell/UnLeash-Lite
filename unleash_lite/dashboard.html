@@ -546,6 +546,13 @@ body{
             <option value="L2+X">L2+X</option>
           </select>
         </div>
+        <div class="param-group" id="params-trigger">
+          <div class="param-label">Trigger Mode</div>
+          <select class="cmd-sel" id="p-trigger-mode">
+            <option value="auto">Auto (bridge emulates controller press)</option>
+            <option value="manual">Manual (press hotkey on controller yourself)</option>
+          </select>
+        </div>
         <div class="cmd-row">
           <button class="btn btn-primary" style="flex:1" onclick="executeJailbreak()" id="btn-execute">EXECUTE</button>
         </div>
@@ -558,7 +565,7 @@ body{
 <div class="tab-pane" id="pane-payloads">
   <div class="payloads-grid">
     <div class="payload-section">
-      <div class="payload-section-head">Standard Modes <span style="font-weight:400;letter-spacing:0">&mdash; auto-triggered via bridge</span></div>
+      <div class="payload-section-head">Standard Modes <span style="font-weight:400;letter-spacing:0">&mdash; firmware &lt; 1.1.14</span></div>
       <div class="payload-card" onclick="selectPayload('ssh')">
         <div class="payload-name">ssh <span class="badge b-system" style="font-size:9px">STANDARD</span></div>
         <div class="payload-desc">Enable SSH, set root password, permit root login. Direct <code>os.system()</code> calls.</div>
@@ -595,7 +602,7 @@ body{
     </div>
 
     <div class="payload-section">
-      <div class="payload-section-head">CVE-2026-27509 Bypass Modes <span style="font-weight:400;letter-spacing:0">&mdash; auto-triggered via bridge</span></div>
+      <div class="payload-section-head">CVE-2026-27509 Bypass Modes <span style="font-weight:400;letter-spacing:0">&mdash; firmware &ge; 1.1.14</span></div>
       <div class="payload-card" onclick="selectPayload('bypass-ssh')">
         <div class="payload-name">bypass-ssh <span class="badge b-stage" style="font-size:9px">RECOMMENDED</span></div>
         <div class="payload-desc">Enable SSH via cron job. One-step SSH for firmware &ge; 1.1.14. Cron fires within 60s, then self-deletes.</div>
@@ -1072,6 +1079,7 @@ function executeJailbreak(){
   if (!mode){ addEntry('error', 'ERROR', 'Select a jailbreak mode'); return; }
 
   var aesKey = document.getElementById('m-aes-key').value.trim();
+  var triggerMode = document.getElementById('p-trigger-mode').value;
   var params = {
     target: target,
     mode: mode,
@@ -1083,6 +1091,7 @@ function executeJailbreak(){
     code: document.getElementById('p-code').value,
     hotkey: document.getElementById('p-hotkey').value,
     aes_key: aesKey || null,
+    trigger_mode: triggerMode,
   };
 
   addEntry('upload', 'JAILBREAK', mode + ' → ' + (target === '*' ? 'ALL' : target));
