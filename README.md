@@ -164,6 +164,7 @@ Common options:
 ```
 --robot-ip IP         Robot IP (default: 192.168.123.161)
 --aes-key KEY         Per-device AES-128 key for firmware >= 1.1.15
+--trigger MODE        auto (bridge, experimental) or manual (press controller)
 --hotkey HOTKEY        Controller hotkey binding (default: L1+Y)
 --password PASS       Root password for ssh modes (default: unleash)
 --debug               Enable debug logging

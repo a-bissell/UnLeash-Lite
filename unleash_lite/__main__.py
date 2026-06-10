@@ -111,6 +111,11 @@ def _add_jailbreak_args(parser):
                         help="Unfiltered Python code for bypass-escalate mode")
     parser.add_argument("--aes-key",
                         help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
+    parser.add_argument("--trigger", choices=["auto", "manual"], default="auto",
+                        help="Trigger mode: auto sends a fake controller press "
+                             "via the bridge (experimental), manual waits for "
+                             "you to press the hotkey on a physical controller "
+                             "(default: auto)")
     parser.add_argument("--timeout", type=float, default=120,
                         help="Callback wait timeout (default: 120s)")
     parser.add_argument("--debug", action="store_true",
@@ -464,6 +469,8 @@ def _run_jailbreak(args):
         print(f"  Unknown mode: {mode}")
         sys.exit(1)
 
+    auto_trigger = args.trigger == "auto"
+
     orchestrator = WebRTCJailbreakOrchestrator(
         robot_ip=args.robot_ip,
         payload=payload,
@@ -477,7 +484,8 @@ def _run_jailbreak(args):
         success = asyncio.run(
             orchestrator.execute(
                 wait_for_callback=not no_callback,
-                callback_timeout=args.timeout))
+                callback_timeout=args.timeout,
+                auto_trigger=auto_trigger))
         sys.exit(0 if success else 1)
     except KeyboardInterrupt:
         pass
