@@ -176,6 +176,8 @@ This tool builds on publicly disclosed security research by multiple independent
 
 **Olivier Laflamme (Boschko) and Ruikai Peng** discovered that `programming_actuator` executes arbitrary Python as root with no authentication ([CVE-2026-27509](https://nvd.nist.gov/vuln/detail/CVE-2026-27509)). Their writeup at [boschko.ca](https://boschko.ca/unitree-go2-rce/) documents the DDS attack chain.
 
+**thiago** identified the `sitecustomize-ssh` technique: `py_script_execute_env` calls `Py_Initialize()` before `seccomp_load()`, meaning `sitecustomize.py` runs with full root syscall access on every Python init. Writing to it via the existing `np.savetxt` bypass gives persistent pre-sandbox code execution on firmware 1.1.14/15 where crond is not running.
+
 **Andreas Makris (Bin4ry), Kevin Finisterre (h0stile), and Konstantin Severov (legion1581)** disclosed the broader Unitree security architecture weaknesses ([CVE-2025-35027](https://nvd.nist.gov/vuln/detail/CVE-2025-35027), [arXiv:2509.14139](https://arxiv.org/abs/2509.14139)). legion1581's [`unitree_webrtc_connect`](https://github.com/legion1581/unitree_webrtc_connect) was foundational for the WebRTC data channel implementation.
 
 ## Legal

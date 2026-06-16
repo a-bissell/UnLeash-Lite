@@ -415,6 +415,8 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
 def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     """Enable SSH via sitecustomize.py injection (firmware >= 1.1.14/15).
 
+    Technique discovered by thiago.
+
     py_script_execute_env calls Py_Initialize() before seccomp_load(), so
     sitecustomize.py runs with full syscall access as root. This payload
     writes sitecustomize.py to all Python lib paths via np.savetxt. On the
