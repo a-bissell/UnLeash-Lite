@@ -4,7 +4,7 @@
 
 **Firmware 1.1.7 – 1.1.13: Confirmed working**
 
-**Firmware 1.1.14/15: Confirmed working**
+**Firmware 1.1.14/15: In testing**
 
 <img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
 </div>
