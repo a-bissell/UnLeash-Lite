@@ -4,7 +4,7 @@
 
 **Firmware 1.1.7 – 1.1.13: Confirmed working**
 
-**Firmware 1.1.14/15: Payload verified, end-to-end pending**
+**Firmware 1.1.14/15: Confirmed working**
 
 <img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
 </div>
@@ -30,7 +30,7 @@ Then open [http://localhost:8443](http://localhost:8443) in your browser.
 The dashboard provides:
 
 - **Command & Control** — Live event feed, host management, and one-click jailbreak execution
-- **Payloads** — All 9 jailbreak modes with firmware compatibility tags and parameter requirements
+- **Payloads** — All 10 jailbreak modes with firmware compatibility tags and parameter requirements
 - **Cloud Intel** — Unitree cloud login to retrieve per-device AES keys (firmware >= 1.1.15)
 
 Options:
@@ -55,29 +55,37 @@ ssh root@192.168.123.161   # password: unleash
 
 ### Firmware 1.1.14 (no AES key)
 
-1. Select **bypass-ssh** mode (or click **Quick SSH**)
+1. Select **init-ssh** mode in the dashboard
 2. Choose a trigger mode:
    - **Auto** — the tool sends a fake controller hotkey press to trigger execution (experimental; may not fire on all boards)
-   - **Manual** — after the payload uploads, press **L1+A** on your physical controller to execute
-3. Click **Execute** and wait up to 60 seconds for the cron job to fire
-4. SSH in:
+   - **Manual** — after the payload uploads, press **L1+Y** on your physical controller to execute
+3. Click **Execute**, then reboot the robot
+4. SSH in after boot:
 
 ```bash
 ssh root@192.168.123.161   # password: unleash
 ```
 
+5. **Remove `sitecustomize.py` immediately** or all Python services will crash on every subsequent boot:
+
+```bash
+find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \;
+reboot
+```
+
 ### Firmware 1.1.15+ (AES key required)
 
 1. Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key — this loads the key into the connect dialog
-2. Select **bypass-ssh**, choose your trigger mode, and execute
-3. Wait up to 60 seconds, then SSH in
+2. Select **init-ssh**, choose your trigger mode, and execute
+3. Reboot the robot, then SSH in after boot
+4. **Remove `sitecustomize.py` immediately** (same cleanup command as above)
 
 ### CLI
 
 ```bash
 unleash-lite ssh                                        # firmware <= 1.1.13
-unleash-lite bypass-ssh                                 # firmware 1.1.14
-unleash-lite bypass-ssh --aes-key <32-hex-char-key>     # firmware 1.1.15+
+unleash-lite init-ssh                                   # firmware 1.1.14
+unleash-lite init-ssh --aes-key <32-hex-char-key>       # firmware 1.1.15+
 ```
 
 ## Firmware Support
@@ -85,8 +93,8 @@ unleash-lite bypass-ssh --aes-key <32-hex-char-key>     # firmware 1.1.15+
 | Firmware | Mode | AES Key? | Status |
 |----------|------|----------|--------|
 | <= 1.1.13 | `ssh` | No | Confirmed |
-| 1.1.14 | `bypass-ssh` | No | Payload writes verified; trigger pending |
-| >= 1.1.15 | `bypass-ssh --aes-key KEY` | Yes | Payload writes verified; trigger pending |
+| 1.1.14 | `init-ssh` | No | Confirmed |
+| >= 1.1.15 | `init-ssh --aes-key KEY` | Yes | Confirmed |
 
 ## Modes
 
