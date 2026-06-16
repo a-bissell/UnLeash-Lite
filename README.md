@@ -110,6 +110,7 @@ These modes bypass the keyword blocklist and seccomp sandbox added in `programmi
 | `bypass-file` | Write arbitrary file content |
 | `bypass-cron` | Install a cron job for command execution |
 | `bypass-escalate` | Two-press self-overwrite for unfiltered Python execution |
+| `init-ssh` | SSH via `sitecustomize.py` injection — use when crond is not running (fw 1.1.14/15) |
 
 ## Fetching the AES Key (firmware >= 1.1.15)
 

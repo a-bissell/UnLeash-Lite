@@ -503,7 +503,7 @@ body{
               <option value="bypass-file">bypass-file</option>
               <option value="bypass-cron">bypass-cron</option>
               <option value="bypass-escalate">bypass-escalate</option>
-              <option value="sitecustomize-ssh">sitecustomize-ssh</option>
+              <option value="init-ssh">init-ssh</option>
             </optgroup>
           </select>
         </div>
@@ -649,8 +649,8 @@ body{
           <span class="payload-tag">2-press</span>
         </div>
       </div>
-      <div class="payload-card" onclick="selectPayload('sitecustomize-ssh')">
-        <div class="payload-name">sitecustomize-ssh <span class="badge b-stage" style="font-size:9px">USE WHEN CRON FAILS</span></div>
+      <div class="payload-card" onclick="selectPayload('init-ssh')">
+        <div class="payload-name">init-ssh <span class="badge b-stage" style="font-size:9px">USE WHEN CRON FAILS</span></div>
         <div class="payload-desc">Write <code>sitecustomize.py</code> to all Python lib paths. Runs <code>os.system()</code> during <code>Py_Initialize()</code>, before <code>seccomp_load()</code>. Reboot required. <strong>Remove sitecustomize.py via SSH after setup or all Python services crash on boot.</strong></div>
         <div class="payload-tags">
           <span class="payload-tag bypass">fw &ge; 1.1.14/15</span>
@@ -1068,7 +1068,7 @@ var modeParams = {
   'bypass-file':          ['file', 'hotkey'],
   'bypass-cron':          ['command', 'hotkey'],
   'bypass-escalate':      ['code', 'hotkey'],
-  'sitecustomize-ssh':    ['password', 'hotkey'],
+  'init-ssh':    ['password', 'hotkey'],
 };
 
 function onModeChange(){

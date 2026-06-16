@@ -79,7 +79,7 @@ def _main_fetch_key():
 _JAILBREAK_MODES = [
     "ssh", "reverse-shell", "custom", "ssh-persist",
     "bypass-ssh", "bypass-hosts", "bypass-file", "bypass-cron",
-    "bypass-escalate", "sitecustomize-ssh",
+    "bypass-escalate", "init-ssh",
 ]
 
 
@@ -314,7 +314,7 @@ def _run_sdp_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-") or mode == "sitecustomize-ssh"
+    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
     if is_bypass:
         no_callback = True
 
@@ -370,7 +370,7 @@ def _run_sdp_jailbreak(args):
             sys.exit(1)
         payload = payload_bypass_escalate(
             unfiltered_code=args.code, hotkey=hotkey)
-    elif mode == "sitecustomize-ssh":
+    elif mode == "init-ssh":
         payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
         print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
         print("  Reboot the robot. SSH will be available on port 22 after boot.")
@@ -421,7 +421,7 @@ def _run_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-") or mode == "sitecustomize-ssh"
+    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
     if is_bypass:
         no_callback = True
 
@@ -477,7 +477,7 @@ def _run_jailbreak(args):
             sys.exit(1)
         payload = payload_bypass_escalate(
             unfiltered_code=args.code, hotkey=hotkey)
-    elif mode == "sitecustomize-ssh":
+    elif mode == "init-ssh":
         payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
         print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
         print("  Reboot the robot. SSH will be available on port 22 after boot.")
