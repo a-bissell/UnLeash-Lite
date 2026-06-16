@@ -503,6 +503,7 @@ body{
               <option value="bypass-file">bypass-file</option>
               <option value="bypass-cron">bypass-cron</option>
               <option value="bypass-escalate">bypass-escalate</option>
+              <option value="init-ssh">init-ssh</option>
             </optgroup>
           </select>
         </div>
@@ -646,6 +647,16 @@ body{
           <span class="payload-tag bypass">fw &ge; 1.1.14</span>
           <span class="payload-tag">--code</span>
           <span class="payload-tag">2-press</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('init-ssh')">
+        <div class="payload-name">init-ssh <span class="badge b-stage" style="font-size:9px">USE WHEN CRON FAILS</span></div>
+        <div class="payload-desc">Write <code>sitecustomize.py</code> to all Python lib paths. Runs <code>os.system()</code> during <code>Py_Initialize()</code>, before <code>seccomp_load()</code>. Reboot required. <strong>Remove sitecustomize.py via SSH after setup or all Python services crash on boot.</strong></div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14/15</span>
+          <span class="payload-tag">--password</span>
+          <span class="payload-tag">np.savetxt</span>
+          <span class="payload-tag">reboot</span>
         </div>
       </div>
     </div>
@@ -1048,15 +1059,16 @@ function resetAll(){
 
 /* ── Mode-dependent params ── */
 var modeParams = {
-  'ssh':              ['password', 'hotkey'],
-  'reverse-shell':    ['attacker', 'hotkey'],
-  'custom':           ['command', 'hotkey'],
-  'ssh-persist':      ['password', 'hotkey'],
-  'bypass-ssh':       ['password', 'hotkey'],
-  'bypass-hosts':     ['attacker', 'hotkey'],
-  'bypass-file':      ['file', 'hotkey'],
-  'bypass-cron':      ['command', 'hotkey'],
-  'bypass-escalate':  ['code', 'hotkey'],
+  'ssh':                  ['password', 'hotkey'],
+  'reverse-shell':        ['attacker', 'hotkey'],
+  'custom':               ['command', 'hotkey'],
+  'ssh-persist':          ['password', 'hotkey'],
+  'bypass-ssh':           ['password', 'hotkey'],
+  'bypass-hosts':         ['attacker', 'hotkey'],
+  'bypass-file':          ['file', 'hotkey'],
+  'bypass-cron':          ['command', 'hotkey'],
+  'bypass-escalate':      ['code', 'hotkey'],
+  'init-ssh':    ['password', 'hotkey'],
 };
 
 function onModeChange(){

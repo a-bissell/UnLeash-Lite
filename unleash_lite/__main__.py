@@ -79,7 +79,7 @@ def _main_fetch_key():
 _JAILBREAK_MODES = [
     "ssh", "reverse-shell", "custom", "ssh-persist",
     "bypass-ssh", "bypass-hosts", "bypass-file", "bypass-cron",
-    "bypass-escalate",
+    "bypass-escalate", "init-ssh",
 ]
 
 
@@ -303,6 +303,7 @@ def _run_sdp_jailbreak(args):
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
+        payload_sitecustomize_ssh,
     )
     from .webrtc_jailbreak import SDPJailbreakOrchestrator
 
@@ -313,7 +314,7 @@ def _run_sdp_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-")
+    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
     if is_bypass:
         no_callback = True
 
@@ -369,6 +370,16 @@ def _run_sdp_jailbreak(args):
             sys.exit(1)
         payload = payload_bypass_escalate(
             unfiltered_code=args.code, hotkey=hotkey)
+    elif mode == "init-ssh":
+        payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
+        print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
+        print("  Reboot the robot. SSH will be available on port 22 after boot.")
+        print()
+        print("  CRITICAL: Remove sitecustomize.py after first SSH login or all")
+        print("  Python services will crash on every boot (robot may fall):")
+        print("    find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;")
+        print("    reboot")
+        print()
     else:
         print(f"  Unknown mode: {mode}")
         sys.exit(1)
@@ -399,6 +410,7 @@ def _run_jailbreak(args):
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
+        payload_sitecustomize_ssh,
     )
     from .webrtc_jailbreak import WebRTCJailbreakOrchestrator
 
@@ -409,7 +421,7 @@ def _run_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-")
+    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
     if is_bypass:
         no_callback = True
 
@@ -465,6 +477,16 @@ def _run_jailbreak(args):
             sys.exit(1)
         payload = payload_bypass_escalate(
             unfiltered_code=args.code, hotkey=hotkey)
+    elif mode == "init-ssh":
+        payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
+        print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
+        print("  Reboot the robot. SSH will be available on port 22 after boot.")
+        print()
+        print("  CRITICAL: Remove sitecustomize.py after first SSH login or all")
+        print("  Python services will crash on every boot (robot may fall):")
+        print("    find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;")
+        print("    reboot")
+        print()
     else:
         print(f"  Unknown mode: {mode}")
         sys.exit(1)

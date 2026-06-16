@@ -26,6 +26,7 @@ from .webrtc_payloads import (
     payload_ssh_persist, payload_bypass_ssh,
     payload_bypass_hosts, payload_bypass_file,
     payload_bypass_cron, payload_bypass_escalate,
+    payload_sitecustomize_ssh,
 )
 
 logger = logging.getLogger("unleash_lite.server")
@@ -294,7 +295,7 @@ class UnleashServer:
             return web.json_response({"ok": False, "error": payload})
 
         ok, kw = validate_bypass_payload(payload.python_code)
-        if not ok and not mode.startswith("bypass-"):
+        if not ok and not mode.startswith("bypass-") and mode != "init-ssh":
             self._feed("warning", "WARNING",
                        f"Payload contains blocked keyword {kw!r} "
                        f"(will fail on fw >= 1.1.14)")
@@ -385,6 +386,15 @@ class UnleashServer:
                 self._feed("stage", "INFO",
                            "Cron job written. Wait up to 60s for crond "
                            "to execute, then SSH to the robot.")
+            elif mode == "init-ssh":
+                self._feed("warning", "REBOOT REQUIRED",
+                           "sitecustomize.py written. Reboot the robot — "
+                           "SSH will be available on port 22 after boot.")
+                self._feed("warning", "CRITICAL",
+                           "Remove sitecustomize.py after first SSH login or "
+                           "ALL Python services crash on boot (robot may fall): "
+                           "find / -name 'sitecustomize.py' -path '*/python*' "
+                           "-exec rm -f {} \\; && reboot")
             self._stats_update()
             return web.json_response({
                 "ok": True,
@@ -444,6 +454,8 @@ class UnleashServer:
                     return "--code required"
                 return payload_bypass_escalate(
                     unfiltered_code=code, hotkey=hotkey)
+            elif mode == "init-ssh":
+                return payload_sitecustomize_ssh(password=pw, hotkey=hotkey)
             else:
                 return f"Unknown mode: {mode}"
         except Exception as e:
