@@ -113,3 +113,47 @@ class TestPayloadFields:
     def test_hotkey_default(self, mode):
         payload = ALL_BUILDERS[mode]()
         assert payload.bind_hotkey == "L1+Y"
+
+
+class TestWrittenFileContent:
+    """Validate content that payload_bypass_file / init-ssh writes to the target filesystem.
+
+    The upload payload itself is syntactically valid Python, but the *content
+    it writes* (e.g. sitecustomize.py) must also be valid or the exploit silently
+    fails. These tests decode the encoded string from the generated code and
+    compile it directly.
+    """
+
+    def test_init_ssh_sitecustomize_content_compiles(self):
+        payload = payload_sitecustomize_ssh()
+        # First line of generated code: _c = str(bytes([...]), 'utf-8')
+        ns = {}
+        exec(payload.python_code.split('\n')[0], ns)
+        content = ns['_c']
+        try:
+            compile(content, '<sitecustomize.py>', 'exec')
+        except SyntaxError as e:
+            pytest.fail(
+                f"sitecustomize.py content has invalid syntax: {e}\n"
+                f"Content: {content!r}")
+
+    def test_init_ssh_content_starts_sshd(self):
+        payload = payload_sitecustomize_ssh(password="testpass")
+        ns = {}
+        exec(payload.python_code.split('\n')[0], ns)
+        content = ns['_c']
+        assert "sshd" in content
+        assert "chpasswd" in content
+        assert "testpass" in content
+
+    def test_bypass_file_content_roundtrip(self):
+        np = pytest.importorskip("numpy")
+        original = "hello\nworld\nthird line"
+        payload = payload_bypass_file(file_path="/tmp/t.txt", content=original)
+        lines = []
+        def fake_savetxt(path, arr, fmt):
+            lines.extend(arr.tolist())
+        ns = {"np": type("np", (), {"savetxt": staticmethod(fake_savetxt),
+                                    "array": staticmethod(np.array)})()}
+        exec(payload.python_code, ns)
+        assert "\n".join(lines) == original

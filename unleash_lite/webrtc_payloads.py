@@ -437,7 +437,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
         " -o PasswordAuthentication=yes"
         " -o PubkeyAuthentication=yes"
     )
-    content = f"import os; os.system('{chpasswd} && {sshd_cmd}')"
+    content = f'import os; os.system("{chpasswd} && {sshd_cmd}")'
 
     paths = [
         "/usr/lib/python3.8/sitecustomize.py",
