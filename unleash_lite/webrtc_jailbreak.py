@@ -172,6 +172,17 @@ class WebRTCJailbreakOrchestrator:
                       f"the cron job.{RESET}")
             print(f"  {C}  Wait up to 60s for crond to execute.{RESET}")
             print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
+        elif p.name == "init-ssh":
+            print()
+            print(f"  {C}  Two-press technique:{RESET}")
+            print(f"  {C}    1st {hotkey}: writes sitecustomize.py{RESET}")
+            print(f"  {C}    2nd {hotkey}: Py_Initialize() loads it, "
+                  f"starts sshd{RESET}")
+            print(f"  {C}  SSH available immediately after 2nd press.{RESET}")
+            print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
+            print()
+            print(f"  {Y}  CRITICAL: Remove sitecustomize.py after SSH login{RESET}")
+            print(f"  {Y}  or Python services crash on boot (robot may fall).{RESET}")
 
         # Phase 4: Wait for callback
         if wait_for_callback and self.callback_ip and server:
@@ -310,6 +321,17 @@ class SDPJailbreakOrchestrator:
             print(f"  {C}  Cron job written. Wait up to 60s for crond "
                   f"to execute.{RESET}")
             print(f"  {C}  Then: ssh root@192.168.123.161{RESET}")
+        elif p.name == "init-ssh":
+            print()
+            print(f"  {C}  Two-press technique:{RESET}")
+            print(f"  {C}    1st {hotkey}: writes sitecustomize.py{RESET}")
+            print(f"  {C}    2nd {hotkey}: Py_Initialize() loads it, "
+                  f"starts sshd{RESET}")
+            print(f"  {C}  SSH available immediately after 2nd press.{RESET}")
+            print(f"  {C}  Then: ssh root@192.168.123.161{RESET}")
+            print()
+            print(f"  {Y}  CRITICAL: Remove sitecustomize.py after SSH login{RESET}")
+            print(f"  {Y}  or Python services crash on boot (robot may fall).{RESET}")
 
         # Phase 4: Wait for callback
         if wait_for_callback and self.callback_ip and server:

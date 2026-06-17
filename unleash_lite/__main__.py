@@ -372,13 +372,19 @@ def _run_sdp_jailbreak(args):
             unfiltered_code=args.code, hotkey=hotkey)
     elif mode == "init-ssh":
         payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
-        print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
-        print("  Reboot the robot. SSH will be available on port 22 after boot.")
+        print("  [init-ssh] Two-press sitecustomize.py injection:")
+        print(f"    1st {hotkey}: writes sitecustomize.py (inside seccomp sandbox)")
+        print(f"    2nd {hotkey}: Py_Initialize() loads it BEFORE seccomp, starts sshd")
+        print()
+        print(f"  SSH will be available immediately after the 2nd press.")
+        print(f"  Then: ssh root@<robot-ip>  (password: {password})")
         print()
         print("  CRITICAL: Remove sitecustomize.py after first SSH login or all")
         print("  Python services will crash on every boot (robot may fall):")
-        print("    find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;")
-        print("    reboot")
+        print("    rm -f /usr/lib/python3.8/sitecustomize.py \\")
+        print("          /usr/lib/python3.10/sitecustomize.py \\")
+        print("          /usr/lib/python3.11/sitecustomize.py \\")
+        print("          /usr/local/lib/python3.8/dist-packages/sitecustomize.py")
         print()
     else:
         print(f"  Unknown mode: {mode}")
@@ -479,19 +485,27 @@ def _run_jailbreak(args):
             unfiltered_code=args.code, hotkey=hotkey)
     elif mode == "init-ssh":
         payload = payload_sitecustomize_ssh(password=password, hotkey=hotkey)
-        print("  [sitecustomize-ssh] Writing sitecustomize.py to all Python lib paths.")
-        print("  Reboot the robot. SSH will be available on port 22 after boot.")
+        print("  [init-ssh] Two-press sitecustomize.py injection:")
+        print(f"    1st {hotkey}: writes sitecustomize.py (inside seccomp sandbox)")
+        print(f"    2nd {hotkey}: Py_Initialize() loads it BEFORE seccomp, starts sshd")
+        print()
+        print(f"  SSH will be available immediately after the 2nd press.")
+        print(f"  Then: ssh root@{args.robot_ip}  (password: {password})")
         print()
         print("  CRITICAL: Remove sitecustomize.py after first SSH login or all")
         print("  Python services will crash on every boot (robot may fall):")
-        print("    find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;")
-        print("    reboot")
+        print("    rm -f /usr/lib/python3.8/sitecustomize.py \\")
+        print("          /usr/lib/python3.10/sitecustomize.py \\")
+        print("          /usr/lib/python3.11/sitecustomize.py \\")
+        print("          /usr/local/lib/python3.8/dist-packages/sitecustomize.py")
         print()
     else:
         print(f"  Unknown mode: {mode}")
         sys.exit(1)
 
     auto_trigger = args.trigger == "auto"
+    if mode == "init-ssh":
+        auto_trigger = False
 
     orchestrator = WebRTCJailbreakOrchestrator(
         robot_ip=args.robot_ip,

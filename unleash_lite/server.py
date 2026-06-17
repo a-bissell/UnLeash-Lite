@@ -387,14 +387,21 @@ class UnleashServer:
                            "Cron job written. Wait up to 60s for crond "
                            "to execute, then SSH to the robot.")
             elif mode == "init-ssh":
-                self._feed("warning", "REBOOT REQUIRED",
-                           "sitecustomize.py written. Reboot the robot — "
-                           "SSH will be available on port 22 after boot.")
+                self._feed("stage", "TWO-PRESS",
+                           f"Press {hotkey} on controller TWICE: "
+                           "1st writes sitecustomize.py, "
+                           "2nd triggers Py_Initialize() to load it and start sshd.")
+                self._feed("success", "SSH",
+                           "SSH available immediately after 2nd press. "
+                           "Connect: ssh root@<robot-ip> (password: "
+                           f"{data.get('password', 'unleash')})")
                 self._feed("warning", "CRITICAL",
                            "Remove sitecustomize.py after first SSH login or "
-                           "ALL Python services crash on boot (robot may fall): "
-                           "find / -name 'sitecustomize.py' -path '*/python*' "
-                           "-exec rm -f {} \\; && reboot")
+                           "ALL Python services crash on boot (robot may fall). "
+                           "Run: rm -f /usr/lib/python3.8/sitecustomize.py "
+                           "/usr/lib/python3.10/sitecustomize.py "
+                           "/usr/lib/python3.11/sitecustomize.py "
+                           "/usr/local/lib/python3.8/dist-packages/sitecustomize.py")
             self._stats_update()
             return web.json_response({
                 "ok": True,

