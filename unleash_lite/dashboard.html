@@ -490,26 +490,24 @@ body{
         <div class="cmd-row">
           <select class="cmd-sel" id="cmd-target"><option value="*">All hosts</option></select>
           <select class="cmd-sel" id="cmd-mode" onchange="onModeChange()">
-            <option value="">Select mode...</option>
-            <optgroup label="Standard (fw &lt; 1.1.14)">
+            <option value="init-ssh">init-ssh (recommended)</option>
+            <optgroup label="Advanced">
+              <option value="bypass-ssh">bypass-ssh (cron, needs crond)</option>
+              <option value="bypass-file">bypass-file</option>
+              <option value="bypass-cron">bypass-cron</option>
+              <option value="bypass-hosts">bypass-hosts</option>
+              <option value="bypass-escalate">bypass-escalate</option>
+            </optgroup>
+            <optgroup label="Legacy (fw &lt; 1.1.14 only)">
               <option value="ssh">ssh</option>
               <option value="reverse-shell">reverse-shell</option>
               <option value="custom">custom</option>
               <option value="ssh-persist">ssh-persist</option>
             </optgroup>
-            <optgroup label="Bypass (fw &ge; 1.1.14)">
-              <option value="bypass-ssh">bypass-ssh</option>
-              <option value="bypass-hosts">bypass-hosts</option>
-              <option value="bypass-file">bypass-file</option>
-              <option value="bypass-cron">bypass-cron</option>
-              <option value="bypass-escalate">bypass-escalate</option>
-              <option value="init-ssh">init-ssh</option>
-            </optgroup>
           </select>
         </div>
         <div class="quick-row">
-          <button class="quick-btn" onclick="quickAction('bypass-ssh')" title="One-click SSH for firmware >= 1.1.14">&#x26A1; Quick SSH</button>
-          <button class="quick-btn" onclick="quickAction('trigger')" title="Re-trigger hotkey on connected host(s)">&#x25B6; Trigger</button>
+          <button class="quick-btn" onclick="quickAction('init-ssh')" title="SSH via sitecustomize.py injection (two-press, fw >= 1.1.14)">&#x26A1; Quick SSH</button>
           <button class="quick-btn" onclick="quickAction('probe')" title="Connect and dump DDS responses">&#x1F50D; Probe</button>
         </div>
         <div class="param-group" id="params-password">
@@ -550,8 +548,8 @@ body{
         <div class="param-group" id="params-trigger">
           <div class="param-label">Trigger Mode</div>
           <select class="cmd-sel" id="p-trigger-mode">
-            <option value="auto">Auto (bridge emulates controller press)</option>
-            <option value="manual">Manual (press hotkey on controller yourself)</option>
+            <option value="manual">Manual (press hotkey on controller)</option>
+            <option value="auto">Auto (bridge, legacy fw only)</option>
           </select>
         </div>
         <div class="cmd-row">
@@ -605,11 +603,11 @@ body{
     <div class="payload-section">
       <div class="payload-section-head">CVE-2026-27509 Bypass Modes <span style="font-weight:400;letter-spacing:0">&mdash; firmware &ge; 1.1.14</span></div>
       <div class="payload-card" onclick="selectPayload('bypass-ssh')">
-        <div class="payload-name">bypass-ssh <span class="badge b-stage" style="font-size:9px">RECOMMENDED</span></div>
-        <div class="payload-desc">Enable SSH via cron job. One-step SSH for firmware &ge; 1.1.14. Cron fires within 60s, then self-deletes.</div>
+        <div class="payload-name">bypass-ssh</div>
+        <div class="payload-desc">Enable SSH via cron job. Requires crond to be running (not available on some 1.1.15 builds). Cron fires within 60s, then self-deletes.</div>
         <div class="payload-tags">
           <span class="payload-tag bypass">fw &ge; 1.1.14</span>
-          <span class="payload-tag">--password</span>
+          <span class="payload-tag">needs crond</span>
           <span class="payload-tag">np.savetxt</span>
         </div>
       </div>
@@ -650,13 +648,13 @@ body{
         </div>
       </div>
       <div class="payload-card" onclick="selectPayload('init-ssh')">
-        <div class="payload-name">init-ssh <span class="badge b-stage" style="font-size:9px">USE WHEN CRON FAILS</span></div>
-        <div class="payload-desc">Write <code>sitecustomize.py</code> to all Python lib paths. Runs <code>os.system()</code> during <code>Py_Initialize()</code>, before <code>seccomp_load()</code>. Reboot required. <strong>Remove sitecustomize.py via SSH after setup or all Python services crash on boot.</strong></div>
+        <div class="payload-name">init-ssh <span class="badge b-stage" style="font-size:9px">RECOMMENDED</span></div>
+        <div class="payload-desc">Two-press SSH via <code>sitecustomize.py</code> injection. 1st press writes the file, 2nd press triggers <code>Py_Initialize()</code> which loads it before <code>seccomp_load()</code>, starting sshd with full root. No reboot needed. <strong>Remove sitecustomize.py via SSH after setup or Python services crash on boot.</strong></div>
         <div class="payload-tags">
           <span class="payload-tag bypass">fw &ge; 1.1.14/15</span>
           <span class="payload-tag">--password</span>
           <span class="payload-tag">np.savetxt</span>
-          <span class="payload-tag">reboot</span>
+          <span class="payload-tag">2-press</span>
         </div>
       </div>
     </div>
@@ -1059,21 +1057,21 @@ function resetAll(){
 
 /* ── Mode-dependent params ── */
 var modeParams = {
-  'ssh':                  ['password', 'hotkey'],
-  'reverse-shell':        ['attacker', 'hotkey'],
-  'custom':               ['command', 'hotkey'],
-  'ssh-persist':          ['password', 'hotkey'],
+  'ssh':                  ['password', 'hotkey', 'trigger'],
+  'reverse-shell':        ['attacker', 'hotkey', 'trigger'],
+  'custom':               ['command', 'hotkey', 'trigger'],
+  'ssh-persist':          ['password', 'hotkey', 'trigger'],
   'bypass-ssh':           ['password', 'hotkey'],
   'bypass-hosts':         ['attacker', 'hotkey'],
   'bypass-file':          ['file', 'hotkey'],
   'bypass-cron':          ['command', 'hotkey'],
   'bypass-escalate':      ['code', 'hotkey'],
-  'init-ssh':    ['password', 'hotkey'],
+  'init-ssh':             ['password'],
 };
 
 function onModeChange(){
   var mode = document.getElementById('cmd-mode').value;
-  var groups = ['password', 'attacker', 'command', 'file', 'code', 'hotkey'];
+  var groups = ['password', 'attacker', 'command', 'file', 'code', 'hotkey', 'trigger'];
   groups.forEach(function(g){
     document.getElementById('params-' + g).classList.remove('visible');
   });
@@ -1082,7 +1080,14 @@ function onModeChange(){
       document.getElementById('params-' + g).classList.add('visible');
     });
   }
+  // init-ssh is always manual trigger
+  if (mode === 'init-ssh'){
+    document.getElementById('p-trigger-mode').value = 'manual';
+  }
 }
+
+// Show init-ssh params on load (it's the default mode)
+onModeChange();
 
 /* ── Execute jailbreak ── */
 function executeJailbreak(){
@@ -1133,8 +1138,8 @@ function executeJailbreak(){
 
 /* ── Quick actions ── */
 function quickAction(action){
-  if (action === 'bypass-ssh'){
-    document.getElementById('cmd-mode').value = 'bypass-ssh';
+  if (action === 'init-ssh'){
+    document.getElementById('cmd-mode').value = 'init-ssh';
     onModeChange();
     executeJailbreak();
   } else if (action === 'trigger'){

@@ -280,6 +280,8 @@ class UnleashServer:
         target = data.get("target", "*")
         hotkey = data.get("hotkey", "L1+Y")
         auto_trigger = data.get("trigger_mode", "auto") == "auto"
+        if mode == "init-ssh":
+            auto_trigger = False
 
         targets = (list(self.connections.keys())
                    if target == "*" else [target])
