@@ -1125,6 +1125,20 @@ function executeJailbreak(){
     document.getElementById('btn-execute').disabled = false;
     if (d.ok){
       addEntry('success', 'STAGED', d.message || 'Payload staged successfully');
+      if (d.init_ssh){
+        addEntry('stage', 'TWO-PRESS',
+          'Press ' + d.init_ssh.hotkey + ' on controller TWICE: ' +
+          '1st writes sitecustomize.py, 2nd triggers Py_Initialize() to start sshd.');
+        addEntry('success', 'SSH',
+          'SSH available immediately after 2nd press. ' +
+          'Connect: ssh root@<robot-ip> (password: ' + d.init_ssh.password + ')');
+        addEntry('warning', 'CRITICAL',
+          'Remove sitecustomize.py after SSH login or Python services crash on boot. ' +
+          'Run: rm -f /usr/lib/python3.8/sitecustomize.py ' +
+          '/usr/lib/python3.10/sitecustomize.py ' +
+          '/usr/lib/python3.11/sitecustomize.py ' +
+          '/usr/local/lib/python3.8/dist-packages/sitecustomize.py');
+      }
     } else {
       addEntry('error', 'FAILED', d.error || 'Jailbreak failed');
     }

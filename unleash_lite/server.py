@@ -335,10 +335,6 @@ class UnleashServer:
                     payload.python_code, payload.program_uuid, hotkey)
                 if status == 0:
                     self.staged += 1
-                    self._feed("success", "STAGED",
-                               f"Payload staged on {ip} — "
-                               f"press {hotkey} on controller")
-                    self._stats_update()
 
                     programs, _ = await dc.list_programs()
                     registered = any(
@@ -358,17 +354,13 @@ class UnleashServer:
                             await dc.trigger_hotkey(hotkey)
                             self.completed += 1
                             self._feed("success", "TRIGGERED",
-                                       f"Payload delivered + triggered on {ip} "
-                                       f"(no controller needed)")
+                                       f"Payload delivered + triggered on {ip}")
                         except Exception as te:
                             self._feed("warning", "WARNING",
                                        f"Bridge trigger failed ({te}) — "
                                        f"press {hotkey} on controller manually")
                     else:
                         self.completed += 1
-                        self._feed("success", "STAGED",
-                                   f"Payload ready on {ip} — "
-                                   f"press {hotkey} on controller to execute")
 
                     results.append({"ip": ip, "ok": True})
                 else:
@@ -388,29 +380,24 @@ class UnleashServer:
                 self._feed("stage", "INFO",
                            "Cron job written. Wait up to 60s for crond "
                            "to execute, then SSH to the robot.")
-            elif mode == "init-ssh":
-                self._feed("stage", "TWO-PRESS",
-                           f"Press {hotkey} on controller TWICE: "
-                           "1st writes sitecustomize.py, "
-                           "2nd triggers Py_Initialize() to load it and start sshd.")
-                self._feed("success", "SSH",
-                           "SSH available immediately after 2nd press. "
-                           "Connect: ssh root@<robot-ip> (password: "
-                           f"{data.get('password', 'unleash')})")
-                self._feed("warning", "CRITICAL",
-                           "Remove sitecustomize.py after first SSH login or "
-                           "ALL Python services crash on boot (robot may fall). "
-                           "Run: rm -f /usr/lib/python3.8/sitecustomize.py "
-                           "/usr/lib/python3.10/sitecustomize.py "
-                           "/usr/lib/python3.11/sitecustomize.py "
-                           "/usr/local/lib/python3.8/dist-packages/sitecustomize.py")
             self._stats_update()
-            return web.json_response({
+            if auto_trigger:
+                msg = f"Payload delivered + triggered on {ok_count}/{len(targets)} host(s)."
+            else:
+                msg = f"Payload staged on {ok_count}/{len(targets)} host(s)."
+
+            resp_data = {
                 "ok": True,
-                "message": f"Payload delivered + triggered on "
-                           f"{ok_count}/{len(targets)} host(s).",
+                "message": msg,
+                "mode": mode,
                 "results": results,
-            })
+            }
+            if mode == "init-ssh":
+                resp_data["init_ssh"] = {
+                    "hotkey": hotkey,
+                    "password": data.get("password", "unleash"),
+                }
+            return web.json_response(resp_data)
         else:
             return web.json_response({
                 "ok": False,
