@@ -113,7 +113,8 @@ These modes bypass the keyword blocklist and seccomp sandbox added in `programmi
 
 | Mode | Description |
 |------|-------------|
-| `bypass-ssh` | Enable SSH via cron job (recommended for all firmware) |
+| `init-ssh` | SSH via `sitecustomize.py` injection — recommended for fw 1.1.14/15 |
+| `bypass-ssh` | SSH via cron job (fw 1.1.14+, requires crond running) |
 | `bypass-hosts` | Write MQTT DNS redirect to `/etc/hosts` |
 | `bypass-file` | Write arbitrary file content |
 | `bypass-cron` | Install a cron job for command execution |
