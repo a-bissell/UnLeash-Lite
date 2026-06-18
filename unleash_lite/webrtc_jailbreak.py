@@ -177,8 +177,11 @@ class WebRTCJailbreakOrchestrator:
             print(f"  {C}  Two-press technique:{RESET}")
             print(f"  {C}    1st {hotkey}: writes sitecustomize.py{RESET}")
             print(f"  {C}    2nd {hotkey}: Py_Initialize() loads it, "
-                  f"starts sshd{RESET}")
+                  f"starts sshd + installs persistence{RESET}")
             print(f"  {C}  SSH available immediately after 2nd press.{RESET}")
+            print(f"  {C}  Persistence: hooks /unitree/var/data/deb_update/"
+                  f"deb_update.sh{RESET}")
+            print(f"  {C}  SSH will survive reboots and OTA updates.{RESET}")
             print(f"  {C}  Then: ssh root@{self.robot_ip}{RESET}")
             print()
             print(f"  {Y}  CRITICAL: Remove sitecustomize.py after SSH login{RESET}")
@@ -326,8 +329,11 @@ class SDPJailbreakOrchestrator:
             print(f"  {C}  Two-press technique:{RESET}")
             print(f"  {C}    1st {hotkey}: writes sitecustomize.py{RESET}")
             print(f"  {C}    2nd {hotkey}: Py_Initialize() loads it, "
-                  f"starts sshd{RESET}")
+                  f"starts sshd + installs persistence{RESET}")
             print(f"  {C}  SSH available immediately after 2nd press.{RESET}")
+            print(f"  {C}  Persistence: hooks /unitree/var/data/deb_update/"
+                  f"deb_update.sh{RESET}")
+            print(f"  {C}  SSH will survive reboots and OTA updates.{RESET}")
             print(f"  {C}  Then: ssh root@192.168.123.161{RESET}")
             print()
             print(f"  {Y}  CRITICAL: Remove sitecustomize.py after SSH login{RESET}")

