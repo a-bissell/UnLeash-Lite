@@ -17,7 +17,7 @@
 
 <div align="center">
 
-**Firmware 1.1.7 – 1.1.15**
+**Go2 Jailbreak for Firmware 1.1.7 – 1.1.15**
 
 
 <img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
