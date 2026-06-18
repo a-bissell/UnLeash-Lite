@@ -439,7 +439,7 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
             /usr/lib/python3.11/sitecustomize.py \\
             /usr/local/lib/python3.8/dist-packages/sitecustomize.py
     """
-    chpasswd = f"echo root:{password} | /usr/sbin/chpasswd"
+    chpasswd = f"echo 'root:{password}' | /usr/sbin/chpasswd"
     sshd_cmd = (
         "/usr/sbin/sshd"
         " -o PermitRootLogin=yes"
@@ -451,7 +451,8 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     )
     persist_lines = (
         f"### UnLeash-Lite: SSH persist\\n"
-        f"echo root:{password} | /usr/sbin/chpasswd\\n"
+        f"sed -i 's/^#*[[:space:]]*PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config\\n"
+        f"echo 'root:{password}' | /usr/sbin/chpasswd\\n"
         f"systemctl enable ssh\\n"
         f"service ssh start\\n"
     )
