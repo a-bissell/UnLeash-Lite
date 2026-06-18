@@ -67,32 +67,19 @@ Set `--password` to require authentication on the dashboard.
 ssh root@192.168.123.161   # password: unleash
 ```
 
-### Firmware 1.1.14 (no AES key)
+### Firmware 1.1.14/15
 
-1. Select **init-ssh** mode in the dashboard
-2. Choose a trigger mode:
-   - **Auto** — the tool sends a fake controller hotkey press to trigger execution (experimental; may not fire on all boards)
-   - **Manual** — after the payload uploads, press **L1+Y** on your physical controller to execute
-3. Click **Execute**, then reboot the robot
-4. SSH in after boot:
-
+1. Connect to robot (with AES key if on 1.1.15)
+2. Run init-ssh (CLI or web dashboard)
+3. Press L1+Y on your physical controller, wait 2 seconds, press L1+Y again
+4. ssh root@<robot-ip> (password: unleash)
+   
+Cleanup:
 ```bash
-ssh root@192.168.123.161   # password: unleash
+rm -f /usr/lib/python3.8/sitecustomize.py /usr/lib/python3.10/sitecustomize.py \
+      /usr/lib/python3.11/sitecustomize.py \
+      /usr/local/lib/python3.8/dist-packages/sitecustomize.py
 ```
-
-5. **Remove `sitecustomize.py` immediately** or all Python services will crash on every subsequent boot:
-
-```bash
-find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \;
-reboot
-```
-
-### Firmware 1.1.15+ (AES key required)
-
-1. Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key — this loads the key into the connect dialog
-2. Select **init-ssh**, choose your trigger mode, and execute
-3. Reboot the robot, then SSH in after boot
-4. **Remove `sitecustomize.py` immediately** (same cleanup command as above)
 
 ### CLI
 
