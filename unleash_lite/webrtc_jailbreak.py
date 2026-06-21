@@ -338,6 +338,17 @@ class SDPJailbreakOrchestrator:
             print()
             print(f"  {Y}  CRITICAL: Remove sitecustomize.py after SSH login{RESET}")
             print(f"  {Y}  or Python services crash on boot (robot may fall).{RESET}")
+        elif p.name == "init-ssh-persist":
+            print()
+            print(f"  {C}  Two-press technique:{RESET}")
+            print(f"  {C}    1st {hotkey}: writes ssh_guard.sh + sitecustomize.py{RESET}")
+            print(f"  {C}    2nd {hotkey}: Py_Initialize() runs sitecustomize.py, "
+                  f"installs ssh_guard.sh, self-removes{RESET}")
+            print(f"  {C}  SSH will be backed by ssh_guard.sh after 2nd press.{RESET}")
+            print(f"  {C}  Prereq: SSH must already be up (run init-ssh first).{RESET}")
+            print(f"  {C}  sitecustomize.py is removed by the install -- no cleanup needed.{RESET}")
+            print()
+            print(f"  {Y}  If SSH is not yet up, run init-ssh first.{RESET}")
 
         # Phase 4: Wait for callback
         if wait_for_callback and self.callback_ip and server:

@@ -73,6 +73,15 @@ find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \;
 reboot
 ```
 
+**If SSH does not survive a reboot**, `init-ssh`'s `deb_update.sh` hook is missing or got wiped by an OTA on your build. Run `init-ssh-persist` as a follow-up to install the real `ssh_guard.sh` persistence:
+
+```bash
+unleash-lite init-ssh-persist          # CLI
+# or click "Quick Persist" in the dashboard
+```
+
+The 1st press writes `ssh_guard.sh` + a self-removing `sitecustomize.py`. The 2nd press runs `sitecustomize.py` pre-seccomp to install `ssh_guard.sh` (systemd service + 5-min cron + path-unit watcher) and then deletes itself -- no manual cleanup needed.
+
 ### Firmware 1.1.15+ (AES key required)
 
 1. Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key — this loads the key into the connect dialog
@@ -94,6 +103,7 @@ unleash-lite init-ssh --aes-key <32-hex-char-key>       # firmware 1.1.15+
 |----------|------|----------|--------|
 | <= 1.1.13 | `ssh` | No | Confirmed |
 | 1.1.14 | `init-ssh` | No | Confirmed |
+| 1.1.14+ | `init-ssh-persist` (after SSH is up) | No | Confirmed |
 | >= 1.1.15 | `init-ssh --aes-key KEY` | Yes | Confirmed |
 
 ## Modes
@@ -114,6 +124,7 @@ These modes bypass the keyword blocklist and seccomp sandbox added in `programmi
 | Mode | Description |
 |------|-------------|
 | `init-ssh` | SSH via `sitecustomize.py` injection — recommended for fw 1.1.14/15 |
+| `init-ssh-persist` | Install `ssh_guard.sh` persistence via self-removing `sitecustomize.py` — follow-up to `init-ssh` when `deb_update.sh` hook is unreliable (fw 1.1.14/15) |
 | `bypass-ssh` | SSH via cron job (fw 1.1.14+, requires crond running) |
 | `bypass-hosts` | Write MQTT DNS redirect to `/etc/hosts` |
 | `bypass-file` | Write arbitrary file content |

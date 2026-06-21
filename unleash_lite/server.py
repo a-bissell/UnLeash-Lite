@@ -26,7 +26,7 @@ from .webrtc_payloads import (
     payload_ssh_persist, payload_bypass_ssh,
     payload_bypass_hosts, payload_bypass_file,
     payload_bypass_cron, payload_bypass_escalate,
-    payload_sitecustomize_ssh,
+    payload_sitecustomize_ssh, payload_init_ssh_persist,
 )
 
 logger = logging.getLogger("unleash_lite.server")
@@ -280,7 +280,7 @@ class UnleashServer:
         target = data.get("target", "*")
         hotkey = data.get("hotkey", "L1+Y")
         auto_trigger = data.get("trigger_mode", "auto") == "auto"
-        if mode == "init-ssh":
+        if mode == "init-ssh" or mode == "init-ssh-persist":
             auto_trigger = False
 
         targets = (list(self.connections.keys())
@@ -397,6 +397,10 @@ class UnleashServer:
                     "hotkey": hotkey,
                     "password": data.get("password", "unleash"),
                 }
+            if mode == "init-ssh-persist":
+                resp_data["init_ssh_persist"] = {
+                    "hotkey": hotkey,
+                }
             return web.json_response(resp_data)
         else:
             return web.json_response({
@@ -452,6 +456,8 @@ class UnleashServer:
                     unfiltered_code=code, hotkey=hotkey)
             elif mode == "init-ssh":
                 return payload_sitecustomize_ssh(password=pw, hotkey=hotkey)
+            elif mode == "init-ssh-persist":
+                return payload_init_ssh_persist(password=pw, hotkey=hotkey)
             else:
                 return f"Unknown mode: {mode}"
         except Exception as e:

@@ -79,7 +79,7 @@ def _main_fetch_key():
 _JAILBREAK_MODES = [
     "ssh", "reverse-shell", "custom", "ssh-persist",
     "bypass-ssh", "bypass-hosts", "bypass-file", "bypass-cron",
-    "bypass-escalate", "init-ssh",
+    "bypass-escalate", "init-ssh", "init-ssh-persist",
 ]
 
 
@@ -303,7 +303,7 @@ def _run_sdp_jailbreak(args):
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
-        payload_sitecustomize_ssh,
+        payload_sitecustomize_ssh, payload_init_ssh_persist,
     )
     from .webrtc_jailbreak import SDPJailbreakOrchestrator
 
@@ -314,7 +314,7 @@ def _run_sdp_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
+    is_bypass = mode.startswith("bypass-") or mode.startswith("init-ssh")
     if is_bypass:
         no_callback = True
 
@@ -388,6 +388,21 @@ def _run_sdp_jailbreak(args):
         print("          /usr/lib/python3.11/sitecustomize.py \\")
         print("          /usr/local/lib/python3.8/dist-packages/sitecustomize.py")
         print()
+    elif mode == "init-ssh-persist":
+        payload = payload_init_ssh_persist(password=password, hotkey=hotkey)
+        print("  [init-ssh-persist] Two-press ssh_guard.sh installer (drop-in for")
+        print("   init-ssh's deb_update.sh hook on builds where that hook fails):")
+        print(f"    1st {hotkey}: writes ssh_guard.sh + self-removing sitecustomize.py")
+        print(f"    2nd {hotkey}: Py_Initialize() loads sitecustomize.py BEFORE seccomp,")
+        print(f"           runs `ssh_guard.sh install`, then self-removes")
+        print()
+        print(f"  Prereq: SSH must already be up (run `init-ssh` first).")
+        print(f"  After the 2nd press, SSH is backed by:")
+        print(f"    - systemd ssh-guard.service (re-enables sshd on boot)")
+        print(f"    - 5-min cron entry (ssh_guard.sh check)")
+        print(f"    - systemd path unit (watches ssh.service for changes)")
+        print(f"  sitecustomize.py is removed by the install -- no cleanup needed.")
+        print()
     else:
         print(f"  Unknown mode: {mode}")
         sys.exit(1)
@@ -418,7 +433,7 @@ def _run_jailbreak(args):
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
-        payload_sitecustomize_ssh,
+        payload_sitecustomize_ssh, payload_init_ssh_persist,
     )
     from .webrtc_jailbreak import WebRTCJailbreakOrchestrator
 
@@ -429,7 +444,7 @@ def _run_jailbreak(args):
     callback_port = args.callback_port
     no_callback = args.no_callback
 
-    is_bypass = mode.startswith("bypass-") or mode == "init-ssh"
+    is_bypass = mode.startswith("bypass-") or mode.startswith("init-ssh")
     if is_bypass:
         no_callback = True
 
@@ -501,12 +516,23 @@ def _run_jailbreak(args):
         print("          /usr/lib/python3.11/sitecustomize.py \\")
         print("          /usr/local/lib/python3.8/dist-packages/sitecustomize.py")
         print()
+    elif mode == "init-ssh-persist":
+        payload = payload_init_ssh_persist(password=password, hotkey=hotkey)
+        print("  [init-ssh-persist] Two-press ssh_guard.sh installer:")
+        print(f"    1st {hotkey}: writes ssh_guard.sh + self-removing sitecustomize.py")
+        print(f"    2nd {hotkey}: Py_Initialize() runs sitecustomize.py BEFORE seccomp,")
+        print(f"           installs ssh_guard.sh, then self-removes")
+        print()
+        print(f"  Prereq: SSH must already be up (run `init-ssh` first).")
+        print(f"  After the 2nd press, SSH is backed by ssh_guard.sh (systemd +")
+        print(f"  cron + path unit) and sitecustomize.py is gone.")
+        print()
     else:
         print(f"  Unknown mode: {mode}")
         sys.exit(1)
 
     auto_trigger = args.trigger == "auto"
-    if mode == "init-ssh":
+    if mode.startswith("init-ssh"):
         auto_trigger = False
 
     orchestrator = WebRTCJailbreakOrchestrator(

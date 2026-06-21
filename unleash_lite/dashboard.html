@@ -493,6 +493,7 @@ body{
             <option value="init-ssh">init-ssh (recommended)</option>
             <optgroup label="Advanced">
               <option value="bypass-ssh">bypass-ssh (cron, needs crond)</option>
+              <option value="init-ssh-persist">init-ssh-persist (after SSH is up)</option>
               <option value="bypass-file">bypass-file</option>
               <option value="bypass-cron">bypass-cron</option>
               <option value="bypass-hosts">bypass-hosts</option>
@@ -508,6 +509,7 @@ body{
         </div>
         <div class="quick-row">
           <button class="quick-btn" onclick="quickAction('init-ssh')" title="SSH via sitecustomize.py injection (two-press, fw >= 1.1.14)">&#x26A1; Quick SSH</button>
+          <button class="quick-btn" onclick="quickAction('init-ssh-persist')" title="Install ssh_guard.sh persistence (two-press, run after SSH is up, fw >= 1.1.14)">&#x1F6E1; Quick Persist</button>
           <button class="quick-btn" onclick="quickAction('probe')" title="Connect and dump DDS responses">&#x1F50D; Probe</button>
         </div>
         <div class="param-group" id="params-password">
@@ -654,6 +656,16 @@ body{
           <span class="payload-tag bypass">fw &ge; 1.1.14/15</span>
           <span class="payload-tag">--password</span>
           <span class="payload-tag">np.savetxt</span>
+          <span class="payload-tag">2-press</span>
+        </div>
+      </div>
+      <div class="payload-card" onclick="selectPayload('init-ssh-persist')">
+        <div class="payload-name">init-ssh-persist</div>
+        <div class="payload-desc">Follow-up to <code>init-ssh</code>. Installs the real <code>ssh_guard.sh</code> persistence (systemd service + 5-min cron + path-unit watcher) via a self-removing <code>sitecustomize.py</code>. Use when <code>init-ssh</code>'s <code>deb_update.sh</code> hook is unreliable on your build. Prereq: SSH must be up (run <code>init-ssh</code> first). 1st press writes files, 2nd press activates the install and removes <code>sitecustomize.py</code> -- no cleanup needed.</div>
+        <div class="payload-tags">
+          <span class="payload-tag bypass">fw &ge; 1.1.14/15</span>
+          <span class="payload-tag">after init-ssh</span>
+          <span class="payload-tag">ssh_guard.sh</span>
           <span class="payload-tag">2-press</span>
         </div>
       </div>
@@ -1067,6 +1079,7 @@ var modeParams = {
   'bypass-cron':          ['command', 'hotkey'],
   'bypass-escalate':      ['code', 'hotkey'],
   'init-ssh':             ['password'],
+  'init-ssh-persist':     ['password'],
 };
 
 function onModeChange(){
@@ -1080,8 +1093,8 @@ function onModeChange(){
       document.getElementById('params-' + g).classList.add('visible');
     });
   }
-  // init-ssh is always manual trigger
-  if (mode === 'init-ssh'){
+  // init-ssh and init-ssh-persist are always manual trigger
+  if (mode === 'init-ssh' || mode === 'init-ssh-persist'){
     document.getElementById('p-trigger-mode').value = 'manual';
   }
 }
@@ -1138,6 +1151,19 @@ function executeJailbreak(){
           '/usr/lib/python3.10/sitecustomize.py ' +
           '/usr/lib/python3.11/sitecustomize.py ' +
           '/usr/local/lib/python3.8/dist-packages/sitecustomize.py');
+        addEntry('info', 'TIP',
+          'If SSH does not persist across reboots, run ' +
+          '"Quick Persist" (init-ssh-persist) afterwards to install ' +
+          'the real ssh_guard.sh persistence (self-removing).');
+      }
+      if (d.init_ssh_persist){
+        addEntry('stage', 'TWO-PRESS',
+          'Press ' + d.init_ssh_persist.hotkey + ' on controller TWICE: ' +
+          '1st writes ssh_guard.sh + sitecustomize.py, ' +
+          '2nd runs sitecustomize.py pre-seccomp to install ssh_guard.sh and self-remove.');
+        addEntry('success', 'PERSISTENCE',
+          'After 2nd press, SSH is backed by ssh_guard.sh (systemd + 5-min cron + ' +
+          'path-unit watcher). sitecustomize.py is removed automatically -- no cleanup needed.');
       }
     } else {
       addEntry('error', 'FAILED', d.error || 'Jailbreak failed');
@@ -1154,6 +1180,10 @@ function executeJailbreak(){
 function quickAction(action){
   if (action === 'init-ssh'){
     document.getElementById('cmd-mode').value = 'init-ssh';
+    onModeChange();
+    executeJailbreak();
+  } else if (action === 'init-ssh-persist'){
+    document.getElementById('cmd-mode').value = 'init-ssh-persist';
     onModeChange();
     executeJailbreak();
   } else if (action === 'trigger'){

