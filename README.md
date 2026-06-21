@@ -1,10 +1,24 @@
+```
+   ██╗   ██╗███╗   ██╗██╗     ███████╗ █████╗ ███████╗██╗  ██╗
+   ██║   ██║████╗  ██║██║     ██╔════╝██╔══██╗██╔════╝██║  ██║
+   ██║   ██║██╔██╗ ██║██║     █████╗  ███████║███████╗███████║
+   ██║   ██║██║╚██╗██║██║     ██╔══╝  ██╔══██║╚════██║██╔══██║
+   ╚██████╔╝██║ ╚████║███████╗███████╗██║  ██║███████║██║  ██║
+    ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+                            l i t e
+```
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Working-brightgreen.svg" alt="Status">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+  <img src="https://img.shields.io/badge/Python-3.10+-yellow.svg" alt="Python">
+  <img src="https://img.shields.io/badge/Hardware-Unitree_Go2-orange.svg" alt="Hardware">
+</p>
+
 <div align="center">
- 
-**Root access for the Unitree Go2.**
 
-**Firmware 1.1.7 – 1.1.13: Confirmed working**
+**Go2 Jailbreak for Firmware 1.1.7 – 1.1.15**
 
-**Firmware 1.1.14/15: "It works on my machine" (verifiers needed)**
 
 <img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
 </div>
@@ -53,17 +67,18 @@ Set `--password` to require authentication on the dashboard.
 ssh root@192.168.123.161   # password: unleash
 ```
 
-### Firmware 1.1.14 (no AES key)
+### Firmware 1.1.14/15
 
-1. Select **init-ssh** mode in the dashboard
-2. Choose a trigger mode:
-   - **Auto** — the tool sends a fake controller hotkey press to trigger execution (experimental; may not fire on all boards)
-   - **Manual** — after the payload uploads, press **L1+Y** on your physical controller to execute
-3. Click **Execute**, then reboot the robot
-4. SSH in after boot:
-
+1. Connect to robot (with AES key if on 1.1.15)
+2. Run init-ssh (CLI or web dashboard)
+3. Press L1+Y on your physical controller, wait 2 seconds, press L1+Y again
+4. ssh root@<robot-ip> (password: unleash)
+   
+Cleanup:
 ```bash
-ssh root@192.168.123.161   # password: unleash
+rm -f /usr/lib/python3.8/sitecustomize.py /usr/lib/python3.10/sitecustomize.py \
+      /usr/lib/python3.11/sitecustomize.py \
+      /usr/local/lib/python3.8/dist-packages/sitecustomize.py
 ```
 
 5. **Remove `sitecustomize.py` immediately** or all Python services will crash on every subsequent boot:
