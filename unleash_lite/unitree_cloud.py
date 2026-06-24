@@ -63,7 +63,7 @@ class UnitreeCloud:
         sign = hashlib.md5(f"{APP_SIGN_SECRET}{ts}{nonce}".encode()).hexdigest()
         return {
             **_HEADERS,
-            "AppTimezone": time.strftime("%Z") or "UTC",
+            "AppTimezone": time.strftime("%z") or "UTC",
             "AppTimestamp": ts,
             "AppNonce": nonce,
             "AppSign": sign,
