@@ -13,11 +13,12 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-yellow.svg" alt="Python">
   <img src="https://img.shields.io/badge/Hardware-Unitree_Go2-orange.svg" alt="Hardware">
+  <img src="https://img.shields.io/badge/Hardware-Unitree_R1_(Experimental)-red.svg" alt="Hardware R1">
 </p>
 
 <div align="center">
 
-**Go2 Jailbreak for Firmware 1.1.7 – 1.1.15**
+**Go2 Jailbreak for Firmware 1.1.7 – 1.1.15 | R1 Support (Experimental)**
 
 
 <img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
@@ -97,6 +98,48 @@ unleash-lite init-ssh --aes-key <32-hex-char-key>       # firmware 1.1.15+
 | 1.1.14 | `init-ssh` | No | Confirmed |
 | >= 1.1.15 | `init-ssh --aes-key KEY` | Yes | Confirmed |
 
+## R1 Support (Experimental)
+
+The Unitree R1 humanoid ships with a hidden debug socket listener (`audio_detect.py`) that can be activated via a controller button combo. Once active, it provides unauthenticated root shell access over TCP port 8888.
+
+### Quick Start
+
+```bash
+# 1. Press L1+L2+Start on the R1's controller (robot plays audio_detect.wav)
+
+# 2. Confirm the listener is active:
+unleash-lite r1 probe
+
+# 3. Interactive root shell:
+unleash-lite r1 shell
+
+# 4. Or run a single command:
+unleash-lite r1 custom --cmd 'id; hostname; cat /etc/os-release'
+```
+
+### R1 Modes
+
+| Mode | Description |
+|------|-------------|
+| `probe` | Check if audio_detect listener is active on port 8888 |
+| `shell` | Interactive root shell with output capture |
+| `custom` | Run any shell command (`--cmd`) with stdout/stderr |
+| `reverse-shell` | Bash reverse shell to specified IP |
+
+> **Note:** The R1 does not ship with openssh-server pre-installed. To get SSH,
+> use `shell` mode to wget/install the aarch64 .deb from a local HTTP server,
+> then start sshd manually. See the Discord notes for the exact procedure.
+
+### R1 Firmware Support
+
+| Firmware | vui_service | Status |
+|----------|-------------|--------|
+| >= 1.4.x | >= 2.2.0 | Experimental (confirmed on 1.4.2.8) |
+
+**Prerequisites:** Physical access to the controller. The FSM state machine requires pressing L1+L2+Start to cycle into audio detect mode, which spawns the Python socket listener on port 8888 as root.
+
+---
+
 ## Modes
 
 ### Standard (firmware <= 1.1.13)
@@ -162,7 +205,8 @@ No DDS multicast, no CycloneDDS dependency.
 ## CLI Reference
 
 ```bash
-unleash-lite <mode> [options]
+unleash-lite <mode> [options]                           # Go2 jailbreak
+unleash-lite r1 <mode> [--robot-ip IP]                  # R1 via audio_detect
 unleash-lite serve [--port 8443] [--password SECRET]
 unleash-lite fetch-key --email EMAIL [--sn SERIAL]
 unleash-lite probe [--aes-key KEY] [--debug]
@@ -189,6 +233,8 @@ This tool builds on publicly disclosed security research by multiple independent
 **thiago** identified the `sitecustomize-ssh` technique: `py_script_execute_env` calls `Py_Initialize()` before `seccomp_load()`, meaning `sitecustomize.py` runs with full root syscall access on every Python init. Writing to it via the existing `np.savetxt` bypass gives persistent pre-sandbox code execution on firmware 1.1.14/15 where crond is not running.
 
 **Andreas Makris (Bin4ry), Kevin Finisterre (h0stile), and Konstantin Severov (legion1581)** disclosed the broader Unitree security architecture weaknesses ([CVE-2025-35027](https://nvd.nist.gov/vuln/detail/CVE-2025-35027), [arXiv:2509.14139](https://arxiv.org/abs/2509.14139)). legion1581's [`unitree_webrtc_connect`](https://github.com/legion1581/unitree_webrtc_connect) was foundational for the WebRTC data channel implementation.
+
+**R1 RE Discord** — The R1 `audio_detect` shell method was discovered and confirmed by the R1 reverse engineering community. Special thanks to **thomas flayols** for confirming the FSM activation sequence (L1+L2+Start) and validating root shell access on firmware 1.4.2.8, **iso** for the Qwen-assisted binary analysis of the `vui_service` FSM state machine and deep Go2/GD32 hardware security knowledge, **Jim** for extensive hardware teardown and PCB tracing work on the R1 mainboard, and **alansrobotlab** for component identification. Their collaborative work made R1 support possible.
 
 ## Legal
 

