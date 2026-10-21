@@ -43,6 +43,7 @@ dependencies = [
     "bcrypt>=4.0",
     "python-multipart>=0.0.9",
     "pydantic-settings>=2.0",
+    "paramiko>=3.0",
 ]
 
 [project.optional-dependencies]

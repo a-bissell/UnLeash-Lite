@@ -21,39 +21,120 @@ def _get_local_ip():
     return None
 
 
+_EPILOG = """\
+Quickstart:
+  unleash enroll 192.168.123.161        Enroll a robot (jailbreak + fleet setup)
+  unleash serve                         Start the management dashboard
+
+Subcommands:
+  unleash enroll <robot-ip> [options]   Guided enrollment (the happy path)
+  unleash serve [--port 8080]           Launch broker + API + dashboard
+  unleash fetch-key --email <email>     Retrieve per-device AES key from cloud
+  unleash probe [--robot-ip IP]         Diagnostic DDS dump
+  unleash trigger [--hotkey L1+Y]       Send a fake controller button press
+  unleash sdp-jailbreak <mode>          SDP overflow jailbreak (benchtop only)
+  unleash <mode> [options]              Raw jailbreak (power users)
+"""
+
+
+def _print_help():
+    print("  UnLeash: own your Unitree robot")
+    print()
+    print(f"  {_EPILOG}")
+    print("  Run 'unleash <subcommand> --help' for details.")
+
+
 def main():
-    # Detect subcommands before argparse sees them
-    if len(sys.argv) > 1 and sys.argv[1] == "fetch-key":
+    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
+        _print_help()
+        return
+
+    sub = sys.argv[1]
+
+    if sub == "enroll":
+        _main_enroll()
+        return
+    if sub == "fetch-key":
         _main_fetch_key()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "probe":
+    if sub == "probe":
         _main_probe()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "sdp-jailbreak":
+    if sub == "sdp-jailbreak":
         _main_sdp_jailbreak()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "trigger":
+    if sub == "trigger":
         _main_trigger()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "serve":
+    if sub == "serve":
         _main_serve()
         return
 
-    # Everything else is the jailbreak CLI
+    # Bare jailbreak mode (backward compat: `unleash init-ssh`)
+    if sub in _JAILBREAK_MODES:
+        parser = argparse.ArgumentParser(
+            prog="unleash",
+            description="UnLeash: own your Unitree robot",
+            epilog=_EPILOG,
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+        )
+        _add_jailbreak_args(parser)
+        args = parser.parse_args()
+        _run_jailbreak(args)
+        return
+
+    print(f"  Unknown command: {sub}")
+    _print_help()
+    sys.exit(1)
+
+
+def _main_enroll():
     parser = argparse.ArgumentParser(
-        prog="unleash",
-        description="UnLeash: own your Unitree robot",
-        epilog="Subcommands:\n"
-               "  unleash fetch-key --email you@example.com\n"
-               "  unleash probe [--aes-key KEY] [--debug]\n"
-               "  unleash trigger [--hotkey L1+Y] [--robot-ip IP]\n"
-               "  unleash sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)\n"
-               "  unleash serve [--port 8080]",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
+        prog="unleash enroll",
+        description="Enroll a Unitree Go2 into your UnLeash fleet: "
+                    "jailbreak + SSH persistence + MQTT redirect in one command.",
     )
-    _add_jailbreak_args(parser)
-    args = parser.parse_args()
-    _run_jailbreak(args)
+    parser.add_argument("robot_ip",
+                        help="Robot IP address (e.g. 192.168.123.161)")
+    parser.add_argument("--aes-key",
+                        help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
+    parser.add_argument("--password", default="unleash",
+                        help="Root password to set (default: unleash)")
+    parser.add_argument("--hotkey", default="L1+Y",
+                        help="Controller hotkey (default: L1+Y)")
+    parser.add_argument("--broker-ip",
+                        help="Broker IP for /etc/hosts redirect (auto-detected)")
+    parser.add_argument("--port", type=int, default=9991,
+                        help="Signaling port (default: 9991)")
+    parser.add_argument("--manual", action="store_true",
+                        help="Manual trigger mode (prompt for controller button presses)")
+    parser.add_argument("--skip-redirect", action="store_true",
+                        help="Skip MQTT broker redirect (enroll SSH only)")
+    parser.add_argument("--skip-persist", action="store_true",
+                        help="Skip ssh_guard.sh installation")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .enroll.enrollctl import EnrollmentSession
+
+    session = EnrollmentSession(
+        args.robot_ip,
+        aes_key=args.aes_key,
+        password=args.password,
+        hotkey=args.hotkey,
+        broker_ip=args.broker_ip,
+        port=args.port,
+        skip_redirect=args.skip_redirect,
+        skip_persist=args.skip_persist,
+        manual_trigger=args.manual,
+    )
+
+    success = asyncio.run(session.run())
+    sys.exit(0 if success else 1)
 
 
 def _main_fetch_key():
