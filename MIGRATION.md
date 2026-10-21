@@ -286,9 +286,9 @@ sdp = ["cyclonedds==0.10.2"]
 telemetry = ["cyclonedds>=0.10,<0.11"]
 ```
 
-Consider: make server deps optional so `pip install unleash` stays light
-for users who just want `unleash enroll`, and `pip install unleash[server]`
-adds the fleet management stack. Decision needed.
+**Decision: fat install.** `pip install unleash` gets everything. Labs want
+things that work, not dependency puzzles. The extra 30s of install is
+nothing compared to "I ran `unleash serve` and it crashed."
 
 ---
 
@@ -338,9 +338,9 @@ adds the fleet management stack. Decision needed.
 
 ### Phase 5: Polish
 - [ ] README rewrite
-- [ ] Deprecation notice for `canopy` PyPI package
-- [ ] Deprecation notice on `unleash-lite` (alias pointing to `unleash`)
-- [ ] GitHub repo rename with redirect
+- [ ] Archive `canopy` repo with pointer to UnLeash
+- [ ] Deprecation notice on `unleash-lite` PyPI (final release pointing to `unleash`)
+- [ ] GitHub repo rename (owner handles manually)
 
 ---
 
@@ -361,12 +361,9 @@ adds the fleet management stack. Decision needed.
 
 ---
 
-## Open questions
+## Decisions (resolved)
 
-1. **Dep weight**: full install vs `unleash[server]` split?
-2. **aiohttp → FastAPI**: lite's dashboard server uses aiohttp, canopy uses
-   FastAPI. Drop aiohttp entirely (the old dashboard.html goes away), or
-   keep a lightweight aiohttp fallback for `unleash enroll --ui`?
-3. **Repo rename timing**: rename to `UnLeash` at 2.0 tag, or wait for stability?
-4. **`canopy` compat shim**: publish a final `canopy` PyPI release that's just
-   `install_requires=["unleash"]` + deprecation warning?
+1. **Dep weight**: fat install. `pip install unleash` includes everything.
+2. **aiohttp**: killed. FastAPI replaces it entirely.
+3. **Repo rename**: owner handles manually after 2.0 ships.
+4. **Canopy shim**: skipped. Archive the repo with a pointer to UnLeash.

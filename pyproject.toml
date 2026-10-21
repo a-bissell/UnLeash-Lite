@@ -3,24 +3,25 @@ requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "unleash-lite"
-version = "0.1.0"
-description = "WebRTC jailbreak for Unitree Go2 robots"
+name = "unleash"
+version = "2.0.0a1"
+description = "Own your Unitree robot — enrollment, fleet management, and OTA deployment"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
     { name = "Alex Bissell" },
 ]
-keywords = ["unitree", "go2", "webrtc", "jailbreak", "robot", "right-to-repair"]
+keywords = ["unitree", "go2", "webrtc", "robot", "right-to-repair", "fleet", "mqtt", "ota"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
+    "Environment :: Web Environment",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
+    "Intended Audience :: System Administrators",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -33,21 +34,34 @@ dependencies = [
     "cryptography",
     "requests",
     "curl_cffi",
-    "aiohttp",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "sqlalchemy[asyncio]>=2.0",
+    "aiosqlite>=0.20",
+    "alembic>=1.13",
+    "python-jose[cryptography]>=3.3",
+    "bcrypt>=4.0",
+    "python-multipart>=0.0.9",
+    "pydantic-settings>=2.0",
 ]
 
 [project.optional-dependencies]
 sdp = ["cyclonedds==0.10.2"]
+telemetry = ["cyclonedds>=0.10,<0.11"]
+test = ["pytest>=8.0", "httpx>=0.27"]
 
 [project.scripts]
-unleash-lite = "unleash_lite.__main__:main"
+unleash = "unleash.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/a-bissell/UnLeash-Lite"
 Issues = "https://github.com/a-bissell/UnLeash-Lite/issues"
 
 [tool.setuptools.package-data]
-unleash_lite = ["dashboard.html"]
+unleash = ["enroll/dashboard.html"]
 
 [tool.setuptools.packages.find]
-include = ["unleash_lite*"]
+include = ["unleash*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

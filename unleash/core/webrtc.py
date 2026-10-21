@@ -26,7 +26,7 @@ from Crypto.PublicKey import RSA
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-logger = logging.getLogger("unleash_lite.webrtc")
+logger = logging.getLogger("unleash.core.webrtc")
 
 # Restrict to SHA-256 only. Multi-algorithm advertisement causes the Go2
 # to use an incompatible SCTP framing mode.

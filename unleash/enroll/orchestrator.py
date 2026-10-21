@@ -11,11 +11,11 @@ Requires LAN adjacency only.
 import asyncio
 import logging
 
-from .webrtc import Go2DataChannel
-from .webrtc_payloads import WebRTCPayload, validate_bypass_payload
-from .webrtc_sdp import Go2DataChannelSDP, dds_trigger_hotkey
+from ..core.webrtc import Go2DataChannel
+from .payloads import WebRTCPayload, validate_bypass_payload
+from ..core.webrtc_sdp import Go2DataChannelSDP, dds_trigger_hotkey
 
-logger = logging.getLogger("unleash_lite.webrtc_jailbreak")
+logger = logging.getLogger("unleash.enroll.orchestrator")
 
 import json
 
