@@ -59,7 +59,7 @@ Homepage = "https://github.com/a-bissell/UnLeash-Lite"
 Issues = "https://github.com/a-bissell/UnLeash-Lite/issues"
 
 [tool.setuptools.package-data]
-unleash = ["enroll/dashboard.html"]
+unleash = ["py.typed"]
 
 [tool.setuptools.packages.find]
 include = ["unleash*"]
