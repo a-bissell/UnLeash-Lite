@@ -584,8 +584,6 @@ def _main_serve():
         port=port,
         log_level=log_level,
     )
-    print("  It will be added in Phase 2 of the UnLeash 2.0 migration.")
-    sys.exit(1)
 
 
 if __name__ == "__main__":
