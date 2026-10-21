@@ -558,23 +558,32 @@ def _run_jailbreak(args):
 def _main_serve():
     parser = argparse.ArgumentParser(
         prog="unleash serve",
-        description="Launch the UnLeash management server",
+        description="Launch the UnLeash management server (broker + API + dashboard)",
     )
-    parser.add_argument("--host", default="0.0.0.0",
-                        help="Bind address (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=8443,
-                        help="HTTP port (default: 8443)")
-    parser.add_argument("--password",
-                        help="Dashboard password (open access if omitted)")
+    parser.add_argument("--host", default=None,
+                        help="Bind address (default: from UNLEASH_HOST or 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=None,
+                        help="HTTP port (default: from UNLEASH_API_PORT or 8080)")
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug logging")
     args = parser.parse_args(sys.argv[2:])
 
+    log_level = "debug" if args.debug else "info"
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    # TODO: Phase 2 — replace with FastAPI serve
-    print("  Error: `unleash serve` is not yet available in this build.")
+    from .config import settings
+    host = args.host or settings.host
+    port = args.port or settings.api_port
+
+    import uvicorn
+    uvicorn.run(
+        "unleash.app:create_app",
+        factory=True,
+        host=host,
+        port=port,
+        log_level=log_level,
+    )
     print("  It will be added in Phase 2 of the UnLeash 2.0 migration.")
     sys.exit(1)
 
