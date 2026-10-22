@@ -306,41 +306,41 @@ nothing compared to "I ran `unleash serve` and it crashed."
 
 ## 8. Migration phases
 
-### Phase 1: Restructure (this branch)
-- [ ] Rename `unleash_lite/` → `unleash/`
-- [ ] Move files into the new directory layout
-- [ ] Update all internal imports
-- [ ] Trim payload registry (cut reverse-shell, bypass-cron, bypass-escalate, bypass-file, old ssh)
-- [ ] Move cut payloads to `jailbreak` subcommand only
-- [ ] Update `pyproject.toml` (name, deps, entry points)
-- [ ] Update tests
-- [ ] Verify: `unleash jailbreak init-ssh` works (backward compat)
+### Phase 1: Restructure ✅
+- [x] Rename `unleash_lite/` → `unleash/`
+- [x] Move files into the new directory layout
+- [x] Update all internal imports
+- [x] Trim payload registry (cut reverse-shell, bypass-cron, bypass-escalate, bypass-file, old ssh)
+- [x] Move cut payloads to `jailbreak` subcommand only
+- [x] Update `pyproject.toml` (name, deps, entry points)
+- [x] Update tests
+- [x] Verify: `unleash jailbreak init-ssh` works (backward compat)
 
-### Phase 2: Integrate Canopy
-- [ ] Copy Canopy modules into `unleash/` (broker, packages, fleet, certs, auth, db, audit, api)
-- [ ] Update Canopy imports (`canopy.` → `unleash.`)
-- [ ] Merge config (`canopy.config` → `unleash.config`, env prefix `UNLEASH_`)
-- [ ] Wire up `unleash serve` to the FastAPI app
-- [ ] Verify: `unleash serve` starts broker + API + dashboard
+### Phase 2: Integrate Canopy ✅
+- [x] Copy Canopy modules into `unleash/` (broker, packages, fleet, certs, auth, db, audit, api)
+- [x] Update Canopy imports (`canopy.` → `unleash.`)
+- [x] Merge config (`canopy.config` → `unleash.config`, env prefix `UNLEASH_`)
+- [x] Wire up `unleash serve` to the FastAPI app
+- [x] Verify: `unleash serve` starts broker + API + dashboard
 
-### Phase 3: Enrollment flow
-- [ ] Build `unleash/enroll/enrollctl.py` — the guided `unleash enroll` command
-- [ ] Combined payload: init-ssh + hosts redirect + CA install
-- [ ] Post-SSH automation: ssh_guard, cert install, MQTT restart
-- [ ] Verification: robot appears in broker
-- [ ] Enrollment API endpoint (for the web UI)
+### Phase 3: Enrollment flow ✅
+- [x] Build `unleash/enroll/enrollctl.py` — the guided `unleash enroll` command
+- [x] Combined payload: init-ssh + hosts redirect + CA install
+- [x] Post-SSH automation: ssh_guard, cert install, MQTT restart
+- [x] Verification: robot appears in broker
+- [x] Enrollment API endpoint (for the web UI)
 
-### Phase 4: Frontend merge
-- [ ] Add `Enroll.tsx` page to the React app (replaces dashboard.html)
-- [ ] WebSocket-driven enrollment progress
-- [ ] Remove `dashboard.html`
-- [ ] Build + bundle frontend
+### Phase 4: Frontend merge ✅
+- [x] Add `Enroll.tsx` page to the React app (replaces dashboard.html)
+- [x] WebSocket-driven enrollment progress
+- [x] Remove `dashboard.html`
+- [x] Build + bundle frontend
 
-### Phase 5: Polish
-- [ ] README rewrite
-- [ ] Archive `canopy` repo with pointer to UnLeash
-- [ ] Deprecation notice on `unleash-lite` PyPI (final release pointing to `unleash`)
-- [ ] GitHub repo rename (owner handles manually)
+### Phase 5: Polish ✅
+- [x] README rewrite
+- [ ] Archive `canopy` repo with pointer to UnLeash *(manual — owner)*
+- [ ] Deprecation notice on `unleash-lite` PyPI (final release pointing to `unleash`) *(manual — owner)*
+- [ ] GitHub repo rename *(manual — owner)*
 
 ---
 
