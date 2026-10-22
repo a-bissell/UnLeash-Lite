@@ -1,4 +1,4 @@
-"""Entry point: python -m unleash_lite"""
+"""Entry point: python -m unleash"""
 
 import argparse
 import asyncio
@@ -21,44 +21,125 @@ def _get_local_ip():
     return None
 
 
+_EPILOG = """\
+Quickstart:
+  unleash enroll 192.168.123.161        Enroll a robot (jailbreak + fleet setup)
+  unleash serve                         Start the management dashboard
+
+Subcommands:
+  unleash enroll <robot-ip> [options]   Guided enrollment (the happy path)
+  unleash serve [--port 8080]           Launch broker + API + dashboard
+  unleash fetch-key --email <email>     Retrieve per-device AES key from cloud
+  unleash probe [--robot-ip IP]         Diagnostic DDS dump
+  unleash trigger [--hotkey L1+Y]       Send a fake controller button press
+  unleash sdp-jailbreak <mode>          SDP overflow jailbreak (benchtop only)
+  unleash <mode> [options]              Raw jailbreak (power users)
+"""
+
+
+def _print_help():
+    print("  UnLeash: own your Unitree robot")
+    print()
+    print(f"  {_EPILOG}")
+    print("  Run 'unleash <subcommand> --help' for details.")
+
+
 def main():
-    # Detect subcommands before argparse sees them
-    if len(sys.argv) > 1 and sys.argv[1] == "fetch-key":
+    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
+        _print_help()
+        return
+
+    sub = sys.argv[1]
+
+    if sub == "enroll":
+        _main_enroll()
+        return
+    if sub == "fetch-key":
         _main_fetch_key()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "probe":
+    if sub == "probe":
         _main_probe()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "sdp-jailbreak":
+    if sub == "sdp-jailbreak":
         _main_sdp_jailbreak()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "trigger":
+    if sub == "trigger":
         _main_trigger()
         return
-    if len(sys.argv) > 1 and sys.argv[1] == "serve":
+    if sub == "serve":
         _main_serve()
         return
 
-    # Everything else is the jailbreak CLI
+    # Bare jailbreak mode (backward compat: `unleash init-ssh`)
+    if sub in _JAILBREAK_MODES:
+        parser = argparse.ArgumentParser(
+            prog="unleash",
+            description="UnLeash: own your Unitree robot",
+            epilog=_EPILOG,
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+        )
+        _add_jailbreak_args(parser)
+        args = parser.parse_args()
+        _run_jailbreak(args)
+        return
+
+    print(f"  Unknown command: {sub}")
+    _print_help()
+    sys.exit(1)
+
+
+def _main_enroll():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite",
-        description="UnLeash Lite: WebRTC jailbreak for Unitree Go2",
-        epilog="Subcommands:\n"
-               "  unleash-lite fetch-key --email you@example.com\n"
-               "  unleash-lite probe [--aes-key KEY] [--debug]\n"
-               "  unleash-lite trigger [--hotkey L1+Y] [--robot-ip IP]\n"
-               "  unleash-lite sdp-jailbreak <mode> [--interface-ip IP]  (benchtop only)\n"
-               "  unleash-lite serve [--port 8443] [--password SECRET]",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
+        prog="unleash enroll",
+        description="Enroll a Unitree Go2 into your UnLeash fleet: "
+                    "jailbreak + SSH persistence + MQTT redirect in one command.",
     )
-    _add_jailbreak_args(parser)
-    args = parser.parse_args()
-    _run_jailbreak(args)
+    parser.add_argument("robot_ip",
+                        help="Robot IP address (e.g. 192.168.123.161)")
+    parser.add_argument("--aes-key",
+                        help="Per-device AES-128 key (32 hex chars) for firmware >= 1.1.15")
+    parser.add_argument("--password", default="unleash",
+                        help="Root password to set (default: unleash)")
+    parser.add_argument("--hotkey", default="L1+Y",
+                        help="Controller hotkey (default: L1+Y)")
+    parser.add_argument("--broker-ip",
+                        help="Broker IP for /etc/hosts redirect (auto-detected)")
+    parser.add_argument("--port", type=int, default=9991,
+                        help="Signaling port (default: 9991)")
+    parser.add_argument("--manual", action="store_true",
+                        help="Manual trigger mode (prompt for controller button presses)")
+    parser.add_argument("--skip-redirect", action="store_true",
+                        help="Skip MQTT broker redirect (enroll SSH only)")
+    parser.add_argument("--skip-persist", action="store_true",
+                        help="Skip ssh_guard.sh installation")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .enroll.enrollctl import EnrollmentSession
+
+    session = EnrollmentSession(
+        args.robot_ip,
+        aes_key=args.aes_key,
+        password=args.password,
+        hotkey=args.hotkey,
+        broker_ip=args.broker_ip,
+        port=args.port,
+        skip_redirect=args.skip_redirect,
+        skip_persist=args.skip_persist,
+        manual_trigger=args.manual,
+    )
+
+    success = asyncio.run(session.run())
+    sys.exit(0 if success else 1)
 
 
 def _main_fetch_key():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite fetch-key",
+        prog="unleash fetch-key",
         description="Fetch per-device AES-128 key from Unitree cloud "
                     "(required for firmware >= 1.1.15)",
     )
@@ -124,7 +205,7 @@ def _add_jailbreak_args(parser):
 
 def _run_fetch_key(args):
     try:
-        from .unitree_cloud import fetch_aes_key, UnitreeCloud, UnitreeCloudError
+        from .core.cloud import fetch_aes_key, UnitreeCloud, UnitreeCloudError
     except ImportError:
         print("  Error: curl_cffi is required for fetch-key.")
         print("  Install it: pip install curl_cffi")
@@ -141,7 +222,7 @@ def _run_fetch_key(args):
             )
             print(f"\n  SN:  {args.sn}")
             print(f"  Key: {key}")
-            print(f"\n  Usage: python -m unleash_lite ssh --aes-key {key}")
+            print(f"\n  Usage: unleash jailbreak ssh --aes-key {key}")
         else:
             cloud = UnitreeCloud(
                 region=args.region, device_type=args.device_type,
@@ -166,7 +247,7 @@ def _run_fetch_key(args):
 
 def _main_probe():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite probe",
+        prog="unleash probe",
         description="Diagnostic probe: connect to robot, upload a no-op, "
                     "dump all raw DDS responses for firmware API analysis",
     )
@@ -183,13 +264,13 @@ def _main_probe():
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    from .webrtc_jailbreak import probe
+    from .enroll.orchestrator import probe
     asyncio.run(probe(args.robot_ip, args.port, aes_128_key=args.aes_key))
 
 
 def _main_sdp_jailbreak():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite sdp-jailbreak",
+        prog="unleash sdp-jailbreak",
         description="Jailbreak via SDP overflow — bypasses HTTP signaling, "
                     "AES auth, and xfkTon key entirely. Pure LAN, pre-auth.",
     )
@@ -228,7 +309,7 @@ def _main_sdp_jailbreak():
 
 def _main_trigger():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite trigger",
+        prog="unleash trigger",
         description="Send a fake controller button press to trigger a "
                     "previously uploaded hotkey-bound payload. Default "
                     "mode uses the WebRTC bridge (works through DDS "
@@ -257,7 +338,7 @@ def _main_trigger():
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
     if args.via == "dds":
-        from .webrtc_sdp import dds_trigger_hotkey, _detect_interface_ip
+        from .core.webrtc_sdp import dds_trigger_hotkey, _detect_interface_ip
 
         interface_ip = args.interface_ip or _detect_interface_ip()
         if not interface_ip:
@@ -274,7 +355,7 @@ def _main_trigger():
             print(f"  Error: {e}")
             sys.exit(1)
     else:
-        from .webrtc import Go2DataChannel
+        from .core.webrtc import Go2DataChannel
 
         async def _bridge_trigger():
             dc = Go2DataChannel(args.robot_ip, args.port,
@@ -298,14 +379,14 @@ def _run_sdp_jailbreak(args):
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    from .webrtc_payloads import (
+    from .enroll.payloads import (
         payload_ssh, payload_reverse_shell, payload_custom,
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
         payload_sitecustomize_ssh, payload_init_ssh_persist,
     )
-    from .webrtc_jailbreak import SDPJailbreakOrchestrator
+    from .enroll.orchestrator import SDPJailbreakOrchestrator
 
     mode = args.mode
     hotkey = args.hotkey
@@ -428,14 +509,14 @@ def _run_jailbreak(args):
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    from .webrtc_payloads import (
+    from .enroll.payloads import (
         payload_ssh, payload_reverse_shell, payload_custom,
         payload_ssh_persist, payload_bypass_ssh,
         payload_bypass_hosts, payload_bypass_file,
         payload_bypass_cron, payload_bypass_escalate,
         payload_sitecustomize_ssh, payload_init_ssh_persist,
     )
-    from .webrtc_jailbreak import WebRTCJailbreakOrchestrator
+    from .enroll.orchestrator import WebRTCJailbreakOrchestrator
 
     mode = args.mode
     hotkey = args.hotkey
@@ -557,26 +638,33 @@ def _run_jailbreak(args):
 
 def _main_serve():
     parser = argparse.ArgumentParser(
-        prog="unleash-lite serve",
-        description="Launch the UnLeash Lite web dashboard",
+        prog="unleash serve",
+        description="Launch the UnLeash management server (broker + API + dashboard)",
     )
-    parser.add_argument("--host", default="0.0.0.0",
-                        help="Bind address (default: 0.0.0.0)")
-    parser.add_argument("--port", type=int, default=8443,
-                        help="HTTP port (default: 8443)")
-    parser.add_argument("--password",
-                        help="Dashboard password (open access if omitted)")
+    parser.add_argument("--host", default=None,
+                        help="Bind address (default: from UNLEASH_HOST or 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=None,
+                        help="HTTP port (default: from UNLEASH_API_PORT or 8080)")
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug logging")
     args = parser.parse_args(sys.argv[2:])
 
+    log_level = "debug" if args.debug else "info"
     if args.debug:
         logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
 
-    from .server import UnleashServer
-    server = UnleashServer(host=args.host, port=args.port,
-                           password=args.password)
-    server.run()
+    from .config import settings
+    host = args.host or settings.host
+    port = args.port or settings.api_port
+
+    import uvicorn
+    uvicorn.run(
+        "unleash.app:create_app",
+        factory=True,
+        host=host,
+        port=port,
+        log_level=log_level,
+    )
 
 
 if __name__ == "__main__":

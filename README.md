@@ -5,25 +5,24 @@
    ██║   ██║██║╚██╗██║██║     ██╔══╝  ██╔══██║╚════██║██╔══██║
    ╚██████╔╝██║ ╚████║███████╗███████╗██║  ██║███████║██║  ██║
     ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-                            l i t e
 ```
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Working-brightgreen.svg" alt="Status">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
-  <img src="https://img.shields.io/badge/Python-3.10+-yellow.svg" alt="Python">
+  <img src="https://img.shields.io/badge/Python-3.11+-yellow.svg" alt="Python">
   <img src="https://img.shields.io/badge/Hardware-Unitree_Go2-orange.svg" alt="Hardware">
 </p>
 
 <div align="center">
 
-**Go2 Jailbreak for Firmware 1.1.7 – 1.1.15**
+**Own your Unitree robot — enroll, manage, deploy.**
 
-
-<img width="1383" height="792" alt="Screenshot 2026-06-09 at 8 29 12 AM" src="https://github.com/user-attachments/assets/acee88a4-658c-422d-a045-decbf057eca0" />
 </div>
 
-UnLeash Lite is a web-based jailbreak tool for the Unitree Go2 robot dog. It connects to the robot over its WebRTC data channel, uploads payloads, and triggers execution as root.
+UnLeash takes a stock Unitree Go2 from factory-locked to fully managed in one command. It combines jailbreak enrollment with fleet management, MQTT brokering, and OTA package deployment in a single tool — built for labs, classrooms, and anyone who believes in the right to repair.
+
+> **Upgrading from UnLeash-Lite?** `unleash jailbreak init-ssh` still works exactly as before. The `unleash enroll` command wraps it with persistence, MQTT redirect, and fleet setup — all automated.
 
 ## Install
 
@@ -31,147 +30,149 @@ UnLeash Lite is a web-based jailbreak tool for the Unitree Go2 robot dog. It con
 pip install .
 ```
 
-## Dashboard
-
-Launch the web dashboard:
-
-```bash
-unleash-lite serve
-```
-
-Then open [http://localhost:8443](http://localhost:8443) in your browser.
-
-The dashboard provides:
-
-- **Command & Control** — Live event feed, host management, and one-click jailbreak execution
-- **Payloads** — All 10 jailbreak modes with firmware compatibility tags and parameter requirements
-- **Cloud Intel** — Unitree cloud login to retrieve per-device AES keys (firmware >= 1.1.15)
-
-Options:
-
-```
-unleash-lite serve [--port PORT] [--password SECRET] [--host ADDR]
-```
-
-Set `--password` to require authentication on the dashboard.
+Requires Python 3.11+. Installs everything (enrollment, server, dashboard).
 
 ## Quick Start
 
-### Firmware <= 1.1.13
-
-1. Open the dashboard and select **ssh** mode
-2. Set trigger mode to **Auto** and click **Execute**
-3. Wait for the callback confirmation in the live feed, then:
+### 1. Enroll a robot
 
 ```bash
-ssh root@192.168.123.161   # password: unleash
+unleash enroll 192.168.123.161
 ```
 
-### Firmware 1.1.14/15
+This single command:
+1. Connects via WebRTC data channel
+2. Deploys SSH access (sitecustomize.py injection, two-press trigger)
+3. Waits for SSH to come up
+4. Installs `ssh_guard.sh` persistence (survives reboots + OTA)
+5. Redirects MQTT traffic to your UnLeash broker
+6. Verifies enrollment and prints a summary
 
-1. Connect to robot (with AES key if on 1.1.15)
-2. Run init-ssh (CLI or web dashboard)
-3. Press L1+Y on your physical controller, wait 2 seconds, press L1+Y again
-4. ssh root@<robot-ip> (password: unleash)
-   
-Cleanup:
-```bash
-rm -f /usr/lib/python3.8/sitecustomize.py /usr/lib/python3.10/sitecustomize.py \
-      /usr/lib/python3.11/sitecustomize.py \
-      /usr/local/lib/python3.8/dist-packages/sitecustomize.py
+```
+  UnLeash — enrolling robot at 192.168.123.161
+
+  [1/6] Connecting via WebRTC...              ✓  connected
+  [2/6] Deploying SSH access...               ✓  triggered (auto)
+  [3/6] Waiting for SSH...                    ✓  sshd running
+  [4/6] Installing persistence...             ✓  ssh_guard.sh active
+  [5/6] Redirecting to UnLeash broker...      ✓  /etc/hosts updated
+  [6/6] Verifying enrollment...               ✓  enrolled
+
+  ┌───────────────────────────────────────────┐
+  │  Serial:    GO2-XXXXXXXXXX                │
+  │  SSH:       ssh root@192.168.123.161      │
+  │  Password:  unleash                       │
+  │  Dashboard: http://10.0.0.5:8080          │
+  └───────────────────────────────────────────┘
+
+  Run `unleash serve` to start the management dashboard.
 ```
 
-5. **Remove `sitecustomize.py` immediately** or all Python services will crash on every subsequent boot:
-
-```bash
-find / -name 'sitecustomize.py' -path '*/python*' -exec rm -f {} \;
-reboot
-```
-
-**If SSH does not survive a reboot**, `init-ssh`'s `deb_update.sh` hook is missing or got wiped by an OTA on your build. Run `init-ssh-persist` as a follow-up to install the real `ssh_guard.sh` persistence:
-
-```bash
-unleash-lite init-ssh-persist          # CLI
-# or click "Quick Persist" in the dashboard
-```
-
-The 1st press writes `ssh_guard.sh` + a self-removing `sitecustomize.py`. The 2nd press runs `sitecustomize.py` pre-seccomp to install `ssh_guard.sh` (systemd service + 5-min cron + path-unit watcher) and then deletes itself -- no manual cleanup needed.
-
-### Firmware 1.1.15+ (AES key required)
-
-1. Go to the **Cloud Intel** tab, log in with your Unitree account, and click **Use** next to your robot's AES key — this loads the key into the connect dialog
-2. Select **init-ssh**, choose your trigger mode, and execute
-3. Reboot the robot, then SSH in after boot
-4. **Remove `sitecustomize.py` immediately** (same cleanup command as above)
-
-### CLI
+For firmware >= 1.1.15, pass the per-device AES key:
 
 ```bash
-unleash-lite ssh                                        # firmware <= 1.1.13
-unleash-lite init-ssh                                   # firmware 1.1.14
-unleash-lite init-ssh --aes-key <32-hex-char-key>       # firmware 1.1.15+
+unleash enroll 192.168.123.161 --aes-key <32-hex-chars>
 ```
+
+Retrieve it with `unleash fetch-key --email you@example.com` or from the Cloud Intel tab in the dashboard.
+
+### 2. Start the management server
+
+```bash
+unleash serve
+```
+
+Opens the dashboard at [http://localhost:8080](http://localhost:8080) with:
+
+- **Fleet** — Real-time robot status, live event feed, MQTT command console
+- **Enroll** — Browser-based enrollment with live progress (alternative to CLI)
+- **Packages** — Build UPK update packages from shell commands
+- **Deployments** — Roll packages out to individual robots or the whole fleet
+- **Audit** — Timestamped log of every action
+
+The server includes a self-hosted MQTT broker that replaces Unitree's cloud. Enrolled robots connect automatically after the `/etc/hosts` redirect.
+
+### 3. Deploy a package
+
+Build and push an OTA package to your fleet:
+
+```bash
+unleash build spec.json        # create a .upk package
+unleash deploy <pkg> <serial>  # push to a specific robot
+```
+
+Or use the Packages + Deployments pages in the dashboard.
 
 ## Firmware Support
 
-| Firmware | Mode | AES Key? | Status |
-|----------|------|----------|--------|
-| <= 1.1.13 | `ssh` | No | Confirmed |
-| 1.1.14 | `init-ssh` | No | Confirmed |
-| 1.1.14+ | `init-ssh-persist` (after SSH is up) | No | Confirmed |
-| >= 1.1.15 | `init-ssh --aes-key KEY` | Yes | Confirmed |
+| Firmware | Enrollment | AES Key? | Status |
+|----------|-----------|----------|--------|
+| <= 1.1.13 | `unleash enroll` (auto-trigger) | No | Confirmed |
+| 1.1.14 | `unleash enroll` (two-press trigger) | No | Confirmed |
+| >= 1.1.15 | `unleash enroll --aes-key KEY` | Yes | Confirmed |
 
-## Modes
+If SSH is already up (e.g., from a previous session), `unleash enroll` skips the jailbreak and goes straight to fleet setup — persistence, MQTT redirect, and verification.
 
-### Standard (firmware <= 1.1.13)
+## CLI Reference
 
-| Mode | Description |
-|------|-------------|
-| `ssh` | Enable SSH and set root password |
-| `ssh-persist` | Persistent SSH with guard service (survives reboots and OTA) |
-| `custom` | Run any shell command as root |
-| `reverse-shell` | Reverse shell to a specified IP |
+```
+unleash                                   Show help + quickstart
+unleash enroll <ip> [options]             Guided enrollment (the happy path)
+unleash serve [--port 8080]               Start broker + API + dashboard
+unleash fetch-key --email EMAIL           Retrieve AES key from Unitree cloud
 
-### Bypass (firmware >= 1.1.14)
-
-These modes bypass the keyword blocklist and seccomp sandbox added in `programming_actuator` 1.0.5.5.
-
-| Mode | Description |
-|------|-------------|
-| `init-ssh` | SSH via `sitecustomize.py` injection — recommended for fw 1.1.14/15 |
-| `init-ssh-persist` | Install `ssh_guard.sh` persistence via self-removing `sitecustomize.py` — follow-up to `init-ssh` when `deb_update.sh` hook is unreliable (fw 1.1.14/15) |
-| `bypass-ssh` | SSH via cron job (fw 1.1.14+, requires crond running) |
-| `bypass-hosts` | Write MQTT DNS redirect to `/etc/hosts` |
-| `bypass-file` | Write arbitrary file content |
-| `bypass-cron` | Install a cron job for command execution |
-| `bypass-escalate` | Two-press self-overwrite for unfiltered Python execution |
-
-## Fetching the AES Key (firmware >= 1.1.15)
-
-Use the **Cloud Intel** tab in the dashboard, or from the CLI:
-
-```bash
-unleash-lite fetch-key --email you@example.com
+# Power-user commands
+unleash jailbreak <mode> [options]        Raw payload delivery
+unleash probe [--robot-ip IP]             Diagnostic DDS dump
 ```
 
-If you already have SSH access:
+### Enroll options
 
-```bash
-ssh root@192.168.123.161 'xxd -p /unitree/etc/key/aes_key.bin'
 ```
+unleash enroll <robot-ip>
+  --aes-key KEY          Per-device AES-128 key (firmware >= 1.1.15)
+  --password PASS        Root password to set (default: unleash)
+  --broker-ip IP         UnLeash broker IP (default: auto-detect)
+  --hotkey HOTKEY         Controller hotkey (default: L1+Y)
+  --manual               Prompt for manual controller press instead of auto-trigger
+  --skip-redirect        Skip MQTT /etc/hosts redirect
+  --skip-persist         Skip ssh_guard.sh persistence install
+  --debug                Enable debug logging
+```
+
+### Jailbreak modes (power users)
+
+These are the raw payload modes, preserved for users who need fine-grained control.
+
+| Mode | Firmware | Description |
+|------|----------|-------------|
+| `init-ssh` | >= 1.1.14 | SSH via `sitecustomize.py` injection (recommended) |
+| `init-ssh-persist` | >= 1.1.14 | Install `ssh_guard.sh` via self-removing sitecustomize |
+| `bypass-ssh` | >= 1.1.14 | SSH via cron job (requires crond) |
+| `bypass-hosts` | >= 1.1.14 | Write MQTT redirect to `/etc/hosts` |
+| `custom` | >= 1.1.14 | Arbitrary shell command via `np.savetxt` bypass |
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `UNLEASH_SECRET_KEY` | (auto-generated) | JWT signing key |
+| `UNLEASH_MQTT_PORT` | `17883` | MQTT broker port |
+| `UNLEASH_ADVERTISE_HOST` | (auto-detect) | Host for OTA package downloads |
+| `UNLEASH_DEFAULT_PASSWORD` | `admin` | Initial dashboard password |
 
 ## How It Works
 
-The Go2's `webrtc_bridge` service sits inside the DDS security perimeter with valid credentials. It bridges between the WebRTC data channel and the internal DDS bus, forwarding messages in both directions without filtering topics or message types.
+The Go2's `webrtc_bridge` service sits inside the DDS security perimeter with valid credentials. It bridges between the WebRTC data channel and the internal DDS bus, forwarding messages without filtering.
 
-UnLeash Lite exploits this by:
+UnLeash exploits this by:
 
 1. Connecting to the HTTP signaling endpoint (port 9991) and establishing a WebRTC data channel
 2. Uploading a Python payload to `programming_actuator` via the bridge
-3. Triggering execution — either automatically via a fake controller hotkey press, or manually by the user pressing **L1+A** on a physical controller
+3. Triggering execution via a fake controller hotkey press (or manual press on physical controller)
 4. The payload runs as root
 
-No DDS multicast, no CycloneDDS dependency.
+The `init-ssh` technique specifically exploits the fact that `py_script_execute_env` calls `Py_Initialize()` before `seccomp_load()`. A `sitecustomize.py` written via `np.savetxt` runs with full root syscall access before the sandbox activates.
 
 ### Firmware Defenses
 
@@ -179,30 +180,34 @@ No DDS multicast, no CycloneDDS dependency.
 |---------|----------|-------------------|
 | DDS Security (PKI-DH) | ~1.1.x | WebRTC bridge is inside the perimeter |
 | Keyword blocklist | 1.1.14 | `str(bytes([...]))` encoding + `np.savetxt` for file I/O |
-| seccomp sandbox | 1.1.14 | Write to `/etc/cron.d/`, crond runs outside sandbox |
+| seccomp sandbox | 1.1.14 | `sitecustomize.py` runs before `seccomp_load()` |
 | UUID validation | 1.1.14 | `str(int(time.time()))` produces valid 10-digit UUIDs |
 | Per-device AES auth | 1.1.15 | Key retrievable from Unitree cloud API |
-| PAM clock skew (stale RTC) | 1.1.14+ | Patch `/etc/pam.d/cron` with `pam_permit.so` before installing cron job |
 
-## CLI Reference
-
-```bash
-unleash-lite <mode> [options]
-unleash-lite serve [--port 8443] [--password SECRET]
-unleash-lite fetch-key --email EMAIL [--sn SERIAL]
-unleash-lite probe [--aes-key KEY] [--debug]
-unleash-lite trigger [--robot-ip IP] [--via bridge|dds]
-```
-
-Common options:
+## Project Structure
 
 ```
---robot-ip IP         Robot IP (default: 192.168.123.161)
---aes-key KEY         Per-device AES-128 key for firmware >= 1.1.15
---trigger MODE        auto (bridge, experimental) or manual (press controller)
---hotkey HOTKEY        Controller hotkey binding (default: L1+Y)
---password PASS       Root password for ssh modes (default: unleash)
---debug               Enable debug logging
+unleash/
+├── core/           WebRTC data channel + signaling
+├── enroll/         Jailbreak payloads + guided enrollment
+├── broker/         Self-hosted MQTT broker
+├── fleet/          Robot tracking + status
+├── packages/       UPK package builder + OTA deployment
+├── certs/          TLS certificate generation
+├── auth/           JWT authentication
+├── db/             SQLite database
+├── audit/          Action logging
+├── api/            FastAPI REST + WebSocket routes
+└── app.py          Application factory
+
+frontend/           React/Vite/Tailwind dashboard
+├── src/pages/
+│   ├── Dashboard   Fleet overview + live feed
+│   ├── Enroll      Browser-based enrollment
+│   ├── Packages    Package management
+│   ├── Deployments OTA rollout tracking
+│   ├── AuditLog    Action history
+│   └── ...
 ```
 
 ## Acknowledgments

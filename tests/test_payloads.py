@@ -2,7 +2,7 @@
 
 import pytest
 
-from unleash_lite.webrtc_payloads import (
+from unleash.enroll.payloads import (
     PAYLOAD_REGISTRY,
     PROGACTUATOR_ILLEGAL_KEYWORDS,
     validate_bypass_payload,
@@ -19,7 +19,7 @@ from unleash_lite.webrtc_payloads import (
     payload_sitecustomize_ssh,
     payload_init_ssh_persist,
 )
-from unleash_lite.__main__ import _JAILBREAK_MODES
+from unleash.__main__ import _JAILBREAK_MODES
 
 
 BYPASS_BUILDERS = {
@@ -209,7 +209,7 @@ class TestInitSshPersistWrittenContent:
         assert "os.unlink" in content
 
     def test_written_guard_script_matches_ssh_guard_constant(self):
-        from unleash_lite.webrtc_payloads import SSH_GUARD_SCRIPT
+        from unleash.enroll.payloads import SSH_GUARD_SCRIPT
         assert self._get_guard_script() == SSH_GUARD_SCRIPT
 
     def test_payload_writes_guard_to_usr_local_bin(self):
