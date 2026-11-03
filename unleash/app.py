@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import secrets
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from .api import (
     auth_routes,
     command_routes,
     deployment_routes,
+    enroll_routes,
     fleet_routes,
     package_routes,
     system_routes,
@@ -44,15 +46,24 @@ async def _ensure_admin_user():
         result = await session.execute(select(User).where(User.role == "admin"))
         if result.scalar_one_or_none():
             return
+        generated_pw = secrets.token_urlsafe(16)
         admin = User(
             username="admin",
-            password_hash=_bcrypt.hashpw(b"unleash", _bcrypt.gensalt()).decode(),
+            password_hash=_bcrypt.hashpw(generated_pw.encode(), _bcrypt.gensalt()).decode(),
             role="admin",
             email="admin@localhost",
         )
         session.add(admin)
         await session.commit()
-        logger.info("Created default admin user (username: admin, password: unleash)")
+        pw_file = settings.data_dir / "admin_password"
+        pw_file.write_text(generated_pw)
+        try:
+            pw_file.chmod(0o600)
+        except OSError:
+            pass
+        logger.warning(
+            "Created admin user — initial password written to %s", pw_file
+        )
 
 
 @asynccontextmanager
@@ -142,9 +153,13 @@ def create_app() -> FastAPI:
     app.include_router(deployment_routes.router, prefix="/api/v1")
     app.include_router(audit_routes.router, prefix="/api/v1")
     app.include_router(system_routes.router, prefix="/api/v1")
+    app.include_router(enroll_routes.router, prefix="/api/v1")
     app.include_router(websocket_routes.router)
+    app.include_router(enroll_routes.ws_router)
 
-    frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
+    frontend_dist = Path(__file__).parent / "frontend_dist"
+    if not frontend_dist.exists():
+        frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
     if frontend_dist.exists():
         app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
 

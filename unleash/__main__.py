@@ -70,6 +70,20 @@ def main():
         _main_serve()
         return
 
+    # `unleash jailbreak <mode>` (documented compat form)
+    if sub == "jailbreak":
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        parser = argparse.ArgumentParser(
+            prog="unleash jailbreak",
+            description="UnLeash: own your Unitree robot",
+            epilog=_EPILOG,
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+        )
+        _add_jailbreak_args(parser)
+        args = parser.parse_args()
+        _run_jailbreak(args)
+        return
+
     # Bare jailbreak mode (backward compat: `unleash init-ssh`)
     if sub in _JAILBREAK_MODES:
         parser = argparse.ArgumentParser(

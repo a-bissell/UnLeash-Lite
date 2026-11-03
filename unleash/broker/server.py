@@ -174,7 +174,7 @@ class UnleashBroker:
         except (asyncio.IncompleteReadError, asyncio.TimeoutError, ConnectionResetError, OSError):
             pass
         finally:
-            if client.serial and client.serial in self.clients:
+            if client.serial and self.clients.get(client.serial) is client:
                 del self.clients[client.serial]
                 self._log_event("disconnect", client.serial)
                 for cb in self._on_disconnect_callbacks:

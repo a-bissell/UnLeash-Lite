@@ -1,10 +1,28 @@
 """Central configuration via environment variables."""
 
+import logging
 import secrets
+import socket
 from pathlib import Path
 
 from pydantic import model_validator
 from pydantic_settings import BaseSettings
+
+_log = logging.getLogger("unleash.config")
+
+
+def _detect_lan_ip() -> str:
+    for target in ("192.168.123.161", "8.8.8.8"):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect((target, 80))
+            ip = s.getsockname()[0]
+            s.close()
+            if ip and not ip.startswith("127."):
+                return ip
+        except Exception:
+            continue
+    return ""
 
 _SECRET_SENTINEL = "change-me-in-production"
 
@@ -45,7 +63,22 @@ class Settings(BaseSettings):
     # Host/IP that robots use to reach the UPK file server. This goes into the
     # download URL inside the updateModule command, so it must be reachable
     # *from the robot*. Override via UNLEASH_UPK_ADVERTISE_HOST in production.
-    upk_advertise_host: str = "127.0.0.1"
+    upk_advertise_host: str = ""
+
+    @model_validator(mode="after")
+    def _ensure_advertise_host(self):
+        if not self.upk_advertise_host:
+            detected = _detect_lan_ip()
+            if detected:
+                self.upk_advertise_host = detected
+            else:
+                self.upk_advertise_host = "127.0.0.1"
+                _log.warning(
+                    "Cannot auto-detect a LAN IP for OTA downloads — "
+                    "defaulting to 127.0.0.1 which robots cannot reach. "
+                    "Set UNLEASH_UPK_ADVERTISE_HOST to fix this."
+                )
+        return self
 
     @model_validator(mode="after")
     def _ensure_secret_key(self):

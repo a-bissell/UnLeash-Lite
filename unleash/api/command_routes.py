@@ -24,6 +24,31 @@ class CommandRequest(BaseModel):
     payload: dict | str
 
 
+@router.post("/broadcast")
+async def broadcast(
+    body: CommandRequest,
+    request: Request,
+    user: CurrentUser = Depends(require_role("admin")),
+    session: AsyncSession = Depends(get_session),
+):
+    if not _broker:
+        raise HTTPException(status_code=503, detail="Broker not available")
+
+    payload = body.payload if isinstance(body.payload, str) else json.dumps(body.payload)
+    sent = []
+    for serial in list(_broker.clients.keys()):
+        if await _broker.send_command(serial, payload):
+            sent.append(serial)
+
+    await log_action(
+        session, user.username, "broadcast_command",
+        user_id=user.user_id,
+        detail={"payload": body.payload, "sent_to": sent},
+        ip_address=request.client.host if request.client else None,
+    )
+    return {"status": "sent", "count": len(sent), "serials": sent}
+
+
 @router.post("/{serial}")
 async def send_command(
     serial: str,
@@ -50,28 +75,3 @@ async def send_command(
         ip_address=request.client.host if request.client else None,
     )
     return {"status": "sent", "serial": serial}
-
-
-@router.post("/broadcast")
-async def broadcast(
-    body: CommandRequest,
-    request: Request,
-    user: CurrentUser = Depends(require_role("admin")),
-    session: AsyncSession = Depends(get_session),
-):
-    if not _broker:
-        raise HTTPException(status_code=503, detail="Broker not available")
-
-    payload = body.payload if isinstance(body.payload, str) else json.dumps(body.payload)
-    sent = []
-    for serial in list(_broker.clients.keys()):
-        if await _broker.send_command(serial, payload):
-            sent.append(serial)
-
-    await log_action(
-        session, user.username, "broadcast_command",
-        user_id=user.user_id,
-        detail={"payload": body.payload, "sent_to": sent},
-        ip_address=request.client.host if request.client else None,
-    )
-    return {"status": "sent", "count": len(sent), "serials": sent}
