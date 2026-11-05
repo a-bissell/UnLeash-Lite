@@ -1,9 +1,9 @@
-# UnLeash 2.0 — USB Dongle Integration Design
+# UnLeash 2.0 — USB UnLeash Key Design
 
 ## Overview
 
-Single-plug jailbreak: flash a Pico2, plug it into any Go2 on fw 1.1.15,
-get persistent root SSH. No laptop, no app, no network needed at exploit time.
+Single-plug unlock: flash a Pico2, plug it into any Go2 on fw 1.1.15,
+get persistent root SSH. No laptop, no app, no network needed at unlock time.
 
 ## Exploit Chain
 
@@ -122,7 +122,7 @@ Idempotent: re-plugging the dongle after installation is a no-op.
 
 ## UX
 
-1. Flash `unleash-dongle.uf2` onto Pico2 (one-time, via BOOTSEL + drag-drop)
+1. Flash `unleash-key.uf2` onto Pico2 (one-time, via BOOTSEL + drag-drop)
 2. Plug Pico2 into any Go2 USB port
 3. Wait ~5 seconds
 4. SSH in: `ssh root@<dog-ip>` (password: `unleash`)
