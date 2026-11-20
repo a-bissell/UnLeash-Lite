@@ -315,23 +315,31 @@ class MQTTEnrollSession:
         """Install ssh_guard.sh for persistence across reboots and OTA."""
         sftp = ssh.open_sftp()
         try:
-            sftp.file("/usr/local/bin/ssh_guard.sh", "w").write(SSH_GUARD_SCRIPT)
+            with sftp.file("/usr/local/bin/ssh_guard.sh", "w") as f:
+                f.write(SSH_GUARD_SCRIPT)
         finally:
             sftp.close()
         _ssh_exec(ssh, "chmod 755 /usr/local/bin/ssh_guard.sh")
         _ssh_exec(ssh, "/usr/local/bin/ssh_guard.sh install")
 
     def _install_redirect(self, ssh):
-        """Write /etc/hosts to redirect MQTT permanently to UnLeash broker."""
-        hosts = (
-            f"127.0.0.1 localhost\n"
-            f"{self.broker_ip} global-robot-mqtt.unitree.com\n"
-            f"{self.broker_ip} robot-mqtt.unitree.com\n"
-        )
+        """Add MQTT redirect entries to /etc/hosts, preserving existing entries."""
+        mqtt_hosts = {
+            "global-robot-mqtt.unitree.com",
+            "robot-mqtt.unitree.com",
+        }
+        existing = _ssh_exec(ssh, "cat /etc/hosts 2>/dev/null || true")
+        kept = [
+            line for line in existing.splitlines()
+            if not any(h in line for h in mqtt_hosts)
+        ]
+        kept.append(f"{self.broker_ip} global-robot-mqtt.unitree.com")
+        kept.append(f"{self.broker_ip} robot-mqtt.unitree.com")
+        new_hosts = "\n".join(kept) + "\n"
         sftp = ssh.open_sftp()
         try:
             with sftp.file("/etc/hosts", "w") as f:
-                f.write(hosts)
+                f.write(new_hosts)
         finally:
             sftp.close()
 
