@@ -37,8 +37,13 @@ def _decode_name(data: bytes, offset: int) -> tuple[str, int]:
     labels = []
     jumped = False
     return_offset = offset
+    seen = set()
 
     while offset < len(data):
+        if offset in seen:
+            break
+        seen.add(offset)
+
         length = data[offset]
 
         if length & 0xC0 == 0xC0:
