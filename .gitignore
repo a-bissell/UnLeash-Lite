@@ -9,3 +9,4 @@ venv/
 .claude/
 frontend/node_modules/
 frontend/dist/
+data/
