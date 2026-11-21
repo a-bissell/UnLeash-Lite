@@ -24,7 +24,7 @@ from aiortc import (
 
 from .webrtc import _validation_response
 
-logger = logging.getLogger("unleash_lite.webrtc_sdp")
+logger = logging.getLogger("unleash.core.webrtc_sdp")
 
 
 def build_e2_sdp(our_fingerprint_hash, our_ice_ufrag, our_ice_pwd,
